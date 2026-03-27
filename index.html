@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neovim Command Search</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #4a9c7d;
+            --card-bg: #2d2d2d;
+            --input-bg: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            background: var(--input-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 156, 125, 0.3);
+        }
+
+        .command-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .command-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .command-card:hover {
+            transform: translateX(5px);
+        }
+
+        .command {
+            color: var(--accent-color);
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .description {
+            color: #a0a0a0;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666666;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text"
+               class="search-box"
+               placeholder="Search Neovim commands..."
+               autofocus
+               id="searchInput">
+        
+        <div class="command-list" id="commandList">
+            
+            <div class="command-card">
+                <div class="command">:w</div>
+                <div class="description">Write (save) the current file</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:q</div>
+                <div class="description">Quit the current window</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:wq</div>
+                <div class="description">Write and quit</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:q!</div>
+                <div class="description">Quit without saving changes</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:e [file]</div>
+                <div class="description">Edit a file</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:help [command]</div>
+                <div class="description">Show help for a command</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:nohl</div>
+                <div class="description">Clear search highlighting</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:split</div>
+                <div class="description">Split window horizontally</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:vsplit</div>
+                <div class="description">Split window vertically</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">i</div>
+                <div class="description">Insert mode (before cursor)</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">a</div>
+                <div class="description">Insert mode (after cursor)</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">o</div>
+                <div class="description">Insert new line below</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">O</div>
+                <div class="description">Insert new line above</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">dd</div>
+                <div class="description">Delete current line</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">yy</div>
+                <div class="description">Yank (copy) current line</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">p</div>
+                <div class="description">Paste after cursor</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">u</div>
+                <div class="description">Undo last action</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command"><C-r></div>
+                <div class="description">Redo last undone action</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">gg</div>
+                <div class="description">Move to first line</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">G</div>
+                <div class="description">Move to last line</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">/pattern</div>
+                <div class="description">Search forward for pattern</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">?pattern</div>
+                <div class="description">Search backward for pattern</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">n</div>
+                <div class="description">Repeat last search</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">N</div>
+                <div class="description">Repeat last search in opposite direction</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:%s/old/new/g</div>
+                <div class="description">Replace all occurrences in file</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:terminal</div>
+                <div class="description">Open terminal emulator</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command"><C-w>w</div>
+                <div class="description">Cycle between windows</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">:tabnew</div>
+                <div class="description">Open new tab</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">gt</div>
+                <div class="description">Go to next tab</div>
+            </div>
+        
+
+            <div class="command-card">
+                <div class="command">gT</div>
+                <div class="description">Go to previous tab</div>
+            </div>
+        
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const commandList = document.getElementById('commandList');
+        const allCommands = Array.from(commandList.children);
+
+        function filterCommands() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let hasResults = false;
+
+            allCommands.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (!hasResults) {
+                commandList.innerHTML = `
+                    <div class="no-results">
+                        No commands found matching "${searchTerm}"
+                    </div>
+                `;
+            } else {
+                commandList.innerHTML = '';
+                allCommands
+                    .filter(card => card.style.display !== 'none')
+                    .forEach(card => commandList.appendChild(card));
+            }
+        }
+
+        searchInput.addEventListener('input', filterCommands);
+    </script>
+</body>
+</html>
