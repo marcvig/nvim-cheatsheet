@@ -3,7 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neovim Cheatsheet</title>
+
+<!-- ============================================================
+     PRIMARY META
+     ============================================================ -->
+<title>Neovim Cheatsheet — Complete nvim Command Reference</title>
+<meta name="description" content="A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.">
+<meta name="keywords" content="neovim cheatsheet, nvim cheatsheet, neovim commands, nvim commands, neovim reference, vim cheatsheet, nvim keybindings, neovim keyboard shortcuts, neovim tutorial, nvim guide, vim commands, neovim lsp, neovim splits, neovim macros, neovim text objects">
+<meta name="author" content="nvimcheatsheet">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="theme-color" content="#0f1117">
+
+<!-- ============================================================
+     CANONICAL
+     ============================================================ -->
+<link rel="canonical" href="https://YOUR-GITHUB-USERNAME.github.io/nvim-cheatsheet/">
+
+<!-- ============================================================
+     OPEN GRAPH (Facebook, LinkedIn, Discord, Slack, iMessage…)
+     ============================================================ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Neovim Cheatsheet">
+<meta property="og:title" content="Neovim Cheatsheet — Complete nvim Command Reference">
+<meta property="og:description" content="A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.">
+<meta property="og:url" content="https://YOUR-GITHUB-USERNAME.github.io/nvim-cheatsheet/">
+<meta property="og:image" content="https://YOUR-GITHUB-USERNAME.github.io/nvim-cheatsheet/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Neovim Cheatsheet — searchable nvim command reference">
+<meta property="og:locale" content="en_US">
+
+<!-- ============================================================
+     TWITTER / X CARD
+     ============================================================ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Neovim Cheatsheet — Complete nvim Command Reference">
+<meta name="twitter:description" content="A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.">
+<meta name="twitter:image" content="https://YOUR-GITHUB-USERNAME.github.io/nvim-cheatsheet/og-image.png">
+<meta name="twitter:image:alt" content="Neovim Cheatsheet — searchable nvim command reference">
+
+<!-- ============================================================
+     JSON-LD STRUCTURED DATA
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Neovim Cheatsheet — Complete nvim Command Reference",
+  "description": "A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.",
+  "url": "https://YOUR-GITHUB-USERNAME.github.io/nvim-cheatsheet/",
+  "inLanguage": "en-US",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Neovim Cheatsheet",
+    "url": "https://YOUR-GITHUB-USERNAME.github.io/nvim-cheatsheet/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Neovim",
+    "alternateName": "nvim",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Linux, macOS, Windows",
+    "url": "https://neovim.io"
+  },
+  "keywords": "neovim, nvim, cheatsheet, vim, commands, keybindings, reference, text editor",
+  "dateModified": "2026-03-27"
+}
+</script>
+
+<!-- ============================================================
+     GOOGLE FONTS
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -15,7 +88,7 @@
   }
   h1 {
     text-align: center;
-    font-size: 2rem;
+    font-size: clamp(1.4rem, 4vw, 2rem);
     color: #7ee787;
     margin-bottom: 6px;
     letter-spacing: 2px;
@@ -23,7 +96,7 @@
   .subtitle {
     text-align: center;
     color: #8b949e;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
     margin-bottom: 18px;
   }
 
@@ -40,7 +113,7 @@
     border: 1px solid #388bfd88;
     border-radius: 8px;
     color: #e2e8f0;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
@@ -108,7 +181,7 @@
   .card-header {
     background: #21262d;
     padding: 10px 14px;
-    font-size: 0.75rem;
+    font-size: clamp(0.68rem, 1.5vw, 0.75rem);
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -126,12 +199,12 @@
   tr.hidden-row { display: none; }
   td {
     padding: 7px 14px;
-    font-size: 0.82rem;
+    font-size: clamp(0.78rem, 1.8vw, 0.86rem);
     vertical-align: middle;
     border-bottom: 1px solid #21262d;
   }
   td:first-child {
-    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    font-family: 'JetBrains Mono', monospace;
     color: #e3b341;
     white-space: nowrap;
     width: 42%;
@@ -158,7 +231,7 @@
 <body>
 
 <h1>⚡ Neovim Cheatsheet</h1>
-<p class="subtitle">Quick reference for everyday Neovim usage</p>
+<p class="subtitle">Complete nvim command reference — searchable, fast, always free</p>
 
 <!-- SEARCH -->
 <div class="search-wrap">
@@ -402,7 +475,7 @@
 
 </div>
 
-<footer>Generated March 27, 2026 · Neovim Cheatsheet</footer>
+<footer>Neovim Cheatsheet · Complete nvim command reference · Updated March 2026 · <a href="https://neovim.io" target="_blank" rel="noopener" style="color:#484f58;">neovim.io</a></footer>
 
 <script>
   const searchInput = document.getElementById('search');
