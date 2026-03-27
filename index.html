@@ -1,324 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neovim Command Search</title>
-    <style>
-        :root {
-            --bg-color: #1a1a1a;
-            --text-color: #e0e0e0;
-            --accent-color: #4a9c7d;
-            --card-bg: #2d2d2d;
-            --input-bg: #333333;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
-            background: var(--input-bg);
-            border: 2px solid var(--accent-color);
-            border-radius: 8px;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-box:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(74, 156, 125, 0.3);
-        }
-
-        .command-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .command-card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-color);
-            transition: transform 0.2s ease;
-            cursor: pointer;
-        }
-
-        .command-card:hover {
-            transform: translateX(5px);
-        }
-
-        .command {
-            color: var(--accent-color);
-            font-family: 'Fira Code', monospace;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .description {
-            color: #a0a0a0;
-            line-height: 1.5;
-        }
-
-        .no-results {
-            text-align: center;
-            color: #666666;
-            padding: 2rem;
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neovim Cheatsheet</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #7ee787;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #8b949e;
+    font-size: 0.85rem;
+    margin-bottom: 28px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: #21262d;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #58a6ff;
+    border-bottom: 1px solid #30363d;
+  }
+  .card-header.green { color: #7ee787; }
+  .card-header.orange { color: #f0883e; }
+  .card-header.purple { color: #d2a8ff; }
+  .card-header.red { color: #f85149; }
+  .card-header.yellow { color: #e3b341; }
+  .card-header.teal { color: #39d353; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  tr:nth-child(even) { background: #1c2128; }
+  td {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #21262d;
+  }
+  td:first-child {
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    color: #e3b341;
+    white-space: nowrap;
+    width: 42%;
+    font-weight: 600;
+  }
+  td:last-child {
+    color: #c9d1d9;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+  }
+  .badge-n { background: #388bfd22; color: #58a6ff; border: 1px solid #388bfd55; }
+  .badge-i { background: #7ee78722; color: #7ee787; border: 1px solid #7ee78755; }
+  .badge-v { background: #d2a8ff22; color: #d2a8ff; border: 1px solid #d2a8ff55; }
+  .badge-c { background: #f0883e22; color: #f0883e; border: 1px solid #f0883e55; }
+  .legend {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 0.78rem;
+  }
+  .legend span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  footer {
+    text-align: center;
+    margin-top: 28px;
+    color: #484f58;
+    font-size: 0.75rem;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <input type="text"
-               class="search-box"
-               placeholder="Search Neovim commands..."
-               autofocus
-               id="searchInput">
-        
-        <div class="command-list" id="commandList">
-            
-            <div class="command-card">
-                <div class="command">:w</div>
-                <div class="description">Write (save) the current file</div>
-            </div>
-        
 
-            <div class="command-card">
-                <div class="command">:q</div>
-                <div class="description">Quit the current window</div>
-            </div>
-        
+<h1>⚡ Neovim Cheatsheet</h1>
+<p class="subtitle">Quick reference for everyday Neovim usage</p>
 
-            <div class="command-card">
-                <div class="command">:wq</div>
-                <div class="description">Write and quit</div>
-            </div>
-        
+<div class="legend">
+  <span><span class="badge badge-n">N</span> Normal</span>
+  <span><span class="badge badge-i">I</span> Insert</span>
+  <span><span class="badge badge-v">V</span> Visual</span>
+  <span><span class="badge badge-c">C</span> Command</span>
+</div>
 
-            <div class="command-card">
-                <div class="command">:q!</div>
-                <div class="description">Quit without saving changes</div>
-            </div>
-        
+<div class="grid">
 
-            <div class="command-card">
-                <div class="command">:e [file]</div>
-                <div class="description">Edit a file</div>
-            </div>
-        
+  <!-- MODES -->
+  <div class="card">
+    <div class="card-header green">Modes</div>
+    <table>
+      <tr><td>i</td><td>Insert before cursor</td></tr>
+      <tr><td>I</td><td>Insert at line start</td></tr>
+      <tr><td>a</td><td>Insert after cursor</td></tr>
+      <tr><td>A</td><td>Insert at line end</td></tr>
+      <tr><td>o</td><td>New line below, insert</td></tr>
+      <tr><td>O</td><td>New line above, insert</td></tr>
+      <tr><td>v</td><td>Visual (character)</td></tr>
+      <tr><td>V</td><td>Visual (line)</td></tr>
+      <tr><td>Ctrl+v</td><td>Visual (block)</td></tr>
+      <tr><td>:</td><td>Command mode</td></tr>
+      <tr><td>Esc / Ctrl+[</td><td>Return to Normal</td></tr>
+      <tr><td>R</td><td>Replace mode</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">:help [command]</div>
-                <div class="description">Show help for a command</div>
-            </div>
-        
+  <!-- NAVIGATION -->
+  <div class="card">
+    <div class="card-header">Navigation — Basic</div>
+    <table>
+      <tr><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
+      <tr><td>w / W</td><td>Next word / WORD</td></tr>
+      <tr><td>b / B</td><td>Prev word / WORD</td></tr>
+      <tr><td>e / E</td><td>End of word / WORD</td></tr>
+      <tr><td>0 / ^</td><td>Line start / first non-blank</td></tr>
+      <tr><td>$</td><td>Line end</td></tr>
+      <tr><td>gg / G</td><td>File start / file end</td></tr>
+      <tr><td>:N</td><td>Go to line N</td></tr>
+      <tr><td>%</td><td>Jump to matching bracket</td></tr>
+      <tr><td>{ / }</td><td>Prev / next blank line (paragraph)</td></tr>
+      <tr><td>Ctrl+d / Ctrl+u</td><td>Half-page down / up</td></tr>
+      <tr><td>Ctrl+f / Ctrl+b</td><td>Full-page down / up</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">:nohl</div>
-                <div class="description">Clear search highlighting</div>
-            </div>
-        
+  <!-- EDITING -->
+  <div class="card">
+    <div class="card-header orange">Editing</div>
+    <table>
+      <tr><td>x</td><td>Delete character</td></tr>
+      <tr><td>dd</td><td>Delete line</td></tr>
+      <tr><td>dw</td><td>Delete word</td></tr>
+      <tr><td>d$ / D</td><td>Delete to end of line</td></tr>
+      <tr><td>yy / Y</td><td>Yank (copy) line</td></tr>
+      <tr><td>yw</td><td>Yank word</td></tr>
+      <tr><td>p / P</td><td>Paste after / before cursor</td></tr>
+      <tr><td>u</td><td>Undo</td></tr>
+      <tr><td>Ctrl+r</td><td>Redo</td></tr>
+      <tr><td>cc / C</td><td>Change line / to end of line</td></tr>
+      <tr><td>cw</td><td>Change word</td></tr>
+      <tr><td>r{char}</td><td>Replace single character</td></tr>
+      <tr><td>~</td><td>Toggle case</td></tr>
+      <tr><td>J</td><td>Join line below to current</td></tr>
+      <tr><td>.</td><td>Repeat last change</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">:split</div>
-                <div class="description">Split window horizontally</div>
-            </div>
-        
+  <!-- TEXT OBJECTS -->
+  <div class="card">
+    <div class="card-header purple">Text Objects (combine with d/c/y/v)</div>
+    <table>
+      <tr><td>iw / aw</td><td>Inner / around word</td></tr>
+      <tr><td>is / as</td><td>Inner / around sentence</td></tr>
+      <tr><td>ip / ap</td><td>Inner / around paragraph</td></tr>
+      <tr><td>i" / a"</td><td>Inner / around double quotes</td></tr>
+      <tr><td>i' / a'</td><td>Inner / around single quotes</td></tr>
+      <tr><td>i` / a`</td><td>Inner / around backticks</td></tr>
+      <tr><td>i( / a(</td><td>Inner / around parens</td></tr>
+      <tr><td>i[ / a[</td><td>Inner / around brackets</td></tr>
+      <tr><td>i{ / a{</td><td>Inner / around braces</td></tr>
+      <tr><td>it / at</td><td>Inner / around HTML tag</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">:vsplit</div>
-                <div class="description">Split window vertically</div>
-            </div>
-        
+  <!-- SEARCH & REPLACE -->
+  <div class="card">
+    <div class="card-header red">Search &amp; Replace</div>
+    <table>
+      <tr><td>/pattern</td><td>Search forward</td></tr>
+      <tr><td>?pattern</td><td>Search backward</td></tr>
+      <tr><td>n / N</td><td>Next / prev match</td></tr>
+      <tr><td>*</td><td>Search word under cursor (fwd)</td></tr>
+      <tr><td>#</td><td>Search word under cursor (bwd)</td></tr>
+      <tr><td>:s/old/new/</td><td>Replace first on line</td></tr>
+      <tr><td>:s/old/new/g</td><td>Replace all on line</td></tr>
+      <tr><td>:%s/old/new/g</td><td>Replace all in file</td></tr>
+      <tr><td>:%s/old/new/gc</td><td>Replace with confirmation</td></tr>
+      <tr><td>:noh</td><td>Clear search highlight</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">i</div>
-                <div class="description">Insert mode (before cursor)</div>
-            </div>
-        
+  <!-- SPLITS & WINDOWS -->
+  <div class="card">
+    <div class="card-header yellow">Splits &amp; Windows</div>
+    <table>
+      <tr><td>:sp / :vsp</td><td>Horizontal / vertical split</td></tr>
+      <tr><td>Ctrl+w s</td><td>Horizontal split</td></tr>
+      <tr><td>Ctrl+w v</td><td>Vertical split</td></tr>
+      <tr><td>Ctrl+w h/j/k/l</td><td>Move between splits</td></tr>
+      <tr><td>Ctrl+w H/J/K/L</td><td>Move split to edge</td></tr>
+      <tr><td>Ctrl+w =</td><td>Equalize split sizes</td></tr>
+      <tr><td>Ctrl+w _ / |</td><td>Max height / max width</td></tr>
+      <tr><td>Ctrl+w +/-</td><td>Increase / decrease height</td></tr>
+      <tr><td>Ctrl+w q</td><td>Close split</td></tr>
+      <tr><td>Ctrl+w o</td><td>Close all other splits</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">a</div>
-                <div class="description">Insert mode (after cursor)</div>
-            </div>
-        
+  <!-- TABS -->
+  <div class="card">
+    <div class="card-header teal">Tabs</div>
+    <table>
+      <tr><td>:tabnew</td><td>Open new tab</td></tr>
+      <tr><td>:tabnew {file}</td><td>Open file in new tab</td></tr>
+      <tr><td>gt / gT</td><td>Next / prev tab</td></tr>
+      <tr><td>:tabn / :tabp</td><td>Next / prev tab</td></tr>
+      <tr><td>:tabclose</td><td>Close current tab</td></tr>
+      <tr><td>:tabonly</td><td>Close all other tabs</td></tr>
+      <tr><td>{N}gt</td><td>Go to tab N</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">o</div>
-                <div class="description">Insert new line below</div>
-            </div>
-        
+  <!-- FILE & BUFFERS -->
+  <div class="card">
+    <div class="card-header">Files &amp; Buffers</div>
+    <table>
+      <tr><td>:e {file}</td><td>Edit file</td></tr>
+      <tr><td>:w</td><td>Save</td></tr>
+      <tr><td>:w {file}</td><td>Save as</td></tr>
+      <tr><td>:wq / :x</td><td>Save and quit</td></tr>
+      <tr><td>:q</td><td>Quit</td></tr>
+      <tr><td>:q!</td><td>Quit without saving</td></tr>
+      <tr><td>:wqa</td><td>Save all and quit</td></tr>
+      <tr><td>:ls / :buffers</td><td>List buffers</td></tr>
+      <tr><td>:bn / :bp</td><td>Next / prev buffer</td></tr>
+      <tr><td>:bd</td><td>Delete (close) buffer</td></tr>
+      <tr><td>:b {N}</td><td>Switch to buffer N</td></tr>
+      <tr><td>Ctrl+^</td><td>Toggle last two buffers</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">O</div>
-                <div class="description">Insert new line above</div>
-            </div>
-        
+  <!-- MARKS & JUMPS -->
+  <div class="card">
+    <div class="card-header purple">Marks &amp; Jumps</div>
+    <table>
+      <tr><td>m{a-z}</td><td>Set local mark</td></tr>
+      <tr><td>m{A-Z}</td><td>Set global mark</td></tr>
+      <tr><td>'{mark}</td><td>Jump to mark line</td></tr>
+      <tr><td>`{mark}</td><td>Jump to exact mark position</td></tr>
+      <tr><td>''</td><td>Jump to last position</td></tr>
+      <tr><td>Ctrl+o / Ctrl+i</td><td>Jump back / forward in history</td></tr>
+      <tr><td>:marks</td><td>List all marks</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">dd</div>
-                <div class="description">Delete current line</div>
-            </div>
-        
+  <!-- MACROS -->
+  <div class="card">
+    <div class="card-header orange">Macros</div>
+    <table>
+      <tr><td>q{a-z}</td><td>Start recording macro into register</td></tr>
+      <tr><td>q</td><td>Stop recording</td></tr>
+      <tr><td>@{a-z}</td><td>Play macro</td></tr>
+      <tr><td>@@</td><td>Repeat last macro</td></tr>
+      <tr><td>{N}@{a-z}</td><td>Play macro N times</td></tr>
+      <tr><td>:reg</td><td>View all registers / macros</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">yy</div>
-                <div class="description">Yank (copy) current line</div>
-            </div>
-        
+  <!-- VISUAL MODE -->
+  <div class="card">
+    <div class="card-header green">Visual Mode</div>
+    <table>
+      <tr><td>v + motion</td><td>Select characters</td></tr>
+      <tr><td>V + motion</td><td>Select lines</td></tr>
+      <tr><td>Ctrl+v + motion</td><td>Block select</td></tr>
+      <tr><td>d / x</td><td>Delete selection</td></tr>
+      <tr><td>y</td><td>Yank selection</td></tr>
+      <tr><td>c</td><td>Change selection</td></tr>
+      <tr><td>&gt; / &lt;</td><td>Indent / un-indent</td></tr>
+      <tr><td>u / U</td><td>Lowercase / uppercase</td></tr>
+      <tr><td>:</td><td>Run command on selection</td></tr>
+      <tr><td>gv</td><td>Reselect last selection</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">p</div>
-                <div class="description">Paste after cursor</div>
-            </div>
-        
+  <!-- FOLDING -->
+  <div class="card">
+    <div class="card-header red">Folding</div>
+    <table>
+      <tr><td>zc / zo</td><td>Close / open fold</td></tr>
+      <tr><td>za</td><td>Toggle fold</td></tr>
+      <tr><td>zC / zO</td><td>Close / open all folds at cursor</td></tr>
+      <tr><td>zM / zR</td><td>Close all / open all folds in file</td></tr>
+      <tr><td>zf{motion}</td><td>Create fold</td></tr>
+      <tr><td>zd</td><td>Delete fold at cursor</td></tr>
+      <tr><td>zj / zk</td><td>Move to next / prev fold</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">u</div>
-                <div class="description">Undo last action</div>
-            </div>
-        
+  <!-- NEOVIM EXTRAS -->
+  <div class="card">
+    <div class="card-header teal">Neovim-Specific</div>
+    <table>
+      <tr><td>:checkhealth</td><td>Run health diagnostics</td></tr>
+      <tr><td>:terminal</td><td>Open built-in terminal</td></tr>
+      <tr><td>Ctrl+\ Ctrl+n</td><td>Exit terminal to Normal mode</td></tr>
+      <tr><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
+      <tr><td>:Mason</td><td>Open Mason LSP installer</td></tr>
+      <tr><td>K</td><td>Show LSP hover docs</td></tr>
+      <tr><td>gd</td><td>Go to definition (LSP)</td></tr>
+      <tr><td>gr</td><td>Find references (LSP)</td></tr>
+      <tr><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
+      <tr><td>&lt;leader&gt;ca</td><td>Code action (LSP, common mapping)</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command"><C-r></div>
-                <div class="description">Redo last undone action</div>
-            </div>
-        
+  <!-- USEFUL COMMANDS -->
+  <div class="card">
+    <div class="card-header">Useful Commands</div>
+    <table>
+      <tr><td>:set number</td><td>Show line numbers</td></tr>
+      <tr><td>:set relativenumber</td><td>Relative line numbers</td></tr>
+      <tr><td>:set wrap / nowrap</td><td>Toggle line wrap</td></tr>
+      <tr><td>:set ignorecase</td><td>Case-insensitive search</td></tr>
+      <tr><td>:set spell</td><td>Enable spell check</td></tr>
+      <tr><td>:sort</td><td>Sort selected lines</td></tr>
+      <tr><td>:!{cmd}</td><td>Run shell command</td></tr>
+      <tr><td>:r !{cmd}</td><td>Insert shell output at cursor</td></tr>
+      <tr><td>:verbose map {key}</td><td>Show where a key is mapped</td></tr>
+      <tr><td>Ctrl+g</td><td>Show file info + cursor position</td></tr>
+      <tr><td>ga</td><td>Show ASCII/Unicode of character</td></tr>
+    </table>
+  </div>
 
-            <div class="command-card">
-                <div class="command">gg</div>
-                <div class="description">Move to first line</div>
-            </div>
-        
+</div>
 
-            <div class="command-card">
-                <div class="command">G</div>
-                <div class="description">Move to last line</div>
-            </div>
-        
+<footer>Generated March 26, 2026 · Neovim Cheatsheet</footer>
 
-            <div class="command-card">
-                <div class="command">/pattern</div>
-                <div class="description">Search forward for pattern</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">?pattern</div>
-                <div class="description">Search backward for pattern</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">n</div>
-                <div class="description">Repeat last search</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">N</div>
-                <div class="description">Repeat last search in opposite direction</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">:%s/old/new/g</div>
-                <div class="description">Replace all occurrences in file</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">:terminal</div>
-                <div class="description">Open terminal emulator</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command"><C-w>w</div>
-                <div class="description">Cycle between windows</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">:tabnew</div>
-                <div class="description">Open new tab</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">gt</div>
-                <div class="description">Go to next tab</div>
-            </div>
-        
-
-            <div class="command-card">
-                <div class="command">gT</div>
-                <div class="description">Go to previous tab</div>
-            </div>
-        
-        </div>
-    </div>
-
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const commandList = document.getElementById('commandList');
-        const allCommands = Array.from(commandList.children);
-
-        function filterCommands() {
-            const searchTerm = searchInput.value.toLowerCase();
-            let hasResults = false;
-
-            allCommands.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    card.style.display = 'block';
-                    hasResults = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            if (!hasResults) {
-                commandList.innerHTML = `
-                    <div class="no-results">
-                        No commands found matching "${searchTerm}"
-                    </div>
-                `;
-            } else {
-                commandList.innerHTML = '';
-                allCommands
-                    .filter(card => card.style.display !== 'none')
-                    .forEach(card => commandList.appendChild(card));
-            }
-        }
-
-        searchInput.addEventListener('input', filterCommands);
-    </script>
 </body>
 </html>
