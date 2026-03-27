@@ -24,8 +24,73 @@
     text-align: center;
     color: #8b949e;
     font-size: 0.85rem;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
   }
+
+  /* SEARCH BOX */
+  .search-wrap {
+    max-width: 540px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 11px 16px 11px 42px;
+    background: #161b22;
+    border: 1px solid #388bfd88;
+    border-radius: 8px;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-wrap input:focus {
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px #388bfd33;
+  }
+  .search-wrap input::placeholder { color: #484f58; }
+  .search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #58a6ff;
+    font-size: 1rem;
+    pointer-events: none;
+  }
+  .search-count {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #8b949e;
+    margin-top: -14px;
+    margin-bottom: 18px;
+    min-height: 18px;
+    transition: color 0.2s;
+  }
+  .search-count.no-results { color: #f85149; }
+
+  .legend {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 0.78rem;
+  }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge-n { background: #388bfd22; color: #58a6ff; border: 1px solid #388bfd55; }
+  .badge-i { background: #7ee78722; color: #7ee787; border: 1px solid #7ee78755; }
+  .badge-v { background: #d2a8ff22; color: #d2a8ff; border: 1px solid #d2a8ff55; }
+  .badge-c { background: #f0883e22; color: #f0883e; border: 1px solid #f0883e55; }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -39,6 +104,7 @@
     border-radius: 10px;
     overflow: hidden;
   }
+  .card.hidden { display: none; }
   .card-header {
     background: #21262d;
     padding: 10px 14px;
@@ -49,17 +115,15 @@
     color: #58a6ff;
     border-bottom: 1px solid #30363d;
   }
-  .card-header.green { color: #7ee787; }
+  .card-header.green  { color: #7ee787; }
   .card-header.orange { color: #f0883e; }
   .card-header.purple { color: #d2a8ff; }
-  .card-header.red { color: #f85149; }
+  .card-header.red    { color: #f85149; }
   .card-header.yellow { color: #e3b341; }
-  .card-header.teal { color: #39d353; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  .card-header.teal   { color: #39d353; }
+  table { width: 100%; border-collapse: collapse; }
   tr:nth-child(even) { background: #1c2128; }
+  tr.hidden-row { display: none; }
   td {
     padding: 7px 14px;
     font-size: 0.82rem;
@@ -73,35 +137,16 @@
     width: 42%;
     font-weight: 600;
   }
-  td:last-child {
-    color: #c9d1d9;
+  td:last-child { color: #c9d1d9; }
+
+  /* highlight matched text */
+  mark {
+    background: #e3b34155;
+    color: #e3b341;
+    border-radius: 2px;
+    padding: 0 1px;
   }
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-right: 4px;
-  }
-  .badge-n { background: #388bfd22; color: #58a6ff; border: 1px solid #388bfd55; }
-  .badge-i { background: #7ee78722; color: #7ee787; border: 1px solid #7ee78755; }
-  .badge-v { background: #d2a8ff22; color: #d2a8ff; border: 1px solid #d2a8ff55; }
-  .badge-c { background: #f0883e22; color: #f0883e; border: 1px solid #f0883e55; }
-  .legend {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    font-size: 0.78rem;
-  }
-  .legend span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
+
   footer {
     text-align: center;
     margin-top: 28px;
@@ -115,6 +160,14 @@
 <h1>⚡ Neovim Cheatsheet</h1>
 <p class="subtitle">Quick reference for everyday Neovim usage</p>
 
+<!-- SEARCH -->
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input type="text" id="search" placeholder="Type to filter commands…" autocomplete="off" spellcheck="false">
+</div>
+<div class="search-count" id="count"></div>
+
+<!-- LEGEND -->
 <div class="legend">
   <span><span class="badge badge-n">N</span> Normal</span>
   <span><span class="badge badge-i">I</span> Insert</span>
@@ -122,9 +175,8 @@
   <span><span class="badge badge-c">C</span> Command</span>
 </div>
 
-<div class="grid">
+<div class="grid" id="grid">
 
-  <!-- MODES -->
   <div class="card">
     <div class="card-header green">Modes</div>
     <table>
@@ -143,7 +195,6 @@
     </table>
   </div>
 
-  <!-- NAVIGATION -->
   <div class="card">
     <div class="card-header">Navigation — Basic</div>
     <table>
@@ -162,7 +213,6 @@
     </table>
   </div>
 
-  <!-- EDITING -->
   <div class="card">
     <div class="card-header orange">Editing</div>
     <table>
@@ -184,7 +234,6 @@
     </table>
   </div>
 
-  <!-- TEXT OBJECTS -->
   <div class="card">
     <div class="card-header purple">Text Objects (combine with d/c/y/v)</div>
     <table>
@@ -201,7 +250,6 @@
     </table>
   </div>
 
-  <!-- SEARCH & REPLACE -->
   <div class="card">
     <div class="card-header red">Search &amp; Replace</div>
     <table>
@@ -218,7 +266,6 @@
     </table>
   </div>
 
-  <!-- SPLITS & WINDOWS -->
   <div class="card">
     <div class="card-header yellow">Splits &amp; Windows</div>
     <table>
@@ -235,7 +282,6 @@
     </table>
   </div>
 
-  <!-- TABS -->
   <div class="card">
     <div class="card-header teal">Tabs</div>
     <table>
@@ -249,7 +295,6 @@
     </table>
   </div>
 
-  <!-- FILE & BUFFERS -->
   <div class="card">
     <div class="card-header">Files &amp; Buffers</div>
     <table>
@@ -268,7 +313,6 @@
     </table>
   </div>
 
-  <!-- MARKS & JUMPS -->
   <div class="card">
     <div class="card-header purple">Marks &amp; Jumps</div>
     <table>
@@ -282,7 +326,6 @@
     </table>
   </div>
 
-  <!-- MACROS -->
   <div class="card">
     <div class="card-header orange">Macros</div>
     <table>
@@ -295,7 +338,6 @@
     </table>
   </div>
 
-  <!-- VISUAL MODE -->
   <div class="card">
     <div class="card-header green">Visual Mode</div>
     <table>
@@ -312,7 +354,6 @@
     </table>
   </div>
 
-  <!-- FOLDING -->
   <div class="card">
     <div class="card-header red">Folding</div>
     <table>
@@ -326,7 +367,6 @@
     </table>
   </div>
 
-  <!-- NEOVIM EXTRAS -->
   <div class="card">
     <div class="card-header teal">Neovim-Specific</div>
     <table>
@@ -343,7 +383,6 @@
     </table>
   </div>
 
-  <!-- USEFUL COMMANDS -->
   <div class="card">
     <div class="card-header">Useful Commands</div>
     <table>
@@ -363,7 +402,92 @@
 
 </div>
 
-<footer>Generated March 26, 2026 · Neovim Cheatsheet</footer>
+<footer>Generated March 27, 2026 · Neovim Cheatsheet</footer>
 
+<script>
+  const searchInput = document.getElementById('search');
+  const countEl = document.getElementById('count');
+  const cards = document.querySelectorAll('.card');
+
+  // Store original cell text for restoration
+  const originalCells = [];
+  cards.forEach(card => {
+    const rows = card.querySelectorAll('tr');
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      originalCells.push({
+        row,
+        card,
+        texts: Array.from(cells).map(td => td.textContent)
+      });
+    });
+  });
+
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const re = new RegExp(`(${escapeRegex(query)})`, 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let totalVisible = 0;
+
+    // Reset everything first
+    originalCells.forEach(({ row, card }) => {
+      row.classList.remove('hidden-row');
+    });
+    cards.forEach(c => c.classList.remove('hidden'));
+
+    // Restore original text (strip old highlights)
+    originalCells.forEach(({ row, texts }) => {
+      const cells = row.querySelectorAll('td');
+      cells.forEach((td, i) => { td.innerHTML = texts[i]; });
+    });
+
+    if (!query) {
+      countEl.textContent = '';
+      countEl.className = 'search-count';
+      return;
+    }
+
+    // Filter and highlight
+    originalCells.forEach(({ row, card, texts }) => {
+      const combined = texts.join(' ').toLowerCase();
+      if (combined.includes(query)) {
+        totalVisible++;
+        const cells = row.querySelectorAll('td');
+        cells.forEach((td, i) => {
+          td.innerHTML = highlight(texts[i], searchInput.value.trim());
+        });
+      } else {
+        row.classList.add('hidden-row');
+      }
+    });
+
+    // Hide cards that have no visible rows
+    cards.forEach(card => {
+      const visibleRows = card.querySelectorAll('tr:not(.hidden-row)');
+      if (visibleRows.length === 0) {
+        card.classList.add('hidden');
+      }
+    });
+
+    if (totalVisible === 0) {
+      countEl.textContent = 'No matches found';
+      countEl.className = 'search-count no-results';
+    } else {
+      countEl.textContent = `${totalVisible} result${totalVisible !== 1 ? 's' : ''} found`;
+      countEl.className = 'search-count';
+    }
+  });
+
+  // Auto-focus search on load
+  searchInput.focus();
+</script>
 </body>
 </html>
