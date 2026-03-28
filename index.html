@@ -278,6 +278,46 @@
   }
   .penguin-btn.exploding   { animation: penguin-explode   0.55s ease-in  forwards; }
   .penguin-btn.reappearing { animation: penguin-reappear  0.45s ease-out forwards; }
+
+  /* ── Back to top ─────────────────────────────────────────────────────── */
+  .back-to-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid #30363d;
+    background: #21262d;
+    color: #7ee787;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s, border-color 0.2s;
+    z-index: 100;
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .back-to-top:hover {
+    background: #7ee78722;
+    border-color: #7ee787;
+  }
+  .back-to-top svg {
+    width: 18px;
+    height: 18px;
+    stroke: #7ee787;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 </style>
 </head>
 <body>
@@ -667,5 +707,21 @@
     }, 750);
   });
 </script>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 </body>
 </html>
