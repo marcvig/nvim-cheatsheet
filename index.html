@@ -228,11 +228,63 @@
     font-size: 0.8rem;
     line-height: 2.2;
   }
+
+  /* ── Penguin easter egg ──────────────────────────────────────────────── */
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+  .header-top h1 {
+    margin-bottom: 0;
+  }
+  .penguin-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid #30363d;
+    background: #21262d;
+    cursor: pointer;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+    transform-origin: center;
+    user-select: none;
+  }
+  .penguin-btn:hover {
+    background: #7ee78722;
+    border-color: #7ee787;
+    transform: scale(1.08) rotate(-8deg);
+  }
+  @keyframes penguin-explode {
+    0%   { transform: scale(1)   rotate(0deg);   opacity: 1; }
+    20%  { transform: scale(1.5) rotate(-15deg); opacity: 1; }
+    40%  { transform: scale(1.8) rotate(15deg);  opacity: 0.8; }
+    60%  { transform: scale(1.2) rotate(-10deg); opacity: 0.4; }
+    80%  { transform: scale(0.3) rotate(30deg);  opacity: 0.1; }
+    100% { transform: scale(0)   rotate(45deg);  opacity: 0; }
+  }
+  @keyframes penguin-reappear {
+    0%   { transform: scale(0)   rotate(-20deg); opacity: 0; }
+    50%  { transform: scale(1.3) rotate(5deg);   opacity: 1; }
+    75%  { transform: scale(0.9) rotate(-3deg);  opacity: 1; }
+    100% { transform: scale(1)   rotate(0deg);   opacity: 1; }
+  }
+  .penguin-btn.exploding   { animation: penguin-explode   0.55s ease-in  forwards; }
+  .penguin-btn.reappearing { animation: penguin-reappear  0.45s ease-out forwards; }
 </style>
 </head>
 <body>
 
-<h1>⚡ Neovim Cheatsheet</h1>
+<div class="header-top">
+  <button class="penguin-btn" id="penguinBtn" aria-label="🐧 Easter egg" title="Try clicking me…">🐧</button>
+  <h1>Neovim Cheatsheet</h1>
+</div>
 <p class="subtitle">Complete nvim command reference — searchable, fast, always free</p>
 
 <!-- SEARCH -->
@@ -567,6 +619,52 @@
 
   // Auto-focus search on load
  // searchInput.focus();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script>
+  const penguinBtn = document.getElementById('penguinBtn');
+  let penguinBusy = false;
+
+  penguinBtn.addEventListener('click', () => {
+    if (penguinBusy) return;
+    penguinBusy = true;
+
+    const rect = penguinBtn.getBoundingClientRect();
+    const origin = {
+      x: (rect.left + rect.width  / 2) / window.innerWidth,
+      y: (rect.top  + rect.height / 2) / window.innerHeight,
+    };
+
+    const colors = ['#7ee787', '#58a6ff', '#ffffff', '#e3b341', '#f85149', '#d2a8ff', '#e2e8f0'];
+
+    penguinBtn.classList.add('exploding');
+
+    setTimeout(() => {
+      confetti({ particleCount: 140, spread: 360, startVelocity: 50,
+                 origin, colors, ticks: 220, scalar: 1.1 });
+    }, 180);
+
+    setTimeout(() => {
+      confetti({ particleCount: 70, spread: 200, startVelocity: 28,
+                 origin, colors, ticks: 180, scalar: 0.85 });
+    }, 320);
+
+    setTimeout(() => {
+      confetti({ particleCount: 40, spread: 120, startVelocity: 18,
+                 origin, colors: ['#7ee787', '#58a6ff', '#ffffff'],
+                 ticks: 120, scalar: 0.65 });
+    }, 480);
+
+    setTimeout(() => {
+      penguinBtn.classList.remove('exploding');
+      penguinBtn.classList.add('reappearing');
+      setTimeout(() => {
+        penguinBtn.classList.remove('reappearing');
+        penguinBusy = false;
+      }, 450);
+    }, 750);
+  });
 </script>
 </body>
 </html>
