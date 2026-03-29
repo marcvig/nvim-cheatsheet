@@ -138,6 +138,30 @@
     box-shadow: 0 0 0 3px #388bfd33;
   }
   .search-wrap input::placeholder { color: #484f58; }
+  .search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #484f58;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s, color 0.15s;
+  }
+  .search-clear.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .search-clear:hover { color: #e2e8f0; }
+  body.light .search-clear { color: #8c959f; }
+  body.light .search-clear:hover { color: #24292f; }
   .search-icon {
     position: absolute;
     left: 13px;
@@ -416,6 +440,7 @@
 <div class="search-wrap">
   <span class="search-icon">🔍</span>
   <input type="text" id="search" placeholder="Type to filter commands…" autocomplete="off" spellcheck="false">
+  <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
 </div>
 <div class="search-count" id="count"></div>
 
@@ -662,6 +687,7 @@
 
 <script>
   const searchInput = document.getElementById('search');
+  const searchClear = document.getElementById('searchClear');
   const countEl = document.getElementById('count');
   const cards = document.querySelectorAll('.card');
 
@@ -689,7 +715,14 @@
     return text.replace(re, '<mark>$1</mark>');
   }
 
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input'));
+    searchInput.focus();
+  });
+
   searchInput.addEventListener('input', () => {
+    searchClear.classList.toggle('visible', searchInput.value.length > 0);
     const query = searchInput.value.trim().toLowerCase();
     let totalVisible = 0;
 
