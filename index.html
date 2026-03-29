@@ -22,6 +22,11 @@
 <meta name="author" content="nvimcheatsheet">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="theme-color" content="#0f1117">
+<script>
+  // Apply saved theme before paint to avoid flash
+  if (localStorage.getItem('nvim-theme') === 'light') document.documentElement.classList.add('preload-light');
+</script>
+<style> .preload-light body, html.preload-light body { background: #ffffff; } </style>
 
 <!-- ============================================================
      CANONICAL
@@ -327,6 +332,75 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
+
+  /* ── Theme toggle button ─────────────────────────────────────────────── */
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid #30363d;
+    background: #21262d;
+    cursor: pointer;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .theme-toggle:hover {
+    background: #7ee78722;
+    border-color: #7ee787;
+    transform: scale(1.08);
+  }
+
+  /* ── Light mode overrides ────────────────────────────────────────────── */
+  body.light {
+    background: #ffffff;
+    color: #24292f;
+  }
+  body.light h1                        { color: #116329; }
+  body.light .subtitle                 { color: #57606a; }
+  body.light .search-wrap input        { background: #f6f8fa; border-color: #0969da88; color: #24292f; }
+  body.light .search-wrap input:focus  { border-color: #0969da; box-shadow: 0 0 0 3px #0969da33; }
+  body.light .search-wrap input::placeholder { color: #8c959f; }
+  body.light .search-icon              { color: #0969da; }
+  body.light .search-count             { color: #57606a; }
+  body.light .search-count.no-results  { color: #cf222e; }
+  body.light .badge-n { background: #0969da18; color: #0969da; border-color: #0969da55; }
+  body.light .badge-i { background: #11632918; color: #116329; border-color: #11632955; }
+  body.light .badge-v { background: #8250df18; color: #8250df; border-color: #8250df55; }
+  body.light .badge-c { background: #bc4c0018; color: #bc4c00; border-color: #bc4c0055; }
+  body.light .card                     { background: #f6f8fa; border-color: #d0d7de; }
+  body.light .card-header              { background: #eaeef2; color: #0969da; border-bottom-color: #d0d7de; }
+  body.light .card-header.green        { color: #116329; }
+  body.light .card-header.orange       { color: #bc4c00; }
+  body.light .card-header.purple       { color: #8250df; }
+  body.light .card-header.red          { color: #cf222e; }
+  body.light .card-header.yellow       { color: #9a6700; }
+  body.light .card-header.teal         { color: #116329; }
+  body.light tr:nth-child(even)        { background: #edf0f3; }
+  body.light td                        { border-bottom-color: #eaeef2; }
+  body.light td:first-child                              { color: #0969da; }
+  body.light .card:has(.card-header.green)  td:first-child { color: #116329; }
+  body.light .card:has(.card-header.orange) td:first-child { color: #bc4c00; }
+  body.light .card:has(.card-header.purple) td:first-child { color: #8250df; }
+  body.light .card:has(.card-header.red)    td:first-child { color: #cf222e; }
+  body.light .card:has(.card-header.yellow) td:first-child { color: #9a6700; }
+  body.light .card:has(.card-header.teal)   td:first-child { color: #0e7490; }
+  body.light td:last-child             { color: #24292f; }
+  body.light mark                      { background: #fff8c5; color: #9a6700; }
+  body.light footer                    { color: #8c959f; }
+  body.light footer span               { color: #24292f !important; }
+  body.light footer a                  { color: #57606a !important; }
+  body.light .penguin-btn              { background: #eaeef2; border-color: #d0d7de; }
+  body.light .penguin-btn:hover        { background: #11632922; border-color: #116329; }
+  body.light .theme-toggle             { background: #eaeef2; border-color: #d0d7de; }
+  body.light .theme-toggle:hover       { background: #11632922; border-color: #116329; }
+  body.light .back-to-top             { background: #eaeef2; border-color: #d0d7de; }
+  body.light .back-to-top:hover       { background: #11632922; border-color: #116329; }
+  body.light .back-to-top svg         { stroke: #116329; }
 </style>
 </head>
 <body>
@@ -334,6 +408,7 @@
 <div class="header-top">
   <button class="penguin-btn" id="penguinBtn" aria-label="🐧 Easter egg" title="Try clicking me…">🐧</button>
   <h1>Neovim Cheatsheet</h1>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">☀️</button>
 </div>
 <p class="subtitle">Complete nvim command reference — searchable, fast, always free</p>
 
@@ -730,6 +805,29 @@
 
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Apply saved preference on load
+  const savedTheme = localStorage.getItem('nvim-theme');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+    document.body.classList.add('light');
+  }
+  document.documentElement.classList.remove('preload-light');
+
+  function updateIcon() {
+    themeToggle.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+  }
+  updateIcon();
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    localStorage.setItem('nvim-theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    updateIcon();
   });
 </script>
 
