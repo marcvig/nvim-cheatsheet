@@ -745,7 +745,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header purple" data-cmd="Text Objects" data-tip="Text objects describe a region by structure: words, sentences, paragraphs, or delimiters. Combine with any operator: operator + i/a + object. Example: diw deletes inner word, ci( changes inside parens.">Text Objects (combine with d/c/y/v) <button class="card-info-btn" id="textObjInfoBtn" aria-label="How to use text objects">ⓘ</button></div>
+    <div class="card-header purple" data-cmd="Text Objects" data-tip="Text objects describe a region by structure: words, sentences, paragraphs, or delimiters. Combine with any operator: operator + i/a + object. Example: diw deletes inner word, ci( changes inside parens.">Text Objects (combine with d/c/y/v)</div>
     <table>
       <tr data-tip="Select inside (iw) or around (aw) a word — use with d, c, y, or v" data-example="diw"><td>iw / aw</td><td>Inner / around word</td></tr>
       <tr data-tip="Select inside or around a sentence — useful for prose editing" data-example="dis"><td>is / as</td><td>Inner / around sentence</td></tr>
@@ -1047,6 +1047,15 @@
     tooltipCmd.textContent = el.dataset.cmd
       || (el.querySelector('td:first-child') ? el.querySelector('td:first-child').textContent : el.textContent.trim());
     tooltipDesc.textContent = el.dataset.tip;
+    // Title color — match card header or legend badge color, reset for rows
+    if (el.classList.contains('card-header')) {
+      tooltipCmd.style.color = getComputedStyle(el).color;
+    } else if (el.closest('.legend')) {
+      const badge = el.querySelector('.badge');
+      tooltipCmd.style.color = badge ? getComputedStyle(badge).color : '';
+    } else {
+      tooltipCmd.style.color = '';
+    }
     // Example section — hide if no example
     if (el.dataset.example) {
       tooltipCode.textContent = el.dataset.example;
@@ -1158,15 +1167,9 @@
   const textObjInfoBtn = document.getElementById('textObjInfoBtn');
   const textObjClose   = document.getElementById('textObjClose');
 
-  textObjInfoBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    closeTooltip();
-    textObjPopup.classList.toggle('visible');
-  });
   textObjClose.addEventListener('click', () => textObjPopup.classList.remove('visible'));
   document.addEventListener('click', e => {
-    if (!textObjPopup.contains(e.target) && e.target !== textObjInfoBtn)
-      textObjPopup.classList.remove('visible');
+    if (!textObjPopup.contains(e.target)) textObjPopup.classList.remove('visible');
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') textObjPopup.classList.remove('visible');
