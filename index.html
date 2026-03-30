@@ -539,6 +539,72 @@
   tr[data-tip] { cursor: pointer; }
 
   @media (max-width: 600px) { .tooltip { width: 92vw; } }
+
+  /* ── Card info button ────────────────────────────────────────────────── */
+  .card-info-btn {
+    background: none; border: none;
+    color: #d2a8ff99; font-size: 0.85rem;
+    cursor: pointer; padding: 0 0 0 4px;
+    vertical-align: middle; line-height: 1;
+    transition: color 0.15s;
+  }
+  .card-info-btn:hover { color: #d2a8ff; }
+
+  /* ── Text object popup ───────────────────────────────────────────────── */
+  .textobj-popup {
+    position: fixed; z-index: 1001;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1c2128;
+    border: 1px solid #d2a8ff;
+    border-radius: 12px;
+    padding: 20px 22px;
+    width: 340px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    display: none;
+  }
+  .textobj-popup.visible { display: block; }
+  .textobj-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem; font-weight: 700;
+    color: #d2a8ff; margin-bottom: 10px; margin-right: 20px;
+  }
+  .textobj-intro {
+    font-size: 0.78rem; color: #c9d1d9; line-height: 1.55; margin-bottom: 14px;
+  }
+  .textobj-code {
+    font-family: 'JetBrains Mono', monospace;
+    color: #e3b341; font-size: 0.78rem;
+    background: #0f1117; padding: 1px 5px; border-radius: 3px;
+  }
+  .textobj-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px;
+  }
+  .textobj-col { display: flex; flex-direction: column; gap: 5px; }
+  .textobj-label {
+    font-size: 0.63rem; color: #8b949e;
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px;
+  }
+  .textobj-row, .textobj-ex {
+    display: flex; align-items: baseline; gap: 7px; font-size: 0.78rem;
+  }
+  .textobj-row code, .textobj-ex code {
+    font-family: 'JetBrains Mono', monospace;
+    color: #7ee787; font-size: 0.78rem;
+    background: #0f1117; padding: 1px 6px; border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .textobj-row span, .textobj-ex span { color: #c9d1d9; }
+  .textobj-examples { display: flex; flex-direction: column; gap: 5px; }
+
+  body.light .textobj-popup { background: #f6f8fa; border-color: #8250df; box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+  body.light .textobj-title { color: #8250df; }
+  body.light .textobj-intro { color: #24292f; }
+  body.light .textobj-code { background: #eaeef2; color: #9a6700; }
+  body.light .textobj-row code, body.light .textobj-ex code { background: #eaeef2; color: #116329; }
+  body.light .textobj-row span, body.light .textobj-ex span { color: #24292f; }
+  body.light .card-info-btn { color: #8250df99; }
+  body.light .card-info-btn:hover { color: #8250df; }
 </style>
 </head>
 <body>
@@ -553,6 +619,34 @@
   <div class="tooltip-example-row">
     <code class="tooltip-example-code" id="tooltipCode"></code>
     <button class="tooltip-copy" id="tooltipCopy">Copy</button>
+  </div>
+</div>
+
+<!-- Text object info popup -->
+<div id="textObjPopup" class="textobj-popup" role="dialog" aria-modal="true" aria-label="Text object syntax explained">
+  <button class="tooltip-close" id="textObjClose" aria-label="Close">✕</button>
+  <div class="textobj-title">How Text Objects Work</div>
+  <p class="textobj-intro">Text objects let you operate on a meaningful chunk of text in one keystroke. The pattern is: <code class="textobj-code">operator + i/a + object</code></p>
+  <div class="textobj-grid">
+    <div class="textobj-col">
+      <div class="textobj-label">Operators</div>
+      <div class="textobj-row"><code>d</code><span>delete</span></div>
+      <div class="textobj-row"><code>c</code><span>change (delete + insert)</span></div>
+      <div class="textobj-row"><code>y</code><span>yank (copy)</span></div>
+      <div class="textobj-row"><code>v</code><span>visually select</span></div>
+    </div>
+    <div class="textobj-col">
+      <div class="textobj-label">i vs a</div>
+      <div class="textobj-row"><code>i</code><span>inner — excludes delimiters</span></div>
+      <div class="textobj-row"><code>a</code><span>around — includes delimiters</span></div>
+    </div>
+  </div>
+  <div class="textobj-label" style="margin-top:12px">Examples</div>
+  <div class="textobj-examples">
+    <div class="textobj-ex"><code>diw</code><span>delete word under cursor</span></div>
+    <div class="textobj-ex"><code>ci"</code><span>change text inside quotes</span></div>
+    <div class="textobj-ex"><code>yip</code><span>copy entire paragraph</span></div>
+    <div class="textobj-ex"><code>va(</code><span>select parens + content</span></div>
   </div>
 </div>
 
@@ -647,7 +741,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header purple">Text Objects (combine with d/c/y/v)</div>
+    <div class="card-header purple">Text Objects (combine with d/c/y/v) <button class="card-info-btn" id="textObjInfoBtn" aria-label="How to use text objects">ⓘ</button></div>
     <table>
       <tr data-tip="Select inside (iw) or around (aw) a word — use with d, c, y, or v" data-example="diw"><td>iw / aw</td><td>Inner / around word</td></tr>
       <tr data-tip="Select inside or around a sentence — useful for prose editing" data-example="dis"><td>is / as</td><td>Inner / around sentence</td></tr>
@@ -1015,6 +1109,25 @@
         tooltipCopy.classList.remove('copied');
       }, 2000);
     });
+  });
+
+  // ── Text object info popup ────────────────────────────────────────────
+  const textObjPopup   = document.getElementById('textObjPopup');
+  const textObjInfoBtn = document.getElementById('textObjInfoBtn');
+  const textObjClose   = document.getElementById('textObjClose');
+
+  textObjInfoBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    closeTooltip();
+    textObjPopup.classList.toggle('visible');
+  });
+  textObjClose.addEventListener('click', () => textObjPopup.classList.remove('visible'));
+  document.addEventListener('click', e => {
+    if (!textObjPopup.contains(e.target) && e.target !== textObjInfoBtn)
+      textObjPopup.classList.remove('visible');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') textObjPopup.classList.remove('visible');
   });
 </script>
 
