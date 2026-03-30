@@ -537,6 +537,8 @@
 
   /* ── Hoverable rows ──────────────────────────────────────────────────── */
   tr[data-tip] { cursor: pointer; }
+  .card-header[data-tip] { cursor: pointer; }
+  .legend span[data-tip]  { cursor: pointer; }
 
   @media (max-width: 600px) { .tooltip { width: 92vw; } }
 
@@ -615,10 +617,12 @@
   <div class="tooltip-danger" id="tooltipDanger"></div>
   <div class="tooltip-cmd" id="tooltipCmd"></div>
   <div class="tooltip-desc" id="tooltipDesc"></div>
-  <div class="tooltip-example-label">Example</div>
-  <div class="tooltip-example-row">
-    <code class="tooltip-example-code" id="tooltipCode"></code>
-    <button class="tooltip-copy" id="tooltipCopy">Copy</button>
+  <div id="tooltipExampleSection">
+    <div class="tooltip-example-label">Example</div>
+    <div class="tooltip-example-row">
+      <code class="tooltip-example-code" id="tooltipCode"></code>
+      <button class="tooltip-copy" id="tooltipCopy">Copy</button>
+    </div>
   </div>
 </div>
 
@@ -674,16 +678,16 @@
 
 <!-- LEGEND -->
 <div class="legend">
-  <span><span class="badge badge-n">N</span> Normal</span>
-  <span><span class="badge badge-i">I</span> Insert</span>
-  <span><span class="badge badge-v">V</span> Visual</span>
-  <span><span class="badge badge-c">C</span> Command</span>
+  <span data-cmd="Normal Mode" data-tip="The default mode — you're here unless you've switched. Navigate, run operators, and issue commands. Enter with Esc from any other mode. Most commands only work in Normal mode."><span class="badge badge-n">N</span> Normal</span>
+  <span data-cmd="Insert Mode" data-tip="Type text directly into the buffer. Enter with i (before cursor), a (after), o (new line below), or O (new line above). Return to Normal with Esc or Ctrl+[."><span class="badge badge-i">I</span> Insert</span>
+  <span data-cmd="Visual Mode" data-tip="Select text interactively, then apply an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — returns to Normal automatically."><span class="badge badge-v">V</span> Visual</span>
+  <span data-cmd="Command Mode" data-tip="Type Ex commands starting with :, or search with / and ?. Enter with : from Normal mode. Run with Enter, cancel with Esc. Supports tab completion for commands, files, and options."><span class="badge badge-c">C</span> Command</span>
 </div>
 
 <div class="grid" id="grid">
 
   <div class="card">
-    <div class="card-header green">Modes</div>
+    <div class="card-header green" data-cmd="Vim Modes" data-tip="Neovim has distinct modes for different tasks. Normal is default — navigate and issue commands. Switch with i/a/o (Insert), v/V/Ctrl+v (Visual), or : (Command). Always return to Normal with Esc.">Modes</div>
     <table>
       <tr data-tip="Enter Insert mode before the cursor position" data-example="i"><td>i</td><td>Insert before cursor</td></tr>
       <tr data-tip="Enter Insert mode at the beginning of the line" data-example="I"><td>I</td><td>Insert at line start</td></tr>
@@ -701,7 +705,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header">Navigation — Basic</div>
+    <div class="card-header" data-cmd="Navigation" data-tip="In Normal mode use h/j/k/l instead of arrow keys. Combine motions with counts: 5j moves 5 lines down. Motions also work as operator arguments — d5j deletes 5 lines down.">Navigation — Basic</div>
     <table>
       <tr data-tip="Move the cursor left (h), down (j), up (k), or right (l) — prefix with a count" data-example="5j"><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
       <tr data-tip="Move forward to the start of the next word; W skips over punctuation" data-example="3w"><td>w / W</td><td>Next word / WORD</td></tr>
@@ -719,7 +723,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header orange">Editing</div>
+    <div class="card-header orange" data-cmd="Editing" data-tip="Operators like d (delete), c (change), and y (yank) act on motions or text objects. Most edits go into the unnamed register and can be pasted with p. Use . to repeat the last change.">Editing</div>
     <table>
       <tr data-tip="Delete the character under the cursor and put it in the unnamed register" data-example="x"><td>x</td><td>Delete character</td></tr>
       <tr data-tip="Delete the entire current line — goes to the unnamed register, not lost" data-example="dd" data-danger="Deletes the line from the buffer immediately"><td>dd</td><td>Delete line</td></tr>
@@ -741,7 +745,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header purple">Text Objects (combine with d/c/y/v) <button class="card-info-btn" id="textObjInfoBtn" aria-label="How to use text objects">ⓘ</button></div>
+    <div class="card-header purple" data-cmd="Text Objects" data-tip="Text objects describe a region by structure: words, sentences, paragraphs, or delimiters. Combine with any operator: operator + i/a + object. Example: diw deletes inner word, ci( changes inside parens.">Text Objects (combine with d/c/y/v) <button class="card-info-btn" id="textObjInfoBtn" aria-label="How to use text objects">ⓘ</button></div>
     <table>
       <tr data-tip="Select inside (iw) or around (aw) a word — use with d, c, y, or v" data-example="diw"><td>iw / aw</td><td>Inner / around word</td></tr>
       <tr data-tip="Select inside or around a sentence — useful for prose editing" data-example="dis"><td>is / as</td><td>Inner / around sentence</td></tr>
@@ -757,7 +761,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header red">Search &amp; Replace</div>
+    <div class="card-header red" data-cmd="Search & Replace" data-tip="Search with /pattern (forward) or ?pattern (backward). Press n/N to cycle matches. :%s/old/new/g replaces all occurrences in the file — add c flag to confirm each match individually.">Search &amp; Replace</div>
     <table>
       <tr data-tip="Search forward for a pattern — press Enter to jump to the first match" data-example="/function"><td>/pattern</td><td>Search forward</td></tr>
       <tr data-tip="Search backward for a pattern in the file" data-example="?TODO"><td>?pattern</td><td>Search backward</td></tr>
@@ -773,7 +777,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header yellow">Splits &amp; Windows</div>
+    <div class="card-header yellow" data-cmd="Splits & Windows" data-tip="Display multiple buffers side by side in split windows. Use :sp for horizontal and :vsp for vertical splits. Navigate splits with Ctrl+w + h/j/k/l. Resize with Ctrl+w +/-/_/|.">Splits &amp; Windows</div>
     <table>
       <tr data-tip="Split the current window horizontally (:sp) or vertically (:vsp)" data-example=":vsp"><td>:sp / :vsp</td><td>Horizontal / vertical split</td></tr>
       <tr data-tip="Split the current window horizontally — same as :sp" data-example="Ctrl+w s"><td>Ctrl+w s</td><td>Horizontal split</td></tr>
@@ -789,7 +793,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header teal">Tabs</div>
+    <div class="card-header teal" data-cmd="Tabs" data-tip="Tabs in Neovim are tab pages — each holds its own window layout, not just a single file. Use :tabnew to open a tab, gt/gT to switch. A single tab can contain multiple splits.">Tabs</div>
     <table>
       <tr data-tip="Open a new empty tab page" data-example=":tabnew"><td>:tabnew</td><td>Open new tab</td></tr>
       <tr data-tip="Open a specific file in a new tab page" data-example=":tabnew index.lua"><td>:tabnew {file}</td><td>Open file in new tab</td></tr>
@@ -802,7 +806,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header">Files &amp; Buffers</div>
+    <div class="card-header" data-cmd="Files & Buffers" data-tip="A buffer is an in-memory copy of a file. You can have many buffers open at once — :ls lists them all, :bn/:bp navigates between them. Splits and tabs are just different views into buffers.">Files &amp; Buffers</div>
     <table>
       <tr data-tip="Open a file for editing — creates it if it doesn't exist yet" data-example=":e src/main.lua"><td>:e {file}</td><td>Edit file</td></tr>
       <tr data-tip="Write the current buffer to disk" data-example=":w"><td>:w</td><td>Save</td></tr>
@@ -821,7 +825,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header purple">Marks &amp; Jumps</div>
+    <div class="card-header purple" data-cmd="Marks & Jumps" data-tip="Marks bookmark positions in a file. Lowercase marks (m{a-z}) are local to the buffer; uppercase (m{A-Z}) are global across files. The jump list (Ctrl+o/Ctrl+i) tracks everywhere you've jumped.">Marks &amp; Jumps</div>
     <table>
       <tr data-tip="Set a local mark at the cursor — lowercase marks are per-file" data-example="ma"><td>m{a-z}</td><td>Set local mark</td></tr>
       <tr data-tip="Set a global mark accessible from any file across sessions" data-example="mA"><td>m{A-Z}</td><td>Set global mark</td></tr>
@@ -834,7 +838,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header orange">Macros</div>
+    <div class="card-header orange" data-cmd="Macros" data-tip="Macros record a sequence of keystrokes into a named register. Press q{letter} to start recording, make your edits, then q to stop. Replay with @{letter} or run N times with {N}@{letter}.">Macros</div>
     <table>
       <tr data-tip="Start recording a macro into the named register — all keystrokes are recorded" data-example="qa"><td>q{a-z}</td><td>Start recording macro into register</td></tr>
       <tr data-tip="Stop recording the current macro" data-example="q"><td>q</td><td>Stop recording</td></tr>
@@ -846,7 +850,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header green">Visual Mode</div>
+    <div class="card-header green" data-cmd="Visual Mode" data-tip="Select text interactively before applying an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — Neovim returns to Normal automatically.">Visual Mode</div>
     <table>
       <tr data-tip="Enter Visual mode and extend the selection using any motion command" data-example="ve"><td>v + motion</td><td>Select characters</td></tr>
       <tr data-tip="Enter Visual Line mode and select entire lines with a motion" data-example="Vj"><td>V + motion</td><td>Select lines</td></tr>
@@ -862,7 +866,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header red">Folding</div>
+    <div class="card-header red" data-cmd="Folding" data-tip="Collapse sections of a file to reduce visual noise. Requires a foldmethod (indent, syntax, expr, or manual). Use zc/zo to close/open a fold, zM/zR to close/open all folds in the file.">Folding</div>
     <table>
       <tr data-tip="Close (zc) or open (zo) the fold at the cursor position" data-example="zo"><td>zc / zo</td><td>Close / open fold</td></tr>
       <tr data-tip="Toggle a fold open or closed at the cursor" data-example="za"><td>za</td><td>Toggle fold</td></tr>
@@ -875,7 +879,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header teal">Neovim-Specific</div>
+    <div class="card-header teal" data-cmd="Neovim-Specific" data-tip="Features unique to Neovim or its ecosystem. Includes LSP (language server protocol) for code intelligence like go-to-definition and hover docs, a built-in terminal, and plugin managers like Lazy.nvim and Mason.">Neovim-Specific</div>
     <table>
       <tr data-tip="Run Neovim's built-in health checks for plugins and system dependencies" data-example=":checkhealth"><td>:checkhealth</td><td>Run health diagnostics</td></tr>
       <tr data-tip="Open a built-in terminal emulator inside a new buffer" data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
@@ -891,7 +895,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header">Useful Commands</div>
+    <div class="card-header" data-cmd="Useful Commands" data-tip="Handy Ex commands for customizing your editing environment on the fly. Make any :set option permanent by adding it to your init.lua (or init.vim) config file so it's applied on every launch.">Useful Commands</div>
     <table>
       <tr data-tip="Display absolute line numbers in the left gutter" data-example=":set number"><td>:set number</td><td>Show line numbers</td></tr>
       <tr data-tip="Display line numbers relative to the cursor — great for planning jump counts" data-example=":set relativenumber"><td>:set relativenumber</td><td>Relative line numbers</td></tr>
@@ -1029,23 +1033,34 @@
   let hideTimer = null;
   let tipVisible = false;
 
-  function openTooltip(row) {
-    if (row.dataset.danger) {
-      tooltipDanger.textContent = '⚠ ' + row.dataset.danger;
+  const tooltipExampleSection = document.getElementById('tooltipExampleSection');
+
+  function openTooltip(el) {
+    // Danger banner
+    if (el.dataset.danger) {
+      tooltipDanger.textContent = '⚠ ' + el.dataset.danger;
       tooltipDanger.style.display = 'flex';
     } else {
       tooltipDanger.style.display = 'none';
     }
-    tooltipCmd.textContent  = row.querySelector('td:first-child').textContent;
-    tooltipDesc.textContent = row.dataset.tip;
-    tooltipCode.textContent = row.dataset.example;
+    // Command label — use data-cmd, or first td text, or element's own text
+    tooltipCmd.textContent = el.dataset.cmd
+      || (el.querySelector('td:first-child') ? el.querySelector('td:first-child').textContent : el.textContent.trim());
+    tooltipDesc.textContent = el.dataset.tip;
+    // Example section — hide if no example
+    if (el.dataset.example) {
+      tooltipCode.textContent = el.dataset.example;
+      tooltipExampleSection.style.display = '';
+    } else {
+      tooltipExampleSection.style.display = 'none';
+    }
     tooltipCopy.textContent = 'Copy';
     tooltipCopy.classList.remove('copied');
     tooltip.classList.add('visible');
     tipVisible = true;
 
     requestAnimationFrame(() => {
-      const rect = row.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
       const tw = tooltip.offsetWidth;
       const th = tooltip.offsetHeight;
       let x = rect.right + 12;
@@ -1085,9 +1100,36 @@
     });
   });
 
+  // ── Card headers + legend badges ──────────────────────────────────────
+  const tipTargets = [
+    ...document.querySelectorAll('.card-header[data-tip]'),
+    ...document.querySelectorAll('.legend span[data-tip]')
+  ];
+
+  tipTargets.forEach(el => {
+    el.addEventListener('click', e => {
+      if (!tipsEnabled() || tooltip.contains(e.target)) return;
+      e.stopPropagation();
+      cancelClose();
+      clearTimeout(showTimer);
+      openTooltip(el);
+    });
+    el.addEventListener('mouseenter', () => {
+      cancelClose();
+      clearTimeout(showTimer);
+      if (!tipsEnabled()) return;
+      showTimer = setTimeout(() => openTooltip(el), 400);
+    });
+    el.addEventListener('mouseleave', e => {
+      clearTimeout(showTimer);
+      if (tipVisible && !tooltip.contains(e.relatedTarget)) scheduleClose();
+    });
+  });
+
   tooltip.addEventListener('mouseenter', cancelClose);
   tooltip.addEventListener('mouseleave', e => {
-    if (!e.relatedTarget || !e.relatedTarget.closest('tr[data-tip]')) scheduleClose();
+    const over = e.relatedTarget;
+    if (!over || (!over.closest('tr[data-tip]') && !over.closest('.card-header[data-tip]') && !over.closest('.legend span[data-tip]'))) scheduleClose();
   });
 
   tooltipClose.addEventListener('click', closeTooltip);
