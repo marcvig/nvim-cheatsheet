@@ -425,9 +425,136 @@
   body.light .back-to-top             { background: #eaeef2; border-color: #d0d7de; }
   body.light .back-to-top:hover       { background: #11632922; border-color: #116329; }
   body.light .back-to-top svg         { stroke: #116329; }
+
+  /* ── Tooltip toggle switch ───────────────────────────────────────────── */
+  .tooltip-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    color: #8b949e;
+    margin-top: -10px;
+    margin-bottom: 18px;
+  }
+  .toggle-switch { display: inline-flex; align-items: center; cursor: pointer; flex-shrink: 0; }
+  .toggle-switch input { display: none; }
+  .toggle-track {
+    width: 34px; height: 19px;
+    background: #30363d;
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .toggle-switch input:checked + .toggle-track { background: #7ee787; }
+  .toggle-thumb {
+    position: absolute; top: 2.5px; left: 2.5px;
+    width: 14px; height: 14px;
+    background: #fff; border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .toggle-switch input:checked + .toggle-track .toggle-thumb { transform: translateX(15px); }
+  body.light .tooltip-hint { color: #57606a; }
+  body.light .toggle-track { background: #d0d7de; }
+  body.light .toggle-switch input:checked + .toggle-track { background: #116329; }
+
+  /* ── Tooltip popup ───────────────────────────────────────────────────── */
+  .tooltip {
+    position: fixed; z-index: 1000;
+    background: #1c2128;
+    border: 1px solid #7ee787;
+    border-radius: 10px;
+    padding: 14px 16px;
+    width: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    display: none;
+    pointer-events: auto;
+  }
+  .tooltip.visible { display: block; }
+  .tooltip-close {
+    position: absolute; top: 8px; right: 10px;
+    background: none; border: none;
+    color: #484f58; font-size: 1rem; cursor: pointer;
+    padding: 2px 7px; border-radius: 4px; line-height: 1;
+    transition: color 0.15s, background 0.15s;
+  }
+  .tooltip-close:hover { color: #e2e8f0; background: #30363d; }
+  .tooltip-cmd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; color: #7ee787; font-weight: 600;
+    margin-bottom: 6px; margin-right: 20px; word-break: break-word;
+  }
+  .tooltip-desc { font-size: 0.8rem; color: #c9d1d9; line-height: 1.5; margin-bottom: 12px; }
+  .tooltip-example-label {
+    font-size: 0.65rem; color: #8b949e;
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
+  }
+  .tooltip-example-row {
+    display: flex; align-items: center; gap: 8px;
+    background: #0f1117; border: 1px solid #30363d;
+    border-radius: 6px; padding: 7px 10px;
+  }
+  .tooltip-example-code {
+    flex: 1; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: #e3b341;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .tooltip-copy {
+    background: #7ee78718; border: 1px solid #7ee78744; color: #7ee787;
+    padding: 3px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;
+    cursor: pointer; transition: background 0.15s; white-space: nowrap; flex-shrink: 0;
+  }
+  .tooltip-copy:hover { background: #7ee78730; }
+  .tooltip-copy.copied { color: #58a6ff; border-color: #58a6ff55; background: #58a6ff18; }
+  .tooltip-danger {
+    background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.3);
+    border-radius: 6px; padding: 6px 10px; margin-bottom: 10px;
+    color: #f85149; font-size: 0.78rem;
+    display: none; align-items: center; gap: 6px;
+  }
+  body.light .tooltip { background: #f6f8fa; border-color: #116329; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  body.light .tooltip-close { color: #8c959f; }
+  body.light .tooltip-close:hover { color: #24292f; background: #eaeef2; }
+  body.light .tooltip-cmd { color: #116329; }
+  body.light .tooltip-desc { color: #24292f; }
+  body.light .tooltip-example-label { color: #57606a; }
+  body.light .tooltip-example-row { background: #eaeef2; border-color: #d0d7de; }
+  body.light .tooltip-example-code { color: #9a6700; }
+  body.light .tooltip-copy { background: #11632912; border-color: #11632944; color: #116329; }
+  body.light .tooltip-copy:hover { background: #11632922; }
+  body.light .tooltip-copy.copied { color: #0969da; border-color: #0969da55; background: #0969da12; }
+  body.light .tooltip-danger { background: rgba(207,34,46,0.06); border-color: rgba(207,34,46,0.25); color: #cf222e; }
+
+  /* ── Danger badge ────────────────────────────────────────────────────── */
+  .cmd-inner { display: flex; align-items: center; gap: 6px; }
+  .cmd-text { flex: 1; min-width: 0; word-break: break-word; }
+  .danger-badge { flex-shrink: 0; font-size: 1.4em; color: #f0883e; line-height: 1; }
+
+  /* ── Placeholder args ────────────────────────────────────────────────── */
+  .placeholder { color: #e3b341; font-style: italic; }
+  body.light .placeholder { color: #9a6700; }
+
+  /* ── Hoverable rows ──────────────────────────────────────────────────── */
+  tr[data-tip] { cursor: pointer; }
+
+  @media (max-width: 600px) { .tooltip { width: 92vw; } }
 </style>
 </head>
 <body>
+
+<!-- Tooltip popup -->
+<div id="tooltip" class="tooltip" role="tooltip">
+  <button class="tooltip-close" id="tooltipClose" aria-label="Close">✕</button>
+  <div class="tooltip-danger" id="tooltipDanger"></div>
+  <div class="tooltip-cmd" id="tooltipCmd"></div>
+  <div class="tooltip-desc" id="tooltipDesc"></div>
+  <div class="tooltip-example-label">Example</div>
+  <div class="tooltip-example-row">
+    <code class="tooltip-example-code" id="tooltipCode"></code>
+    <button class="tooltip-copy" id="tooltipCopy">Copy</button>
+  </div>
+</div>
 
 <div class="header-top">
   <button class="penguin-btn" id="penguinBtn" aria-label="🐧 Easter egg" title="Try clicking me…">🐧</button>
@@ -443,6 +570,13 @@
   <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
 </div>
 <div class="search-count" id="count"></div>
+<p class="tooltip-hint">
+  <label class="toggle-switch" title="Enable / disable command tooltips">
+    <input type="checkbox" id="tooltipToggle" checked>
+    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+  </label>
+  Click or hover any command for a description &amp; example
+</p>
 
 <!-- LEGEND -->
 <div class="legend">
@@ -457,225 +591,225 @@
   <div class="card">
     <div class="card-header green">Modes</div>
     <table>
-      <tr><td>i</td><td>Insert before cursor</td></tr>
-      <tr><td>I</td><td>Insert at line start</td></tr>
-      <tr><td>a</td><td>Insert after cursor</td></tr>
-      <tr><td>A</td><td>Insert at line end</td></tr>
-      <tr><td>o</td><td>New line below, insert</td></tr>
-      <tr><td>O</td><td>New line above, insert</td></tr>
-      <tr><td>v</td><td>Visual (character)</td></tr>
-      <tr><td>V</td><td>Visual (line)</td></tr>
-      <tr><td>Ctrl+v</td><td>Visual (block)</td></tr>
-      <tr><td>:</td><td>Command mode</td></tr>
-      <tr><td>Esc / Ctrl+[</td><td>Return to Normal</td></tr>
-      <tr><td>R</td><td>Replace mode</td></tr>
+      <tr data-tip="Enter Insert mode before the cursor position" data-example="i"><td>i</td><td>Insert before cursor</td></tr>
+      <tr data-tip="Enter Insert mode at the beginning of the line" data-example="I"><td>I</td><td>Insert at line start</td></tr>
+      <tr data-tip="Enter Insert mode after the cursor position" data-example="a"><td>a</td><td>Insert after cursor</td></tr>
+      <tr data-tip="Enter Insert mode at the end of the line" data-example="A"><td>A</td><td>Insert at line end</td></tr>
+      <tr data-tip="Open a new line below the current line and enter Insert mode" data-example="o"><td>o</td><td>New line below, insert</td></tr>
+      <tr data-tip="Open a new line above the current line and enter Insert mode" data-example="O"><td>O</td><td>New line above, insert</td></tr>
+      <tr data-tip="Enter Visual mode to select individual characters" data-example="v"><td>v</td><td>Visual (character)</td></tr>
+      <tr data-tip="Enter Visual Line mode to select entire lines" data-example="V"><td>V</td><td>Visual (line)</td></tr>
+      <tr data-tip="Enter Visual Block mode to select a rectangular region of text" data-example="Ctrl+v"><td>Ctrl+v</td><td>Visual (block)</td></tr>
+      <tr data-tip="Enter Command mode to type Ex commands like :w, :q, :s" data-example=":w"><td>:</td><td>Command mode</td></tr>
+      <tr data-tip="Return to Normal mode from any other mode" data-example="Esc"><td>Esc / Ctrl+[</td><td>Return to Normal</td></tr>
+      <tr data-tip="Enter Replace mode — typed characters overwrite existing text character by character" data-example="R"><td>R</td><td>Replace mode</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header">Navigation — Basic</div>
     <table>
-      <tr><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
-      <tr><td>w / W</td><td>Next word / WORD</td></tr>
-      <tr><td>b / B</td><td>Prev word / WORD</td></tr>
-      <tr><td>e / E</td><td>End of word / WORD</td></tr>
-      <tr><td>0 / ^</td><td>Line start / first non-blank</td></tr>
-      <tr><td>$</td><td>Line end</td></tr>
-      <tr><td>gg / G</td><td>File start / file end</td></tr>
-      <tr><td>:N</td><td>Go to line N</td></tr>
-      <tr><td>%</td><td>Jump to matching bracket</td></tr>
-      <tr><td>{ / }</td><td>Prev / next blank line (paragraph)</td></tr>
-      <tr><td>Ctrl+d / Ctrl+u</td><td>Half-page down / up</td></tr>
-      <tr><td>Ctrl+f / Ctrl+b</td><td>Full-page down / up</td></tr>
+      <tr data-tip="Move the cursor left (h), down (j), up (k), or right (l) — prefix with a count" data-example="5j"><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
+      <tr data-tip="Move forward to the start of the next word; W skips over punctuation" data-example="3w"><td>w / W</td><td>Next word / WORD</td></tr>
+      <tr data-tip="Move backward to the start of the previous word; B skips over punctuation" data-example="b"><td>b / B</td><td>Prev word / WORD</td></tr>
+      <tr data-tip="Move to the end of the current or next word; E skips over punctuation" data-example="e"><td>e / E</td><td>End of word / WORD</td></tr>
+      <tr data-tip="Jump to column 0 (0) or the first non-blank character on the line (^)" data-example="^"><td>0 / ^</td><td>Line start / first non-blank</td></tr>
+      <tr data-tip="Move to the last character on the current line" data-example="$"><td>$</td><td>Line end</td></tr>
+      <tr data-tip="Jump to the very first line (gg) or very last line (G) of the file" data-example="gg"><td>gg / G</td><td>File start / file end</td></tr>
+      <tr data-tip="Jump directly to a specific line number" data-example=":42"><td>:N</td><td>Go to line N</td></tr>
+      <tr data-tip="Jump to the bracket, parenthesis, or brace that matches the one under the cursor" data-example="%"><td>%</td><td>Jump to matching bracket</td></tr>
+      <tr data-tip="Jump to the previous ({) or next (}) empty line — moves between paragraphs" data-example="}"><td>{ / }</td><td>Prev / next blank line (paragraph)</td></tr>
+      <tr data-tip="Scroll down (Ctrl+d) or up (Ctrl+u) by half a screen" data-example="Ctrl+d"><td>Ctrl+d / Ctrl+u</td><td>Half-page down / up</td></tr>
+      <tr data-tip="Scroll forward (Ctrl+f) or backward (Ctrl+b) by a full screen" data-example="Ctrl+f"><td>Ctrl+f / Ctrl+b</td><td>Full-page down / up</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header orange">Editing</div>
     <table>
-      <tr><td>x</td><td>Delete character</td></tr>
-      <tr><td>dd</td><td>Delete line</td></tr>
-      <tr><td>dw</td><td>Delete word</td></tr>
-      <tr><td>d$ / D</td><td>Delete to end of line</td></tr>
-      <tr><td>yy</td><td>Yank (copy) line</td></tr>
-      <tr><td>Y</td><td>Yank to end of line (= y$)</td></tr>
-      <tr><td>yw</td><td>Yank word</td></tr>
-      <tr><td>p / P</td><td>Paste after / before cursor</td></tr>
-      <tr><td>u</td><td>Undo</td></tr>
-      <tr><td>Ctrl+r</td><td>Redo</td></tr>
-      <tr><td>cc / C</td><td>Change line / to end of line</td></tr>
-      <tr><td>cw</td><td>Change word</td></tr>
-      <tr><td>r{char}</td><td>Replace single character</td></tr>
-      <tr><td>~</td><td>Toggle case</td></tr>
-      <tr><td>J</td><td>Join line below to current</td></tr>
-      <tr><td>.</td><td>Repeat last change</td></tr>
+      <tr data-tip="Delete the character under the cursor and put it in the unnamed register" data-example="x"><td>x</td><td>Delete character</td></tr>
+      <tr data-tip="Delete the entire current line — goes to the unnamed register, not lost" data-example="dd" data-danger="Deletes the line from the buffer immediately"><td>dd</td><td>Delete line</td></tr>
+      <tr data-tip="Delete from the cursor to the start of the next word" data-example="dw"><td>dw</td><td>Delete word</td></tr>
+      <tr data-tip="Delete from the cursor to the end of the line" data-example="D"><td>d$ / D</td><td>Delete to end of line</td></tr>
+      <tr data-tip="Yank (copy) the entire current line into the unnamed register" data-example="yy"><td>yy</td><td>Yank (copy) line</td></tr>
+      <tr data-tip="Yank from the cursor to the end of the line — equivalent to y$ in Neovim" data-example="Y"><td>Y</td><td>Yank to end of line (= y$)</td></tr>
+      <tr data-tip="Yank from the cursor to the start of the next word" data-example="yw"><td>yw</td><td>Yank word</td></tr>
+      <tr data-tip="Paste after the cursor (p) or before the cursor (P) from the unnamed register" data-example="p"><td>p / P</td><td>Paste after / before cursor</td></tr>
+      <tr data-tip="Undo the last change — press repeatedly to undo further" data-example="u"><td>u</td><td>Undo</td></tr>
+      <tr data-tip="Redo the last undone change" data-example="Ctrl+r"><td>Ctrl+r</td><td>Redo</td></tr>
+      <tr data-tip="Delete the line (cc) or to end of line (C) and enter Insert mode" data-example="cc"><td>cc / C</td><td>Change line / to end of line</td></tr>
+      <tr data-tip="Delete the current word and enter Insert mode to type a replacement" data-example="cw"><td>cw</td><td>Change word</td></tr>
+      <tr data-tip="Replace only the character under the cursor — stays in Normal mode" data-example="ra"><td>r{char}</td><td>Replace single character</td></tr>
+      <tr data-tip="Toggle the case of the character under the cursor and move the cursor right" data-example="~"><td>~</td><td>Toggle case</td></tr>
+      <tr data-tip="Join the line below to the end of the current line, separated by a space" data-example="J"><td>J</td><td>Join line below to current</td></tr>
+      <tr data-tip="Repeat the last edit command — one of the most powerful Normal mode keys" data-example="."><td>.</td><td>Repeat last change</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header purple">Text Objects (combine with d/c/y/v)</div>
     <table>
-      <tr><td>iw / aw</td><td>Inner / around word</td></tr>
-      <tr><td>is / as</td><td>Inner / around sentence</td></tr>
-      <tr><td>ip / ap</td><td>Inner / around paragraph</td></tr>
-      <tr><td>i" / a"</td><td>Inner / around double quotes</td></tr>
-      <tr><td>i' / a'</td><td>Inner / around single quotes</td></tr>
-      <tr><td>i` / a`</td><td>Inner / around backticks</td></tr>
-      <tr><td>i( / a(</td><td>Inner / around parens</td></tr>
-      <tr><td>i[ / a[</td><td>Inner / around brackets</td></tr>
-      <tr><td>i{ / a{</td><td>Inner / around braces</td></tr>
-      <tr><td>it / at</td><td>Inner / around HTML tag</td></tr>
+      <tr data-tip="Select inside (iw) or around (aw) a word — use with d, c, y, or v" data-example="diw"><td>iw / aw</td><td>Inner / around word</td></tr>
+      <tr data-tip="Select inside or around a sentence — useful for prose editing" data-example="dis"><td>is / as</td><td>Inner / around sentence</td></tr>
+      <tr data-tip="Select inside or around a paragraph (contiguous block of non-empty lines)" data-example="dip"><td>ip / ap</td><td>Inner / around paragraph</td></tr>
+      <tr data-tip='Select text inside (i") or including (a") the surrounding double quotes' data-example='ci"'><td>i" / a"</td><td>Inner / around double quotes</td></tr>
+      <tr data-tip="Select text inside or including the surrounding single quotes" data-example="ci'"><td>i' / a'</td><td>Inner / around single quotes</td></tr>
+      <tr data-tip="Select text inside or including the surrounding backticks" data-example="ci`"><td>i` / a`</td><td>Inner / around backticks</td></tr>
+      <tr data-tip="Select text inside or including the surrounding parentheses" data-example="ci("><td>i( / a(</td><td>Inner / around parens</td></tr>
+      <tr data-tip="Select text inside or including the surrounding square brackets" data-example="ci["><td>i[ / a[</td><td>Inner / around brackets</td></tr>
+      <tr data-tip="Select text inside or including the surrounding curly braces" data-example="ci{"><td>i{ / a{</td><td>Inner / around braces</td></tr>
+      <tr data-tip="Select text inside or including the surrounding HTML/XML tag" data-example="dit"><td>it / at</td><td>Inner / around HTML tag</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header red">Search &amp; Replace</div>
     <table>
-      <tr><td>/pattern</td><td>Search forward</td></tr>
-      <tr><td>?pattern</td><td>Search backward</td></tr>
-      <tr><td>n / N</td><td>Next / prev match</td></tr>
-      <tr><td>*</td><td>Search word under cursor (fwd)</td></tr>
-      <tr><td>#</td><td>Search word under cursor (bwd)</td></tr>
-      <tr><td>:s/old/new/</td><td>Replace first on line</td></tr>
-      <tr><td>:s/old/new/g</td><td>Replace all on line</td></tr>
-      <tr><td>:%s/old/new/g</td><td>Replace all in file</td></tr>
-      <tr><td>:%s/old/new/gc</td><td>Replace with confirmation</td></tr>
-      <tr><td>:noh</td><td>Clear search highlight</td></tr>
+      <tr data-tip="Search forward for a pattern — press Enter to jump to the first match" data-example="/function"><td>/pattern</td><td>Search forward</td></tr>
+      <tr data-tip="Search backward for a pattern in the file" data-example="?TODO"><td>?pattern</td><td>Search backward</td></tr>
+      <tr data-tip="Jump to the next (n) or previous (N) search match" data-example="n"><td>n / N</td><td>Next / prev match</td></tr>
+      <tr data-tip="Search forward for the exact whole word under the cursor" data-example="*"><td>*</td><td>Search word under cursor (fwd)</td></tr>
+      <tr data-tip="Search backward for the exact whole word under the cursor" data-example="#"><td>#</td><td>Search word under cursor (bwd)</td></tr>
+      <tr data-tip="Replace the first occurrence of a pattern with a new string on the current line" data-example=":s/foo/bar/"><td>:s/old/new/</td><td>Replace first on line</td></tr>
+      <tr data-tip="Replace all occurrences on the current line" data-example=":s/foo/bar/g"><td>:s/old/new/g</td><td>Replace all on line</td></tr>
+      <tr data-tip="Replace every match across the entire file — no confirmation prompt" data-example=":%s/foo/bar/g" data-danger="Replaces all matches in the entire file with no undo prompt"><td>:%s/old/new/g</td><td>Replace all in file</td></tr>
+      <tr data-tip="Replace all in file but prompt y/n/a/q at each match for safety" data-example=":%s/foo/bar/gc"><td>:%s/old/new/gc</td><td>Replace with confirmation</td></tr>
+      <tr data-tip="Clear the search highlight without clearing the search pattern itself" data-example=":noh"><td>:noh</td><td>Clear search highlight</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header yellow">Splits &amp; Windows</div>
     <table>
-      <tr><td>:sp / :vsp</td><td>Horizontal / vertical split</td></tr>
-      <tr><td>Ctrl+w s</td><td>Horizontal split</td></tr>
-      <tr><td>Ctrl+w v</td><td>Vertical split</td></tr>
-      <tr><td>Ctrl+w h/j/k/l</td><td>Move between splits</td></tr>
-      <tr><td>Ctrl+w H/J/K/L</td><td>Move split to edge</td></tr>
-      <tr><td>Ctrl+w =</td><td>Equalize split sizes</td></tr>
-      <tr><td>Ctrl+w _ / |</td><td>Max height / max width</td></tr>
-      <tr><td>Ctrl+w +/-</td><td>Increase / decrease height</td></tr>
-      <tr><td>Ctrl+w q</td><td>Close split</td></tr>
-      <tr><td>Ctrl+w o</td><td>Close all other splits</td></tr>
+      <tr data-tip="Split the current window horizontally (:sp) or vertically (:vsp)" data-example=":vsp"><td>:sp / :vsp</td><td>Horizontal / vertical split</td></tr>
+      <tr data-tip="Split the current window horizontally — same as :sp" data-example="Ctrl+w s"><td>Ctrl+w s</td><td>Horizontal split</td></tr>
+      <tr data-tip="Split the current window vertically — same as :vsp" data-example="Ctrl+w v"><td>Ctrl+w v</td><td>Vertical split</td></tr>
+      <tr data-tip="Move focus to the split in the left/down/up/right direction" data-example="Ctrl+w l"><td>Ctrl+w h/j/k/l</td><td>Move between splits</td></tr>
+      <tr data-tip="Move the current split window to the far left/bottom/top/right edge" data-example="Ctrl+w H"><td>Ctrl+w H/J/K/L</td><td>Move split to edge</td></tr>
+      <tr data-tip="Resize all open splits to equal dimensions" data-example="Ctrl+w ="><td>Ctrl+w =</td><td>Equalize split sizes</td></tr>
+      <tr data-tip="Maximize the height (_) or width (|) of the current split" data-example="Ctrl+w _"><td>Ctrl+w _ / |</td><td>Max height / max width</td></tr>
+      <tr data-tip="Increase (+) or decrease (-) the height of the current split by one line" data-example="Ctrl+w +"><td>Ctrl+w +/-</td><td>Increase / decrease height</td></tr>
+      <tr data-tip="Close the current split window" data-example="Ctrl+w q"><td>Ctrl+w q</td><td>Close split</td></tr>
+      <tr data-tip="Close all splits except the current one" data-example="Ctrl+w o" data-danger="Closes all other split windows immediately"><td>Ctrl+w o</td><td>Close all other splits</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header teal">Tabs</div>
     <table>
-      <tr><td>:tabnew</td><td>Open new tab</td></tr>
-      <tr><td>:tabnew {file}</td><td>Open file in new tab</td></tr>
-      <tr><td>gt / gT</td><td>Next / prev tab</td></tr>
-      <tr><td>:tabn / :tabp</td><td>Next / prev tab</td></tr>
-      <tr><td>:tabclose</td><td>Close current tab</td></tr>
-      <tr><td>:tabonly</td><td>Close all other tabs</td></tr>
-      <tr><td>{N}gt</td><td>Go to tab N</td></tr>
+      <tr data-tip="Open a new empty tab page" data-example=":tabnew"><td>:tabnew</td><td>Open new tab</td></tr>
+      <tr data-tip="Open a specific file in a new tab page" data-example=":tabnew index.lua"><td>:tabnew {file}</td><td>Open file in new tab</td></tr>
+      <tr data-tip="Switch to the next (gt) or previous (gT) tab page" data-example="gt"><td>gt / gT</td><td>Next / prev tab</td></tr>
+      <tr data-tip="Go to the next (:tabn) or previous (:tabp) tab page" data-example=":tabn"><td>:tabn / :tabp</td><td>Next / prev tab</td></tr>
+      <tr data-tip="Close the current tab page — prompts if there are unsaved buffers" data-example=":tabclose"><td>:tabclose</td><td>Close current tab</td></tr>
+      <tr data-tip="Close all tab pages except the current one" data-example=":tabonly" data-danger="Closes all other tab pages immediately"><td>:tabonly</td><td>Close all other tabs</td></tr>
+      <tr data-tip="Jump directly to tab number N" data-example="3gt"><td>{N}gt</td><td>Go to tab N</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header">Files &amp; Buffers</div>
     <table>
-      <tr><td>:e {file}</td><td>Edit file</td></tr>
-      <tr><td>:w</td><td>Save</td></tr>
-      <tr><td>:w {file}</td><td>Save as</td></tr>
-      <tr><td>:w ++p</td><td>Save, creating parent dirs if needed</td></tr>
-      <tr><td>:wq / :x</td><td>Save and quit</td></tr>
-      <tr><td>:q</td><td>Quit</td></tr>
-      <tr><td>:q!</td><td>Quit without saving</td></tr>
-      <tr><td>:wqa</td><td>Save all and quit</td></tr>
-      <tr><td>:ls / :buffers</td><td>List buffers</td></tr>
-      <tr><td>:bn / :bp</td><td>Next / prev buffer</td></tr>
-      <tr><td>:bd</td><td>Delete (close) buffer</td></tr>
-      <tr><td>:b {N}</td><td>Switch to buffer N</td></tr>
-      <tr><td>Ctrl+^</td><td>Toggle last two buffers</td></tr>
+      <tr data-tip="Open a file for editing — creates it if it doesn't exist yet" data-example=":e src/main.lua"><td>:e {file}</td><td>Edit file</td></tr>
+      <tr data-tip="Write the current buffer to disk" data-example=":w"><td>:w</td><td>Save</td></tr>
+      <tr data-tip="Write the current buffer to a new filename (Save As)" data-example=":w newfile.txt"><td>:w {file}</td><td>Save as</td></tr>
+      <tr data-tip="Write the file and automatically create any missing parent directories" data-example=":w ++p"><td>:w ++p</td><td>Save, creating parent dirs if needed</td></tr>
+      <tr data-tip="Save the file and quit — :x only writes if there are unsaved changes" data-example=":wq"><td>:wq / :x</td><td>Save and quit</td></tr>
+      <tr data-tip="Quit the current window — fails if there are unsaved changes" data-example=":q"><td>:q</td><td>Quit</td></tr>
+      <tr data-tip="Force-quit without saving, discarding all unsaved changes" data-example=":q!" data-danger="Discards all unsaved changes — cannot be undone"><td>:q!</td><td>Quit without saving</td></tr>
+      <tr data-tip="Save all open buffers and quit Neovim completely" data-example=":wqa"><td>:wqa</td><td>Save all and quit</td></tr>
+      <tr data-tip="List all open buffers and their status (modified, active, etc.)" data-example=":ls"><td>:ls / :buffers</td><td>List buffers</td></tr>
+      <tr data-tip="Switch to the next (:bn) or previous (:bp) buffer in the buffer list" data-example=":bn"><td>:bn / :bp</td><td>Next / prev buffer</td></tr>
+      <tr data-tip="Delete (close) the current buffer from the buffer list" data-example=":bd"><td>:bd</td><td>Delete (close) buffer</td></tr>
+      <tr data-tip="Switch to a specific buffer by its number from :ls" data-example=":b 3"><td>:b {N}</td><td>Switch to buffer N</td></tr>
+      <tr data-tip="Toggle between the current and the previously active buffer" data-example="Ctrl+^"><td>Ctrl+^</td><td>Toggle last two buffers</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header purple">Marks &amp; Jumps</div>
     <table>
-      <tr><td>m{a-z}</td><td>Set local mark</td></tr>
-      <tr><td>m{A-Z}</td><td>Set global mark</td></tr>
-      <tr><td>'{mark}</td><td>Jump to mark line</td></tr>
-      <tr><td>`{mark}</td><td>Jump to exact mark position</td></tr>
-      <tr><td>''</td><td>Jump to last position</td></tr>
-      <tr><td>Ctrl+o / Ctrl+i</td><td>Jump back / forward in history</td></tr>
-      <tr><td>:marks</td><td>List all marks</td></tr>
+      <tr data-tip="Set a local mark at the cursor — lowercase marks are per-file" data-example="ma"><td>m{a-z}</td><td>Set local mark</td></tr>
+      <tr data-tip="Set a global mark accessible from any file across sessions" data-example="mA"><td>m{A-Z}</td><td>Set global mark</td></tr>
+      <tr data-tip="Jump to the first character of the line where the mark was set" data-example="'a"><td>'{mark}</td><td>Jump to mark line</td></tr>
+      <tr data-tip="Jump to the exact position (line and column) where the mark was set" data-example="`a"><td>`{mark}</td><td>Jump to exact mark position</td></tr>
+      <tr data-tip="Jump back to the position before your last jump command" data-example="''"><td>''</td><td>Jump to last position</td></tr>
+      <tr data-tip="Move backward (Ctrl+o) or forward (Ctrl+i) through the jump list" data-example="Ctrl+o"><td>Ctrl+o / Ctrl+i</td><td>Jump back / forward in history</td></tr>
+      <tr data-tip="Show a list of all current marks and their file positions" data-example=":marks"><td>:marks</td><td>List all marks</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header orange">Macros</div>
     <table>
-      <tr><td>q{a-z}</td><td>Start recording macro into register</td></tr>
-      <tr><td>q</td><td>Stop recording</td></tr>
-      <tr><td>@{a-z}</td><td>Play macro</td></tr>
-      <tr><td>@@</td><td>Repeat last macro</td></tr>
-      <tr><td>{N}@{a-z}</td><td>Play macro N times</td></tr>
-      <tr><td>:reg</td><td>View all registers / macros</td></tr>
+      <tr data-tip="Start recording a macro into the named register — all keystrokes are recorded" data-example="qa"><td>q{a-z}</td><td>Start recording macro into register</td></tr>
+      <tr data-tip="Stop recording the current macro" data-example="q"><td>q</td><td>Stop recording</td></tr>
+      <tr data-tip="Replay the macro stored in the named register" data-example="@a"><td>@{a-z}</td><td>Play macro</td></tr>
+      <tr data-tip="Repeat the most recently played macro" data-example="@@"><td>@@</td><td>Repeat last macro</td></tr>
+      <tr data-tip="Run a macro N times in a row — great for repetitive edits" data-example="10@a"><td>{N}@{a-z}</td><td>Play macro N times</td></tr>
+      <tr data-tip="Display the contents of all registers, including recorded macros" data-example=":reg"><td>:reg</td><td>View all registers / macros</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header green">Visual Mode</div>
     <table>
-      <tr><td>v + motion</td><td>Select characters</td></tr>
-      <tr><td>V + motion</td><td>Select lines</td></tr>
-      <tr><td>Ctrl+v + motion</td><td>Block select</td></tr>
-      <tr><td>d / x</td><td>Delete selection</td></tr>
-      <tr><td>y</td><td>Yank selection</td></tr>
-      <tr><td>c</td><td>Change selection</td></tr>
-      <tr><td>&gt; / &lt;</td><td>Indent / un-indent</td></tr>
-      <tr><td>u / U</td><td>Lowercase / uppercase</td></tr>
-      <tr><td>:</td><td>Run command on selection</td></tr>
-      <tr><td>gv</td><td>Reselect last selection</td></tr>
+      <tr data-tip="Enter Visual mode and extend the selection using any motion command" data-example="ve"><td>v + motion</td><td>Select characters</td></tr>
+      <tr data-tip="Enter Visual Line mode and select entire lines with a motion" data-example="Vj"><td>V + motion</td><td>Select lines</td></tr>
+      <tr data-tip="Enter Visual Block mode to select a rectangular region — great for column edits" data-example="Ctrl+v 3j I# Esc"><td>Ctrl+v + motion</td><td>Block select</td></tr>
+      <tr data-tip="Delete the visually selected text into the unnamed register" data-example="vwd"><td>d / x</td><td>Delete selection</td></tr>
+      <tr data-tip="Yank (copy) the selected text into the unnamed register" data-example="viwy"><td>y</td><td>Yank selection</td></tr>
+      <tr data-tip="Delete the selection and enter Insert mode to type replacement text" data-example="viwc"><td>c</td><td>Change selection</td></tr>
+      <tr data-tip="Indent the selection right (>) or left (<) by one shiftwidth" data-example=">"><td>&gt; / &lt;</td><td>Indent / un-indent</td></tr>
+      <tr data-tip="Convert the selected text to lowercase (u) or uppercase (U)" data-example="viwU"><td>u / U</td><td>Lowercase / uppercase</td></tr>
+      <tr data-tip="Enter Command mode with the visual selection range pre-filled as '&lt;,'&gt;" data-example=":'<,'>sort"><td>:</td><td>Run command on selection</td></tr>
+      <tr data-tip="Re-select the last visual selection — useful after a paste or command" data-example="gv"><td>gv</td><td>Reselect last selection</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header red">Folding</div>
     <table>
-      <tr><td>zc / zo</td><td>Close / open fold</td></tr>
-      <tr><td>za</td><td>Toggle fold</td></tr>
-      <tr><td>zC / zO</td><td>Close / open all folds at cursor</td></tr>
-      <tr><td>zM / zR</td><td>Close all / open all folds in file</td></tr>
-      <tr><td>zf{motion}</td><td>Create fold</td></tr>
-      <tr><td>zd</td><td>Delete fold at cursor</td></tr>
-      <tr><td>zj / zk</td><td>Move to next / prev fold</td></tr>
+      <tr data-tip="Close (zc) or open (zo) the fold at the cursor position" data-example="zo"><td>zc / zo</td><td>Close / open fold</td></tr>
+      <tr data-tip="Toggle a fold open or closed at the cursor" data-example="za"><td>za</td><td>Toggle fold</td></tr>
+      <tr data-tip="Close (zC) or open (zO) all nested folds at the cursor recursively" data-example="zO"><td>zC / zO</td><td>Close / open all folds at cursor</td></tr>
+      <tr data-tip="Close all folds in the file (zM) or open every fold (zR)" data-example="zR"><td>zM / zR</td><td>Close all / open all folds in file</td></tr>
+      <tr data-tip="Create a fold spanning the range of the motion — works with manual foldmethod" data-example="zf3j"><td>zf{motion}</td><td>Create fold</td></tr>
+      <tr data-tip="Delete the fold definition at the cursor — text is kept, only the fold is removed" data-example="zd" data-danger="Permanently removes the fold — text remains but fold definition is gone"><td>zd</td><td>Delete fold at cursor</td></tr>
+      <tr data-tip="Move the cursor to the start of the next (zj) or previous (zk) fold" data-example="zj"><td>zj / zk</td><td>Move to next / prev fold</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header teal">Neovim-Specific</div>
     <table>
-      <tr><td>:checkhealth</td><td>Run health diagnostics</td></tr>
-      <tr><td>:terminal</td><td>Open built-in terminal</td></tr>
-      <tr><td>Ctrl+\ Ctrl+n</td><td>Exit terminal to Normal mode</td></tr>
-      <tr><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
-      <tr><td>:Mason</td><td>Open Mason LSP installer</td></tr>
-      <tr><td>K</td><td>Show LSP hover docs</td></tr>
-      <tr><td>gd</td><td>Go to definition (LSP)</td></tr>
-      <tr><td>gr</td><td>Find references (LSP)</td></tr>
-      <tr><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
-      <tr><td>&lt;leader&gt;ca</td><td>Code action (LSP, common mapping)</td></tr>
+      <tr data-tip="Run Neovim's built-in health checks for plugins and system dependencies" data-example=":checkhealth"><td>:checkhealth</td><td>Run health diagnostics</td></tr>
+      <tr data-tip="Open a built-in terminal emulator inside a new buffer" data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
+      <tr data-tip="Exit terminal mode and return to Normal mode — Esc doesn't work in terminal buffers" data-example="Ctrl+\ Ctrl+n"><td>Ctrl+\ Ctrl+n</td><td>Exit terminal to Normal mode</td></tr>
+      <tr data-tip="Open the Lazy.nvim plugin manager UI to install, update, or remove plugins" data-example=":Lazy"><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
+      <tr data-tip="Open Mason to browse and install LSP servers, formatters, and linters" data-example=":Mason"><td>:Mason</td><td>Open Mason LSP installer</td></tr>
+      <tr data-tip="Show hover documentation for the symbol under the cursor via LSP" data-example="K"><td>K</td><td>Show LSP hover docs</td></tr>
+      <tr data-tip="Jump to the definition of the symbol under the cursor using the LSP" data-example="gd"><td>gd</td><td>Go to definition (LSP)</td></tr>
+      <tr data-tip="Show all references to the symbol under the cursor in a quickfix list" data-example="gr"><td>gr</td><td>Find references (LSP)</td></tr>
+      <tr data-tip="Jump to the next (]d) or previous ([d) LSP diagnostic — error, warning, or hint" data-example="]d"><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
+      <tr data-tip="Trigger a code action at the cursor — rename, auto-import, fix, etc. (common default mapping)" data-example="&lt;leader&gt;ca"><td>&lt;leader&gt;ca</td><td>Code action (LSP, common mapping)</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header">Useful Commands</div>
     <table>
-      <tr><td>:set number</td><td>Show line numbers</td></tr>
-      <tr><td>:set relativenumber</td><td>Relative line numbers</td></tr>
-      <tr><td>:set wrap / nowrap</td><td>Toggle line wrap</td></tr>
-      <tr><td>:set ignorecase</td><td>Case-insensitive search</td></tr>
-      <tr><td>:set spell</td><td>Enable spell check</td></tr>
-      <tr><td>:sort</td><td>Sort selected lines</td></tr>
-      <tr><td>:!{cmd}</td><td>Run shell command</td></tr>
-      <tr><td>:r !{cmd}</td><td>Insert shell output at cursor</td></tr>
-      <tr><td>:verbose map {key}</td><td>Show where a key is mapped</td></tr>
-      <tr><td>Ctrl+g</td><td>Show file info + cursor position</td></tr>
-      <tr><td>ga</td><td>Show ASCII/Unicode of character</td></tr>
+      <tr data-tip="Display absolute line numbers in the left gutter" data-example=":set number"><td>:set number</td><td>Show line numbers</td></tr>
+      <tr data-tip="Display line numbers relative to the cursor — great for planning jump counts" data-example=":set relativenumber"><td>:set relativenumber</td><td>Relative line numbers</td></tr>
+      <tr data-tip="Toggle whether long lines wrap visually or scroll horizontally" data-example=":set wrap"><td>:set wrap / nowrap</td><td>Toggle line wrap</td></tr>
+      <tr data-tip="Make searches case-insensitive — combine with :set smartcase for best results" data-example=":set ignorecase"><td>:set ignorecase</td><td>Case-insensitive search</td></tr>
+      <tr data-tip="Enable spell checking — use ]s and [s to navigate misspellings, z= to fix" data-example=":set spell"><td>:set spell</td><td>Enable spell check</td></tr>
+      <tr data-tip="Sort the selected lines alphabetically — works on a visual selection" data-example=":'<,'>sort"><td>:sort</td><td>Sort selected lines</td></tr>
+      <tr data-tip="Run a shell command without leaving Neovim — output shown in a pager" data-example=":!ls -la"><td>:!{cmd}</td><td>Run shell command</td></tr>
+      <tr data-tip="Run a shell command and insert its stdout output below the cursor" data-example=":r !date"><td>:r !{cmd}</td><td>Insert shell output at cursor</td></tr>
+      <tr data-tip="Show where a key mapping was defined — useful for debugging config conflicts" data-example=":verbose map &lt;leader&gt;f"><td>:verbose map {key}</td><td>Show where a key is mapped</td></tr>
+      <tr data-tip="Show the current filename, modification status, and cursor position in the status line" data-example="Ctrl+g"><td>Ctrl+g</td><td>Show file info + cursor position</td></tr>
+      <tr data-tip="Show the ASCII decimal, hex, and Unicode code point of the character under the cursor" data-example="ga"><td>ga</td><td>Show ASCII/Unicode of character</td></tr>
     </table>
   </div>
 
@@ -688,23 +822,35 @@
 </footer>
 
 <script>
-  const searchInput = document.getElementById('search');
-  const searchClear = document.getElementById('searchClear');
-  const countEl = document.getElementById('count');
-  const cards = document.querySelectorAll('.card');
+  const searchInput  = document.getElementById('search');
+  const searchClear  = document.getElementById('searchClear');
+  const countEl      = document.getElementById('count');
+  const cards        = document.querySelectorAll('.card');
 
-  // Store original cell text for restoration
+  // 1. Store original innerHTML + textContent per cell
   const originalCells = [];
   cards.forEach(card => {
-    const rows = card.querySelectorAll('tr');
-    rows.forEach(row => {
+    card.querySelectorAll('tr').forEach(row => {
       const cells = row.querySelectorAll('td');
       originalCells.push({
-        row,
-        card,
+        row, card,
+        htmls: Array.from(cells).map(td => td.innerHTML),
         texts: Array.from(cells).map(td => td.textContent)
       });
     });
+  });
+
+  // 2. Post-process: style <placeholders> and inject danger badges
+  originalCells.forEach(({ row, htmls }) => {
+    const cmdCell = row.querySelector('td:first-child');
+    if (!cmdCell) return;
+    let inner = htmls[0].replace(/&lt;([^&]+)&gt;/g,
+      '<span class="placeholder">&lt;$1&gt;</span>');
+    if (row.dataset.danger) {
+      inner = `<div class="cmd-inner"><span class="cmd-text">${inner}</span><span class="danger-badge" title="${row.dataset.danger}">⚠</span></div>`;
+    }
+    cmdCell.innerHTML = inner;
+    htmls[0] = inner;
   });
 
   function escapeRegex(str) {
@@ -726,18 +872,12 @@
   searchInput.addEventListener('input', () => {
     searchClear.classList.toggle('visible', searchInput.value.length > 0);
     const query = searchInput.value.trim().toLowerCase();
-    let totalVisible = 0;
 
-    // Reset everything first
-    originalCells.forEach(({ row, card }) => {
-      row.classList.remove('hidden-row');
-    });
+    // Reset
+    originalCells.forEach(({ row }) => row.classList.remove('hidden-row'));
     cards.forEach(c => c.classList.remove('hidden'));
-
-    // Restore original text (strip old highlights)
-    originalCells.forEach(({ row, texts }) => {
-      const cells = row.querySelectorAll('td');
-      cells.forEach((td, i) => { td.innerHTML = texts[i]; });
+    originalCells.forEach(({ row, htmls }) => {
+      row.querySelectorAll('td').forEach((td, i) => { td.innerHTML = htmls[i]; });
     });
 
     if (!query) {
@@ -746,7 +886,7 @@
       return;
     }
 
-    // Filter and highlight
+    let totalVisible = 0;
     originalCells.forEach(({ row, card, texts }) => {
       const combined = texts.join(' ').toLowerCase();
       if (combined.includes(query)) {
@@ -760,12 +900,9 @@
       }
     });
 
-    // Hide cards that have no visible rows
     cards.forEach(card => {
-      const visibleRows = card.querySelectorAll('tr:not(.hidden-row)');
-      if (visibleRows.length === 0) {
+      if (card.querySelectorAll('tr:not(.hidden-row)').length === 0)
         card.classList.add('hidden');
-      }
     });
 
     if (totalVisible === 0) {
@@ -776,9 +913,109 @@
       countEl.className = 'search-count';
     }
   });
+</script>
 
-  // Auto-focus search on load
- // searchInput.focus();
+<script>
+  // ── Tooltip system ────────────────────────────────────────────────────────
+  const tooltip       = document.getElementById('tooltip');
+  const tooltipCmd    = document.getElementById('tooltipCmd');
+  const tooltipDesc   = document.getElementById('tooltipDesc');
+  const tooltipCode   = document.getElementById('tooltipCode');
+  const tooltipCopy   = document.getElementById('tooltipCopy');
+  const tooltipClose  = document.getElementById('tooltipClose');
+  const tooltipDanger = document.getElementById('tooltipDanger');
+  const tooltipToggle = document.getElementById('tooltipToggle');
+  const tipsEnabled   = () => tooltipToggle.checked;
+
+  tooltipToggle.addEventListener('change', () => {
+    if (!tooltipToggle.checked) closeTooltip();
+  });
+
+  let showTimer = null;
+  let hideTimer = null;
+  let tipVisible = false;
+
+  function openTooltip(row) {
+    if (row.dataset.danger) {
+      tooltipDanger.textContent = '⚠ ' + row.dataset.danger;
+      tooltipDanger.style.display = 'flex';
+    } else {
+      tooltipDanger.style.display = 'none';
+    }
+    tooltipCmd.textContent  = row.querySelector('td:first-child').textContent;
+    tooltipDesc.textContent = row.dataset.tip;
+    tooltipCode.textContent = row.dataset.example;
+    tooltipCopy.textContent = 'Copy';
+    tooltipCopy.classList.remove('copied');
+    tooltip.classList.add('visible');
+    tipVisible = true;
+
+    requestAnimationFrame(() => {
+      const rect = row.getBoundingClientRect();
+      const tw = tooltip.offsetWidth;
+      const th = tooltip.offsetHeight;
+      let x = rect.right + 12;
+      let y = rect.top;
+      if (x + tw > window.innerWidth - 12) x = rect.left - tw - 12;
+      if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      tooltip.style.left = Math.max(8, x) + 'px';
+      tooltip.style.top  = Math.max(8, y) + 'px';
+    });
+  }
+
+  function closeTooltip() {
+    tooltip.classList.remove('visible');
+    tipVisible = false;
+  }
+
+  function scheduleClose() { hideTimer = setTimeout(closeTooltip, 120); }
+  function cancelClose()   { clearTimeout(hideTimer); }
+
+  document.querySelectorAll('tr[data-tip]').forEach(row => {
+    row.addEventListener('click', e => {
+      if (!tipsEnabled() || tooltip.contains(e.target)) return;
+      e.stopPropagation();
+      cancelClose();
+      clearTimeout(showTimer);
+      openTooltip(row);
+    });
+    row.addEventListener('mouseenter', () => {
+      cancelClose();
+      clearTimeout(showTimer);
+      if (!tipsEnabled()) return;
+      showTimer = setTimeout(() => openTooltip(row), 2000);
+    });
+    row.addEventListener('mouseleave', e => {
+      clearTimeout(showTimer);
+      if (tipVisible && !tooltip.contains(e.relatedTarget)) scheduleClose();
+    });
+  });
+
+  tooltip.addEventListener('mouseenter', cancelClose);
+  tooltip.addEventListener('mouseleave', e => {
+    if (!e.relatedTarget || !e.relatedTarget.closest('tr[data-tip]')) scheduleClose();
+  });
+
+  tooltipClose.addEventListener('click', closeTooltip);
+
+  document.addEventListener('click', e => {
+    if (tipVisible && !tooltip.contains(e.target)) closeTooltip();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && tipVisible) closeTooltip();
+  });
+
+  tooltipCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(tooltipCode.textContent).then(() => {
+      tooltipCopy.textContent = 'Copied ✓';
+      tooltipCopy.classList.add('copied');
+      setTimeout(() => {
+        tooltipCopy.textContent = 'Copy';
+        tooltipCopy.classList.remove('copied');
+      }, 2000);
+    });
+  });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
