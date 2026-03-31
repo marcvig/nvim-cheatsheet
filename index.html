@@ -879,18 +879,22 @@
   </div>
 
   <div class="card">
-    <div class="card-header teal" data-cmd="Neovim-Specific" data-tip="Features unique to Neovim or its ecosystem. Includes LSP (language server protocol) for code intelligence like go-to-definition and hover docs, a built-in terminal, and plugin managers like Lazy.nvim and Mason.">Neovim-Specific</div>
+    <div class="card-header teal" data-cmd="Neovim-Specific" data-tip="Features unique to Neovim or its ecosystem. LSP keymaps (gd, grr, gra, etc.) are built-in defaults since Neovim 0.10 — no config needed, work on any machine or server. Plugin managers like Lazy.nvim and Mason require installation.">Neovim-Specific</div>
     <table>
-      <tr data-tip="Run Neovim's built-in health checks for plugins and system dependencies" data-example=":checkhealth"><td>:checkhealth</td><td>Run health diagnostics</td></tr>
-      <tr data-tip="Open a built-in terminal emulator inside a new buffer" data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
-      <tr data-tip="Exit terminal mode and return to Normal mode — Esc doesn't work in terminal buffers" data-example="Ctrl+\ Ctrl+n"><td>Ctrl+\ Ctrl+n</td><td>Exit terminal to Normal mode</td></tr>
-      <tr data-tip="Open the Lazy.nvim plugin manager UI to install, update, or remove plugins" data-example=":Lazy"><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
-      <tr data-tip="Open Mason to browse and install LSP servers, formatters, and linters" data-example=":Mason"><td>:Mason</td><td>Open Mason LSP installer</td></tr>
-      <tr data-tip="Show hover documentation for the symbol under the cursor via LSP" data-example="K"><td>K</td><td>Show LSP hover docs</td></tr>
-      <tr data-tip="Jump to the definition of the symbol under the cursor using the LSP" data-example="gd"><td>gd</td><td>Go to definition (LSP)</td></tr>
-      <tr data-tip="Show all references to the symbol under the cursor in a quickfix list" data-example="gr"><td>gr</td><td>Find references (LSP)</td></tr>
-      <tr data-tip="Jump to the next (]d) or previous ([d) LSP diagnostic — error, warning, or hint" data-example="]d"><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
-      <tr data-tip="Trigger a code action at the cursor — rename, auto-import, fix, etc. (common default mapping)" data-example="&lt;leader&gt;ca"><td>&lt;leader&gt;ca</td><td>Code action (LSP, common mapping)</td></tr>
+      <tr data-tip="Run Neovim's built-in health checks for plugins and system dependencies. Shows what LSP servers, tools, and providers are properly installed." data-example=":checkhealth"><td>:checkhealth</td><td>Run health diagnostics</td></tr>
+      <tr data-tip="Open a built-in terminal emulator inside a new buffer. The terminal runs in a special mode — normal editing keys are passed to the shell, not Neovim." data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
+      <tr data-tip="Exit terminal mode and return to Normal mode. Esc does not work inside terminal buffers — this two-key chord is the only way out." data-example="Ctrl+\ Ctrl+n"><td>Ctrl+\ Ctrl+n</td><td>Exit terminal to Normal mode</td></tr>
+      <tr data-tip="Open the Lazy.nvim plugin manager UI to install, update, or remove plugins. Lazy.nvim is the most popular Neovim plugin manager — requires it to be configured in your init.lua first." data-example=":Lazy"><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
+      <tr data-tip="Open Mason to browse and install LSP servers, formatters, and linters. Mason manages the binaries; you still need to configure each server in your init.lua via lspconfig or similar." data-example=":Mason"><td>:Mason</td><td>Open Mason LSP installer</td></tr>
+      <tr data-tip="Show hover documentation for the symbol under the cursor. Built-in default since Neovim 0.10 — no config needed. Requires an LSP server attached to the buffer. Press K again to enter the hover window." data-example="K"><td>K</td><td>LSP hover docs</td></tr>
+      <tr data-tip="Jump to the definition of the symbol under the cursor. Built-in default since Neovim 0.10 — works on any machine without custom keymaps. Use Ctrl+o to jump back after." data-example="gd"><td>gd</td><td>Go to definition (LSP)</td></tr>
+      <tr data-tip="Show all references to the symbol under the cursor in a quickfix list. Built-in default since Neovim 0.10 — grr (two r's) not gr. Use :cn / :cp to navigate the quickfix list." data-example="grr"><td>grr</td><td>Find references (LSP)</td></tr>
+      <tr data-tip="Jump to the implementation(s) of the symbol under the cursor — useful for interfaces and abstract methods. Built-in default since Neovim 0.10, no config needed." data-example="gri"><td>gri</td><td>Go to implementation (LSP)</td></tr>
+      <tr data-tip="Rename the symbol under the cursor across the entire project via LSP. Built-in default since Neovim 0.10 — smarter than find-and-replace because it understands scope and references." data-example="grn"><td>grn</td><td>Rename symbol (LSP)</td></tr>
+      <tr data-tip="Trigger a code action at the cursor — auto-import, extract variable, fix diagnostic, etc. Built-in default since Neovim 0.10. You may have seen &lt;leader&gt;ca used instead — that is a custom mapping for the same thing, not a built-in." data-example="gra"><td>gra</td><td>Code action (LSP)</td></tr>
+      <tr data-tip="List all symbols in the current file (functions, classes, variables) via LSP. Built-in default since Neovim 0.10. Results open in a quickfix list — use :cn / :cp to navigate." data-example="gO"><td>gO</td><td>Document symbols (LSP)</td></tr>
+      <tr data-tip="Show the function signature (parameter types and docs) for the call under the cursor. Built-in default since Neovim 0.10 — works in Insert mode while typing a function call." data-example="Ctrl+S"><td>Ctrl+S <span style="font-size:0.7em;color:#8b949e">(Insert)</span></td><td>Signature help (LSP)</td></tr>
+      <tr data-tip="Jump to the next (]d) or previous ([d) LSP diagnostic in the buffer — errors, warnings, and hints. Built-in defaults since Neovim 0.10, no config needed." data-example="]d"><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
     </table>
   </div>
 
