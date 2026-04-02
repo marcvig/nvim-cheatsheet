@@ -526,6 +526,16 @@
   body.light .tooltip-copy.copied { color: #0969da; border-color: #0969da55; background: #0969da12; }
   body.light .tooltip-danger { background: rgba(207,34,46,0.06); border-color: rgba(207,34,46,0.25); color: #cf222e; }
 
+  /* ── Tooltip: Your Binding section ──────────────────────────────────── */
+  .tooltip-custom-label { color: #7ee787; }
+  .tooltip-custom-row {
+    background: #0f1117; border: 1px solid #7ee78744;
+    border-radius: 6px; padding: 7px 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  body.light .tooltip-custom-label { color: #116329; }
+  body.light .tooltip-custom-row { background: #f0fdf4; border-color: #11632944; }
+
   /* ── Danger badge ────────────────────────────────────────────────────── */
   .cmd-inner { display: flex; align-items: center; gap: 6px; }
   .cmd-text { flex: 1; min-width: 0; word-break: break-word; }
@@ -696,6 +706,13 @@
     <div class="tooltip-example-row">
       <code class="tooltip-example-code" id="tooltipCode"></code>
       <button class="tooltip-copy" id="tooltipCopy">Copy</button>
+    </div>
+  </div>
+  <div id="tooltipCustomSection" style="display:none; margin-top:8px;">
+    <div class="tooltip-example-label tooltip-custom-label">Your Binding</div>
+    <div class="tooltip-custom-row">
+      <code class="tooltip-example-code" id="tooltipCustomCode"></code>
+      <button class="tooltip-copy" id="tooltipCustomCopy">Copy</button>
     </div>
   </div>
 </div>
@@ -1126,8 +1143,11 @@
   const tooltipDesc   = document.getElementById('tooltipDesc');
   const tooltipCode   = document.getElementById('tooltipCode');
   const tooltipCopy   = document.getElementById('tooltipCopy');
-  const tooltipClose  = document.getElementById('tooltipClose');
-  const tooltipDanger = document.getElementById('tooltipDanger');
+  const tooltipClose         = document.getElementById('tooltipClose');
+  const tooltipDanger        = document.getElementById('tooltipDanger');
+  const tooltipCustomSection = document.getElementById('tooltipCustomSection');
+  const tooltipCustomCode    = document.getElementById('tooltipCustomCode');
+  const tooltipCustomCopy    = document.getElementById('tooltipCustomCopy');
   const tooltipToggle = document.getElementById('tooltipToggle');
   const tipsEnabled   = () => tooltipToggle.checked;
 
@@ -1171,6 +1191,16 @@
     }
     tooltipCopy.textContent = 'Copy';
     tooltipCopy.classList.remove('copied');
+    // Your Binding section — only for rows with a custom binding
+    const isCustom = el.classList.contains('has-custom');
+    if (isCustom && el.dataset.currentCmd) {
+      tooltipCustomCode.textContent = el.dataset.currentCmd;
+      tooltipCustomCopy.textContent = 'Copy';
+      tooltipCustomCopy.classList.remove('copied');
+      tooltipCustomSection.style.display = '';
+    } else {
+      tooltipCustomSection.style.display = 'none';
+    }
     tooltip.classList.add('visible');
     tipVisible = true;
 
@@ -1264,6 +1294,17 @@
       setTimeout(() => {
         tooltipCopy.textContent = 'Copy';
         tooltipCopy.classList.remove('copied');
+      }, 2000);
+    });
+  });
+
+  tooltipCustomCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(tooltipCustomCode.textContent).then(() => {
+      tooltipCustomCopy.textContent = 'Copied ✓';
+      tooltipCustomCopy.classList.add('copied');
+      setTimeout(() => {
+        tooltipCustomCopy.textContent = 'Copy';
+        tooltipCustomCopy.classList.remove('copied');
       }, 2000);
     });
   });
