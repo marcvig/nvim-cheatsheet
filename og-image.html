@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+  body {
+    background: #0f1117;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Subtle grid background */
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(#7ee78708 1px, transparent 1px),
+      linear-gradient(90deg, #7ee78708 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Top radial glow */
+  .bg-glow {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, #7ee78718 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Bottom accent bar */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #7ee787, transparent);
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 80px;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 22px;
+  }
+
+  .nvim-icon {
+    font-size: 3.8rem;
+    line-height: 1;
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #7ee787;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .subtitle {
+    font-size: 1.35rem;
+    color: #c9d1d9;
+    font-weight: 400;
+    margin-bottom: 44px;
+    letter-spacing: 0.2px;
+  }
+
+  /* Command preview strip */
+  .commands {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 16px 32px;
+    margin-bottom: 44px;
+  }
+
+  .cmd-pair {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px;
+    border-right: 1px solid #30363d;
+  }
+  .cmd-pair:last-child { border-right: none; }
+
+  .cmd-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #e3b341;
+    white-space: nowrap;
+  }
+
+  .cmd-arrow {
+    color: #484f58;
+    font-size: 0.95rem;
+  }
+
+  .cmd-desc {
+    font-size: 0.95rem;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  .domain {
+    font-size: 1.1rem;
+    color: #484f58;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="bottom-bar"></div>
+
+  <div class="content">
+    <div class="title-row">
+      <span class="nvim-icon">📋</span>
+      <h1>Neovim Cheatsheet</h1>
+    </div>
+    <p class="subtitle">Complete nvim command reference — searchable, fast, always free</p>
+
+    <div class="commands">
+      <div class="cmd-pair">
+        <span class="cmd-key">dd</span>
+        <span class="cmd-arrow">→</span>
+        <span class="cmd-desc">delete line</span>
+      </div>
+      <div class="cmd-pair">
+        <span class="cmd-key">gg / G</span>
+        <span class="cmd-arrow">→</span>
+        <span class="cmd-desc">top / bottom</span>
+      </div>
+      <div class="cmd-pair">
+        <span class="cmd-key">:%s/old/new/g</span>
+        <span class="cmd-arrow">→</span>
+        <span class="cmd-desc">replace all</span>
+      </div>
+      <div class="cmd-pair">
+        <span class="cmd-key">gra</span>
+        <span class="cmd-arrow">→</span>
+        <span class="cmd-desc">code action</span>
+      </div>
+    </div>
+
+    <p class="domain">neovimcheatsheet.com</p>
+  </div>
+</body>
+</html>
