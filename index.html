@@ -1198,8 +1198,10 @@
       tooltipCustomCopy.textContent = 'Copy';
       tooltipCustomCopy.classList.remove('copied');
       tooltipCustomSection.style.display = '';
+      tooltipExampleSection.querySelector('.tooltip-example-label').textContent = 'Default';
     } else {
       tooltipCustomSection.style.display = 'none';
+      tooltipExampleSection.querySelector('.tooltip-example-label').textContent = 'Example';
     }
     tooltip.classList.add('visible');
     tipVisible = true;
