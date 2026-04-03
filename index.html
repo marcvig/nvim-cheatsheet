@@ -1265,10 +1265,18 @@
       const rect = el.getBoundingClientRect();
       const tw = tooltip.offsetWidth;
       const th = tooltip.offsetHeight;
-      let x = rect.right + 12;
-      let y = rect.top;
-      if (x + tw > window.innerWidth - 12) x = rect.left - tw - 12;
-      if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      let x, y;
+      if (window.innerWidth <= 600) {
+        // Mobile: place below the row so it never covers the command
+        x = 8;
+        y = rect.bottom + 10;
+        if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      } else {
+        x = rect.right + 12;
+        y = rect.top;
+        if (x + tw > window.innerWidth - 12) x = rect.left - tw - 12;
+        if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      }
       tooltip.style.left = Math.max(8, x) + 'px';
       tooltip.style.top  = Math.max(8, y) + 'px';
     });
