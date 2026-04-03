@@ -626,6 +626,49 @@
   body.light .customize-bar .cb-reset { color: #cf222e; border-color: #cf222e55; }
   body.light .customize-bar .cb-reset:hover { background: #cf222e0a; border-color: #cf222e; }
 
+  /* ── Confirm overlay dialog ──────────────────────────────────────────── */
+  .confirm-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .confirm-overlay.open { opacity: 1; pointer-events: all; }
+  .confirm-dialog {
+    background: #161b22; border: 1px solid #30363d;
+    border-radius: 10px; padding: 28px 32px 22px;
+    max-width: 380px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .confirm-dialog h3 {
+    margin: 0; font-size: 1rem; font-weight: 600; color: #f85149;
+  }
+  .confirm-dialog p {
+    margin: 0; font-size: 0.88rem; color: #8b949e; line-height: 1.5;
+  }
+  .confirm-dialog-btns {
+    display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px;
+  }
+  .confirm-dialog-btns button {
+    padding: 7px 18px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; border: 1px solid; transition: background 0.15s, color 0.15s;
+  }
+  .confirm-btn-cancel {
+    background: transparent; border-color: #30363d; color: #8b949e;
+  }
+  .confirm-btn-cancel:hover { background: #21262d; color: #e2e8f0; }
+  .confirm-btn-ok {
+    background: transparent; border-color: #f8514955; color: #f85149;
+  }
+  .confirm-btn-ok:hover { background: #f8514912; border-color: #f85149; }
+  body.light .confirm-dialog { background: #ffffff; border-color: #d0d7de; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  body.light .confirm-dialog p { color: #57606a; }
+  body.light .confirm-btn-cancel { border-color: #d0d7de; color: #57606a; }
+  body.light .confirm-btn-cancel:hover { background: #f3f4f6; color: #24292f; }
+  body.light .confirm-btn-ok { border-color: #cf222e55; color: #cf222e; }
+  body.light .confirm-btn-ok:hover { background: #cf222e0a; border-color: #cf222e; }
+
   /* ── Card info button ────────────────────────────────────────────────── */
   .card-info-btn {
     background: none; border: none;
@@ -781,6 +824,18 @@
   <button id="importBindings">📥 Import JSON</button>
   <button id="resetAllBindings" class="cb-reset" style="display:none">↺ Reset all</button>
   <input type="file" id="importFile" accept=".json" style="display:none">
+</div>
+
+<!-- Confirm overlay dialog (reusable) -->
+<div class="confirm-overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="confirm-dialog">
+    <h3 id="confirmTitle">Reset all custom bindings?</h3>
+    <p id="confirmMsg">This will restore every command to its default keybinding. This cannot be undone.</p>
+    <div class="confirm-dialog-btns">
+      <button class="confirm-btn-cancel" id="confirmCancel">Cancel</button>
+      <button class="confirm-btn-ok" id="confirmOk">↺ Reset all</button>
+    </div>
+  </div>
 </div>
 
 <div class="grid" id="grid">
@@ -1651,13 +1706,40 @@
     reader.readAsText(file);
   });
 
+  // ── Confirm overlay (shared) ────────────────────────────────────────────
+  const confirmOverlay = document.getElementById('confirmOverlay');
+  const confirmCancel  = document.getElementById('confirmCancel');
+  const confirmOk      = document.getElementById('confirmOk');
+  let confirmCallback  = null;
+
+  function showConfirm(title, msg, okLabel, cb) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMsg').textContent   = msg;
+    confirmOk.textContent = okLabel;
+    confirmCallback = cb;
+    confirmOverlay.classList.add('open');
+    confirmCancel.focus();
+  }
+  function closeConfirm() { confirmOverlay.classList.remove('open'); confirmCallback = null; }
+
+  confirmCancel.addEventListener('click', closeConfirm);
+  confirmOk.addEventListener('click', () => { closeConfirm(); confirmCallback && confirmCallback(); });
+  confirmOverlay.addEventListener('click', e => { if (e.target === confirmOverlay) closeConfirm(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && confirmOverlay.classList.contains('open')) closeConfirm(); });
+
   // ── Reset all ───────────────────────────────────────────────────────────
   document.getElementById('resetAllBindings')?.addEventListener('click', () => {
-    if (!confirm('Reset all custom bindings to their defaults?')) return;
-    bindings = {};
-    saveBindings(bindings);
-    rowMeta.forEach((meta, row) => { if (row.classList.contains('has-custom')) resetBinding(row); });
-    updateResetAllBtn();
+    showConfirm(
+      'Reset all custom bindings?',
+      'This will restore every command to its default keybinding. This cannot be undone.',
+      '↺ Reset all',
+      () => {
+        bindings = {};
+        saveBindings(bindings);
+        rowMeta.forEach((meta, row) => { if (row.classList.contains('has-custom')) resetBinding(row); });
+        updateResetAllBtn();
+      }
+    );
   });
 
   init();
