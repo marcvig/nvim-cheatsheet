@@ -526,6 +526,16 @@
   body.light .tooltip-copy.copied { color: #0969da; border-color: #0969da55; background: #0969da12; }
   body.light .tooltip-danger { background: rgba(207,34,46,0.06); border-color: rgba(207,34,46,0.25); color: #cf222e; }
 
+  /* ── Tooltip: Your Binding section ──────────────────────────────────── */
+  .tooltip-custom-label { color: #7ee787; }
+  .tooltip-custom-row {
+    background: #0f1117; border: 1px solid #7ee78744;
+    border-radius: 6px; padding: 7px 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  body.light .tooltip-custom-label { color: #116329; }
+  body.light .tooltip-custom-row { background: #f0fdf4; border-color: #11632944; }
+
   /* ── Danger badge ────────────────────────────────────────────────────── */
   .cmd-inner { display: flex; align-items: center; gap: 6px; }
   .cmd-text { flex: 1; min-width: 0; word-break: break-word; }
@@ -541,6 +551,123 @@
   .legend span[data-tip]  { cursor: pointer; }
 
   @media (max-width: 600px) { .tooltip { width: 92vw; } }
+
+  /* ── Custom bindings ─────────────────────────────────────────────────── */
+  td:first-child { position: relative; padding-right: 28px; }
+
+  .edit-bind-btn {
+    position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: #484f58; font-size: 0.85rem; padding: 2px 4px;
+    border-radius: 3px; line-height: 1; opacity: 0;
+    transition: opacity 0.15s, color 0.15s, background 0.15s;
+  }
+  tr:hover .edit-bind-btn { opacity: 1; }
+  .edit-bind-btn:hover { color: #7ee787; background: #7ee78718; }
+
+  /* Green dot on customized rows */
+  tr.has-custom td:first-child { padding-left: 20px; }
+  tr.has-custom td:first-child::before {
+    content: '';
+    position: absolute; left: 7px; top: 50%; transform: translateY(-50%);
+    width: 5px; height: 5px;
+    background: #7ee787; border-radius: 50%;
+  }
+
+  /* Inline edit state */
+  td.editing { padding: 4px 8px; }
+  .binding-wrap { display: flex; align-items: center; gap: 4px; overflow: hidden; }
+  .binding-input {
+    width: 6rem; flex: none; min-width: 0;
+    background: #0f1117; border: 1px solid #58a6ff88;
+    border-radius: 4px; color: #e3b341;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+    padding: 3px 7px; outline: none;
+  }
+  .binding-input:focus { border-color: #7ee787; box-shadow: 0 0 0 2px #7ee78722; }
+  .binding-save, .binding-cancel, .binding-reset {
+    background: none; border: 1px solid; font-size: 0.78rem;
+    cursor: pointer; padding: 2px 6px; border-radius: 3px;
+    transition: background 0.15s; white-space: nowrap; flex-shrink: 0;
+  }
+  .binding-save   { color: #7ee787; border-color: #7ee78755; }
+  .binding-save:hover   { background: #7ee78720; }
+  .binding-cancel { color: #f85149; border-color: #f8514955; }
+  .binding-cancel:hover { background: #f8514920; }
+  .binding-reset  { color: #8b949e; border-color: #30363d; }
+  .binding-reset:hover  { background: #21262d; color: #e2e8f0; }
+
+  /* Customize toolbar */
+  .customize-bar {
+    display: flex; gap: 8px; justify-content: center; align-items: center;
+    flex-wrap: wrap; margin-bottom: 14px; font-size: 0.72rem; color: #8b949e;
+  }
+  .customize-bar span { letter-spacing: 0.3px; }
+  .customize-bar button {
+    background: #161b22; border: 1px solid #30363d; color: #8b949e;
+    font-size: 0.72rem; cursor: pointer; padding: 4px 10px; border-radius: 5px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .customize-bar button:hover { background: #21262d; color: #e2e8f0; border-color: #484f58; }
+  .customize-bar .cb-reset { color: #f85149; border-color: #f8514955; }
+  .customize-bar .cb-reset:hover { background: #f8514912; border-color: #f85149; color: #f85149; }
+
+  /* Light mode overrides — custom bindings */
+  body.light .edit-bind-btn { color: #8c959f; }
+  body.light .edit-bind-btn:hover { color: #116329; background: #11632912; }
+  body.light tr.has-custom td:first-child::before { background: #116329; }
+  body.light .binding-input { background: #f6f8fa; border-color: #0969da88; color: #9a6700; }
+  body.light .binding-input:focus { border-color: #116329; box-shadow: 0 0 0 2px #11632912; }
+  body.light .binding-save { color: #116329; border-color: #11632955; }
+  body.light .binding-cancel { color: #cf222e; border-color: #cf222e55; }
+  body.light .binding-reset { color: #57606a; border-color: #d0d7de; }
+  body.light .customize-bar button { background: #f6f8fa; border-color: #d0d7de; color: #57606a; }
+  body.light .customize-bar button:hover { background: #eaeef2; color: #24292f; border-color: #8c959f; }
+  body.light .customize-bar .cb-reset { color: #cf222e; border-color: #cf222e55; }
+  body.light .customize-bar .cb-reset:hover { background: #cf222e0a; border-color: #cf222e; }
+
+  /* ── Confirm overlay dialog ──────────────────────────────────────────── */
+  .confirm-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .confirm-overlay.open { opacity: 1; pointer-events: all; }
+  .confirm-dialog {
+    background: #161b22; border: 1px solid #30363d;
+    border-radius: 10px; padding: 28px 32px 22px;
+    max-width: 380px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .confirm-dialog h3 {
+    margin: 0; font-size: 1rem; font-weight: 600; color: #f85149;
+  }
+  .confirm-dialog p {
+    margin: 0; font-size: 0.88rem; color: #8b949e; line-height: 1.5;
+  }
+  .confirm-dialog-btns {
+    display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px;
+  }
+  .confirm-dialog-btns button {
+    padding: 7px 18px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; border: 1px solid; transition: background 0.15s, color 0.15s;
+  }
+  .confirm-btn-cancel {
+    background: transparent; border-color: #30363d; color: #8b949e;
+  }
+  .confirm-btn-cancel:hover { background: #21262d; color: #e2e8f0; }
+  .confirm-btn-ok {
+    background: transparent; border-color: #f8514955; color: #f85149;
+  }
+  .confirm-btn-ok:hover { background: #f8514912; border-color: #f85149; }
+  body.light .confirm-dialog { background: #ffffff; border-color: #d0d7de; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  body.light .confirm-dialog p { color: #57606a; }
+  body.light .confirm-btn-cancel { border-color: #d0d7de; color: #57606a; }
+  body.light .confirm-btn-cancel:hover { background: #f3f4f6; color: #24292f; }
+  body.light .confirm-btn-ok { border-color: #cf222e55; color: #cf222e; }
+  body.light .confirm-btn-ok:hover { background: #cf222e0a; border-color: #cf222e; }
 
   /* ── Card info button ────────────────────────────────────────────────── */
   .card-info-btn {
@@ -624,6 +751,13 @@
       <button class="tooltip-copy" id="tooltipCopy">Copy</button>
     </div>
   </div>
+  <div id="tooltipCustomSection" style="display:none; margin-top:8px;">
+    <div class="tooltip-example-label tooltip-custom-label">Your Binding</div>
+    <div class="tooltip-custom-row">
+      <code class="tooltip-example-code" id="tooltipCustomCode"></code>
+      <button class="tooltip-copy" id="tooltipCustomCopy">Copy</button>
+    </div>
+  </div>
 </div>
 
 <!-- Text object info popup -->
@@ -682,6 +816,26 @@
   <span data-cmd="Insert Mode" data-tip="Type text directly into the buffer. Enter with i (before cursor), a (after), o (new line below), or O (new line above). Return to Normal with Esc or Ctrl+[."><span class="badge badge-i">I</span> Insert</span>
   <span data-cmd="Visual Mode" data-tip="Select text interactively, then apply an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — returns to Normal automatically."><span class="badge badge-v">V</span> Visual</span>
   <span data-cmd="Command Mode" data-tip="Type Ex commands starting with :, or search with / and ?. Enter with : from Normal mode. Run with Enter, cancel with Esc. Supports tab completion for commands, files, and options."><span class="badge badge-c">C</span> Command</span>
+</div>
+
+<div class="customize-bar" id="customizeBar">
+  <span>✎ Custom bindings:</span>
+  <button id="exportBindings">📤 Export JSON</button>
+  <button id="importBindings">📥 Import JSON</button>
+  <button id="resetAllBindings" class="cb-reset" style="display:none">↺ Reset all</button>
+  <input type="file" id="importFile" accept=".json" style="display:none">
+</div>
+
+<!-- Confirm overlay dialog (reusable) -->
+<div class="confirm-overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="confirm-dialog">
+    <h3 id="confirmTitle">Reset all custom bindings?</h3>
+    <p id="confirmMsg">This will restore every command to its default keybinding. This cannot be undone.</p>
+    <div class="confirm-dialog-btns">
+      <button class="confirm-btn-cancel" id="confirmCancel">Cancel</button>
+      <button class="confirm-btn-ok" id="confirmOk">↺ Reset all</button>
+    </div>
+  </div>
 </div>
 
 <div class="grid" id="grid">
@@ -959,6 +1113,8 @@
     });
   });
 
+  window.originalCells = originalCells;
+
   // 2. Post-process: style <placeholders> and inject danger badges
   originalCells.forEach(({ row, htmls }) => {
     const cmdCell = row.querySelector('td:first-child');
@@ -1031,6 +1187,7 @@
       countEl.textContent = `${totalVisible} result${totalVisible !== 1 ? 's' : ''} found`;
       countEl.className = 'search-count';
     }
+    window.onSearchUpdate && window.onSearchUpdate();
   });
 </script>
 
@@ -1041,8 +1198,11 @@
   const tooltipDesc   = document.getElementById('tooltipDesc');
   const tooltipCode   = document.getElementById('tooltipCode');
   const tooltipCopy   = document.getElementById('tooltipCopy');
-  const tooltipClose  = document.getElementById('tooltipClose');
-  const tooltipDanger = document.getElementById('tooltipDanger');
+  const tooltipClose         = document.getElementById('tooltipClose');
+  const tooltipDanger        = document.getElementById('tooltipDanger');
+  const tooltipCustomSection = document.getElementById('tooltipCustomSection');
+  const tooltipCustomCode    = document.getElementById('tooltipCustomCode');
+  const tooltipCustomCopy    = document.getElementById('tooltipCustomCopy');
   const tooltipToggle = document.getElementById('tooltipToggle');
   const tipsEnabled   = () => tooltipToggle.checked;
 
@@ -1065,7 +1225,7 @@
       tooltipDanger.style.display = 'none';
     }
     // Command label — use data-cmd, or first td text, or element's own text
-    tooltipCmd.textContent = el.dataset.cmd
+    tooltipCmd.textContent = el.dataset.cmd || el.dataset.currentCmd
       || (el.querySelector('td:first-child') ? el.querySelector('td:first-child').textContent : el.textContent.trim());
     tooltipDesc.textContent = el.dataset.tip;
     // Title color — match card header or legend badge color, reset for rows
@@ -1086,6 +1246,18 @@
     }
     tooltipCopy.textContent = 'Copy';
     tooltipCopy.classList.remove('copied');
+    // Your Binding section — only for rows with a custom binding
+    const isCustom = el.classList.contains('has-custom');
+    if (isCustom && el.dataset.currentCmd) {
+      tooltipCustomCode.textContent = el.dataset.currentCmd;
+      tooltipCustomCopy.textContent = 'Copy';
+      tooltipCustomCopy.classList.remove('copied');
+      tooltipCustomSection.style.display = '';
+      tooltipExampleSection.querySelector('.tooltip-example-label').textContent = 'Default';
+    } else {
+      tooltipCustomSection.style.display = 'none';
+      tooltipExampleSection.querySelector('.tooltip-example-label').textContent = 'Example';
+    }
     tooltip.classList.add('visible');
     tipVisible = true;
 
@@ -1093,10 +1265,18 @@
       const rect = el.getBoundingClientRect();
       const tw = tooltip.offsetWidth;
       const th = tooltip.offsetHeight;
-      let x = rect.right + 12;
-      let y = rect.top;
-      if (x + tw > window.innerWidth - 12) x = rect.left - tw - 12;
-      if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      let x, y;
+      if (window.innerWidth <= 600) {
+        // Mobile: place below the row so it never covers the command
+        x = 8;
+        y = rect.bottom + 10;
+        if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      } else {
+        x = rect.right + 12;
+        y = rect.top;
+        if (x + tw > window.innerWidth - 12) x = rect.left - tw - 12;
+        if (y + th > window.innerHeight - 12) y = window.innerHeight - th - 12;
+      }
       tooltip.style.left = Math.max(8, x) + 'px';
       tooltip.style.top  = Math.max(8, y) + 'px';
     });
@@ -1179,6 +1359,17 @@
       setTimeout(() => {
         tooltipCopy.textContent = 'Copy';
         tooltipCopy.classList.remove('copied');
+      }, 2000);
+    });
+  });
+
+  tooltipCustomCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(tooltipCustomCode.textContent).then(() => {
+      tooltipCustomCopy.textContent = 'Copied ✓';
+      tooltipCustomCopy.classList.add('copied');
+      setTimeout(() => {
+        tooltipCustomCopy.textContent = 'Copy';
+        tooltipCustomCopy.classList.remove('copied');
       }, 2000);
     });
   });
@@ -1280,6 +1471,287 @@
     localStorage.setItem('nvim-theme', document.body.classList.contains('light') ? 'light' : 'dark');
     updateIcon();
   });
+</script>
+
+<script>
+// ── Custom Bindings System ────────────────────────────────────────────────────
+(function () {
+  const STORAGE_KEY = 'nvim-custom-bindings';
+  const EDIT_BTN = '<button class="edit-bind-btn" aria-label="Customize binding" title="Hover any command row, then click ✎ to customize">✎</button>';
+
+  function loadBindings() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+  }
+  function saveBindings(b) { localStorage.setItem(STORAGE_KEY, JSON.stringify(b)); }
+
+  let bindings = loadBindings();
+  const rowMeta = new Map(); // tr -> { originalHtml, originalText, cellEntry }
+
+  function rowKey(row) {
+    const meta = rowMeta.get(row);
+    if (!meta) return null;
+    const header = row.closest('.card')?.querySelector('.card-header');
+    const cardTitle = (header?.textContent || 'unknown').trim();
+    return `${cardTitle}::${meta.originalText}`;
+  }
+
+  function buildDisplayHtml(row, val) {
+    // Escape then style <placeholder> patterns the same way the search script does
+    let inner = val
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/&lt;([^&\s][^&]*?)&gt;/g, '<span class="placeholder">&lt;$1&gt;</span>');
+    if (row.dataset.danger) {
+      inner = `<div class="cmd-inner"><span class="cmd-text">${inner}</span><span class="danger-badge" title="${row.dataset.danger}">⚠</span></div>`;
+    }
+    return inner + EDIT_BTN;
+  }
+
+  function applyBinding(row, val) {
+    const meta = rowMeta.get(row);
+    if (!meta) return;
+    const td = row.querySelector('td:first-child');
+    if (!td) return;
+    const html = buildDisplayHtml(row, val);
+    td.innerHTML = html;
+    meta.cellEntry.htmls[0] = html; // keep search display in sync
+    row.classList.add('has-custom');
+    row.dataset.currentCmd = val;
+  }
+
+  function resetBinding(row) {
+    const meta = rowMeta.get(row);
+    if (!meta) return;
+    const td = row.querySelector('td:first-child');
+    if (!td) return;
+    const html = meta.originalHtml + EDIT_BTN;
+    td.innerHTML = html;
+    meta.cellEntry.htmls[0] = html;
+    row.classList.remove('has-custom');
+    row.dataset.currentCmd = meta.originalText;
+    const key = rowKey(row);
+    if (key) { delete bindings[key]; saveBindings(bindings); }
+  }
+
+  function startEdit(row) {
+    const td = row.querySelector('td:first-child');
+    if (!td || td.classList.contains('editing')) return;
+    const meta = rowMeta.get(row);
+    const isCustom = row.classList.contains('has-custom');
+    const currentVal = isCustom ? (bindings[rowKey(row)] || meta.originalText) : meta.originalText;
+
+    td.classList.add('editing');
+    td.innerHTML = '';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'binding-wrap';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'binding-input';
+    input.value = currentVal;
+    input.setAttribute('aria-label', 'Custom binding value');
+    input.setAttribute('placeholder', meta.originalText);
+
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'binding-save';
+    saveBtn.textContent = '✓';
+    saveBtn.title = 'Save (Enter)';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'binding-cancel';
+    cancelBtn.textContent = '✕';
+    cancelBtn.title = 'Cancel (Esc)';
+
+    wrap.append(input, saveBtn, cancelBtn);
+
+    if (isCustom) {
+      const resetBtn = document.createElement('button');
+      resetBtn.className = 'binding-reset';
+      resetBtn.textContent = '↩';
+      resetBtn.title = `Reset to default: ${meta.originalText}`;
+      resetBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        td.classList.remove('editing');
+        resetBinding(row);
+        updateResetAllBtn();
+      });
+      wrap.appendChild(resetBtn);
+    }
+
+    td.appendChild(wrap);
+    input.focus();
+    input.select();
+
+    function commit() {
+      const val = input.value.trim();
+      td.classList.remove('editing');
+      if (!val || val === meta.originalText) {
+        resetBinding(row);
+      } else {
+        bindings[rowKey(row)] = val;
+        saveBindings(bindings);
+        applyBinding(row, val);
+      }
+      updateResetAllBtn();
+    }
+
+    function cancel() {
+      td.classList.remove('editing');
+      if (row.classList.contains('has-custom')) {
+        applyBinding(row, bindings[rowKey(row)] || meta.originalText);
+      } else {
+        td.innerHTML = meta.originalHtml + EDIT_BTN;
+      }
+    }
+
+    saveBtn.addEventListener('click',   e => { e.stopPropagation(); commit(); });
+    cancelBtn.addEventListener('click', e => { e.stopPropagation(); cancel(); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter')  { e.preventDefault(); e.stopPropagation(); commit(); }
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cancel(); }
+      else { e.stopPropagation(); } // prevent keystroke from triggering search
+    });
+  }
+
+  // Capture-phase delegation — fires before tooltip row handlers
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.edit-bind-btn');
+    if (!btn) return;
+    e.stopPropagation();
+    const row = btn.closest('tr[data-tip]');
+    if (row) startEdit(row);
+  }, true);
+
+  function updateResetAllBtn() {
+    const btn = document.getElementById('resetAllBindings');
+    if (btn) btn.style.display = Object.keys(bindings).length > 0 ? '' : 'none';
+  }
+
+  function init() {
+    const cells = window.originalCells;
+    if (!cells) return;
+
+    cells.forEach(cellEntry => {
+      const { row, htmls, texts } = cellEntry;
+      if (!row.hasAttribute('data-tip')) return;
+      const td = row.querySelector('td:first-child');
+      if (!td) return;
+
+      const originalText = texts[0];
+      rowMeta.set(row, { originalHtml: htmls[0], originalText, cellEntry });
+      row.dataset.currentCmd = originalText;
+
+      // Check for saved custom binding
+      const header = row.closest('.card')?.querySelector('.card-header');
+      const cardTitle = (header?.textContent || 'unknown').trim();
+      const key = `${cardTitle}::${originalText}`;
+
+      if (bindings[key]) {
+        applyBinding(row, bindings[key]);
+      } else {
+        htmls[0] += EDIT_BTN;
+        td.insertAdjacentHTML('beforeend', EDIT_BTN);
+      }
+    });
+
+    updateResetAllBtn();
+  }
+
+  // Re-inject edit buttons that search highlighting wiped
+  window.onSearchUpdate = function () {
+    rowMeta.forEach((meta, row) => {
+      const td = row.querySelector('td:first-child');
+      if (!td || td.classList.contains('editing') || td.querySelector('.edit-bind-btn')) return;
+      td.insertAdjacentHTML('beforeend', EDIT_BTN);
+    });
+  };
+
+  // ── Export ──────────────────────────────────────────────────────────────
+  document.getElementById('exportBindings')?.addEventListener('click', () => {
+    const data = loadBindings();
+    if (!Object.keys(data).length) {
+      alert('No custom bindings yet — hover any command row and click ✎ to customize one first.');
+      return;
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'nvim-bindings.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── Import ──────────────────────────────────────────────────────────────
+  const importFile = document.getElementById('importFile');
+  document.getElementById('importBindings')?.addEventListener('click', () => importFile?.click());
+  importFile?.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        if (typeof imported !== 'object' || imported === null || Array.isArray(imported)) throw new Error();
+        let count = 0;
+        Object.entries(imported).forEach(([key, val]) => {
+          if (typeof val !== 'string') return;
+          bindings[key] = val;
+          rowMeta.forEach((meta, row) => {
+            const header = row.closest('.card')?.querySelector('.card-header');
+            const cardTitle = (header?.textContent || 'unknown').trim();
+            if (`${cardTitle}::${meta.originalText}` === key) {
+              applyBinding(row, val); count++;
+            }
+          });
+        });
+        saveBindings(bindings);
+        updateResetAllBtn();
+        alert(`Imported ${count} custom binding${count !== 1 ? 's' : ''}.`);
+      } catch {
+        alert('Invalid file — expected a JSON object like:\n{ "Modes::i": "ctrl+i" }');
+      }
+      importFile.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // ── Confirm overlay (shared) ────────────────────────────────────────────
+  const confirmOverlay = document.getElementById('confirmOverlay');
+  const confirmCancel  = document.getElementById('confirmCancel');
+  const confirmOk      = document.getElementById('confirmOk');
+  let confirmCallback  = null;
+
+  function showConfirm(title, msg, okLabel, cb) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMsg').textContent   = msg;
+    confirmOk.textContent = okLabel;
+    confirmCallback = cb;
+    confirmOverlay.classList.add('open');
+    confirmCancel.focus();
+  }
+  function closeConfirm() { confirmOverlay.classList.remove('open'); confirmCallback = null; }
+
+  confirmCancel.addEventListener('click', closeConfirm);
+  confirmOk.addEventListener('click', () => { const cb = confirmCallback; closeConfirm(); cb && cb(); });
+  confirmOverlay.addEventListener('click', e => { if (e.target === confirmOverlay) closeConfirm(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && confirmOverlay.classList.contains('open')) closeConfirm(); });
+
+  // ── Reset all ───────────────────────────────────────────────────────────
+  document.getElementById('resetAllBindings')?.addEventListener('click', () => {
+    showConfirm(
+      'Reset all custom bindings?',
+      'This will restore every command to its default keybinding. This cannot be undone.',
+      '↺ Reset all',
+      () => {
+        bindings = {};
+        saveBindings(bindings);
+        rowMeta.forEach((meta, row) => { if (row.classList.contains('has-custom')) resetBinding(row); });
+        updateResetAllBtn();
+      }
+    );
+  });
+
+  init();
+})();
 </script>
 
 </body>
