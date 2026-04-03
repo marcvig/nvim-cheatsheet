@@ -1723,7 +1723,7 @@
   function closeConfirm() { confirmOverlay.classList.remove('open'); confirmCallback = null; }
 
   confirmCancel.addEventListener('click', closeConfirm);
-  confirmOk.addEventListener('click', () => { closeConfirm(); confirmCallback && confirmCallback(); });
+  confirmOk.addEventListener('click', () => { const cb = confirmCallback; closeConfirm(); cb && cb(); });
   confirmOverlay.addEventListener('click', e => { if (e.target === confirmOverlay) closeConfirm(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && confirmOverlay.classList.contains('open')) closeConfirm(); });
 
