@@ -828,7 +828,7 @@
     <input type="checkbox" id="tooltipToggle" checked>
     <span class="toggle-track"><span class="toggle-thumb"></span></span>
   </label>
-  Click or hover any command for a description &amp; example
+  Click any command for a description &amp; example
 </p>
 
 <!-- LEGEND -->
@@ -1254,9 +1254,9 @@
     if (!tooltipToggle.checked) closeTooltip();
   });
 
-  let showTimer = null;
-  let hideTimer = null;
-  let tipVisible = false;
+  let autoCloseTimer = null;
+  let tipVisible     = false;
+  let activeRow      = null;
 
   const tooltipExampleSection = document.getElementById('tooltipExampleSection');
 
@@ -1304,6 +1304,11 @@
     }
     tooltip.classList.add('visible');
     tipVisible = true;
+    activeRow  = el;
+
+    // Auto-close after 6 s if mouse is not over the tooltip
+    clearTimeout(autoCloseTimer);
+    autoCloseTimer = setTimeout(closeTooltip, 6000);
 
     requestAnimationFrame(() => {
       const rect = el.getBoundingClientRect();
@@ -1327,30 +1332,19 @@
   }
 
   function closeTooltip() {
+    clearTimeout(autoCloseTimer);
     tooltip.classList.remove('visible');
     tipVisible = false;
+    activeRow  = null;
   }
 
-  function scheduleClose() { hideTimer = setTimeout(closeTooltip, 120); }
-  function cancelClose()   { clearTimeout(hideTimer); }
 
   document.querySelectorAll('tr[data-tip]').forEach(row => {
     row.addEventListener('click', e => {
       if (!tipsEnabled() || tooltip.contains(e.target)) return;
       e.stopPropagation();
-      cancelClose();
-      clearTimeout(showTimer);
+      if (tipVisible && activeRow === row) { closeTooltip(); return; }
       openTooltip(row);
-    });
-    row.addEventListener('mouseenter', () => {
-      cancelClose();
-      clearTimeout(showTimer);
-      if (!tipsEnabled()) return;
-      showTimer = setTimeout(() => openTooltip(row), 2000);
-    });
-    row.addEventListener('mouseleave', e => {
-      clearTimeout(showTimer);
-      if (tipVisible && !tooltip.contains(e.relatedTarget)) scheduleClose();
     });
   });
 
@@ -1364,26 +1358,15 @@
     el.addEventListener('click', e => {
       if (!tipsEnabled() || tooltip.contains(e.target)) return;
       e.stopPropagation();
-      cancelClose();
-      clearTimeout(showTimer);
+      if (tipVisible && activeRow === el) { closeTooltip(); return; }
       openTooltip(el);
-    });
-    el.addEventListener('mouseenter', () => {
-      cancelClose();
-      clearTimeout(showTimer);
-      if (!tipsEnabled()) return;
-      showTimer = setTimeout(() => openTooltip(el), 400);
-    });
-    el.addEventListener('mouseleave', e => {
-      clearTimeout(showTimer);
-      if (tipVisible && !tooltip.contains(e.relatedTarget)) scheduleClose();
     });
   });
 
-  tooltip.addEventListener('mouseenter', cancelClose);
-  tooltip.addEventListener('mouseleave', e => {
-    const over = e.relatedTarget;
-    if (!over || (!over.closest('tr[data-tip]') && !over.closest('.card-header[data-tip]') && !over.closest('.legend span[data-tip]'))) scheduleClose();
+  // Pause the 6 s auto-close while mouse is over the tooltip; restart when it leaves
+  tooltip.addEventListener('mouseenter', () => clearTimeout(autoCloseTimer));
+  tooltip.addEventListener('mouseleave', () => {
+    if (tipVisible) autoCloseTimer = setTimeout(closeTooltip, 6000);
   });
 
   tooltipClose.addEventListener('click', closeTooltip);
