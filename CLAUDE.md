@@ -60,6 +60,12 @@ CURRENT_DOMAIN for this site: `neovimcheatsheet.com`
 - `openTooltip(el)` works on any element — `<tr>`, `.card-header`, `.legend span`
 - Title color is set via `getComputedStyle(el).color` so it auto-matches card accent in both themes
 
+## Mobile / Touch UX Notes
+- Tooltips use `touchend` on `tr[data-tip]` rows with `preventDefault()` to suppress the synthetic click that would double-fire on iOS Safari
+- **Scroll detection:** `touchstart` position is captured globally; `touchend` bails out (no tooltip) if finger moved >8px in either axis — prevents accidental tooltip opens during scrolling
+- **Dismiss on scroll:** `window` scroll listener calls `closeTooltip()` immediately when the user scrolls
+- **Edit button taps:** `.edit-bind-btn` and `.binding-wrap` elements must be excluded from `preventDefault()` in the `touchend` handler — they rely on the synthetic click to reach the capture-phase `click` listener in the custom bindings IIFE. If you add other interactive elements inside rows in future, exempt them the same way.
+
 ## LSP Keymaps (Neovim 0.10+ built-in defaults)
 The Neovim-Specific card shows built-in defaults only — no custom config needed:
 - `gd` go to definition, `grr` references, `gri` implementation, `grn` rename
