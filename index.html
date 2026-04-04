@@ -1272,15 +1272,20 @@
     tooltipCmd.textContent = el.dataset.cmd || el.dataset.currentCmd
       || (el.querySelector('td:first-child') ? el.querySelector('td:first-child').textContent : el.textContent.trim());
     tooltipDesc.textContent = el.dataset.tip;
-    // Title color — match card header or legend badge color, reset for rows
+    // Accent color — match parent card header color in all cases
+    let accentColor = '';
     if (el.classList.contains('card-header')) {
-      tooltipCmd.style.color = getComputedStyle(el).color;
+      accentColor = getComputedStyle(el).color;
     } else if (el.closest('.legend')) {
       const badge = el.querySelector('.badge');
-      tooltipCmd.style.color = badge ? getComputedStyle(badge).color : '';
+      accentColor = badge ? getComputedStyle(badge).color : '';
     } else {
-      tooltipCmd.style.color = '';
+      // Row — walk up to the card and read its header color
+      const header = el.closest('.card')?.querySelector('.card-header');
+      accentColor = header ? getComputedStyle(header).color : '';
     }
+    tooltipCmd.style.color    = accentColor;
+    tooltip.style.borderColor = accentColor;
     // Example section — hide if no example
     if (el.dataset.example) {
       tooltipCode.textContent = el.dataset.example;
@@ -1334,6 +1339,7 @@
   function closeTooltip() {
     clearTimeout(autoCloseTimer);
     tooltip.classList.remove('visible');
+    tooltip.style.borderColor = '';
     tipVisible = false;
     activeRow  = null;
   }
