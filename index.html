@@ -124,7 +124,7 @@
   }
   .search-wrap input {
     width: 100%;
-    padding: 11px 16px 11px 42px;
+    padding: 11px 96px 11px 42px;
     background: #161b22;
     border: 1px solid #388bfd88;
     border-radius: 8px;
@@ -162,6 +162,26 @@
   .search-clear:hover { color: #e2e8f0; }
   body.light .search-clear { color: #8c959f; }
   body.light .search-clear:hover { color: #24292f; }
+  .search-hint {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    color: #6e7681;
+    padding: 2px 6px;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+    line-height: 1.5;
+  }
+  .search-hint.hidden { opacity: 0; }
+  body.light .search-hint { background: #f6f8fa; border-color: #d0d7de; color: #8c959f; }
   .search-icon {
     position: absolute;
     left: 13px;
@@ -600,7 +620,7 @@
   /* Customize toolbar */
   .customize-bar {
     display: flex; gap: 8px; justify-content: center; align-items: center;
-    flex-wrap: wrap; margin-bottom: 14px; font-size: 0.72rem; color: #8b949e;
+    flex-wrap: wrap; margin: 28px 0 8px; font-size: 0.72rem; color: #8b949e;
   }
   .customize-bar span { letter-spacing: 0.3px; }
   .customize-bar button {
@@ -799,6 +819,7 @@
 <div class="search-wrap">
   <span class="search-icon">🔍</span>
   <input type="text" id="search" placeholder="Type to filter commands…" autocomplete="off" spellcheck="false">
+  <span class="search-hint" id="searchHint">/ to search</span>
   <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
 </div>
 <div class="search-count" id="count"></div>
@@ -816,14 +837,6 @@
   <span data-cmd="Insert Mode" data-tip="Type text directly into the buffer. Enter with i (before cursor), a (after), o (new line below), or O (new line above). Return to Normal with Esc or Ctrl+[."><span class="badge badge-i">I</span> Insert</span>
   <span data-cmd="Visual Mode" data-tip="Select text interactively, then apply an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — returns to Normal automatically."><span class="badge badge-v">V</span> Visual</span>
   <span data-cmd="Command Mode" data-tip="Type Ex commands starting with :, or search with / and ?. Enter with : from Normal mode. Run with Enter, cancel with Esc. Supports tab completion for commands, files, and options."><span class="badge badge-c">C</span> Command</span>
-</div>
-
-<div class="customize-bar" id="customizeBar">
-  <span>✎ Custom bindings:</span>
-  <button id="exportBindings">📤 Export JSON</button>
-  <button id="importBindings">📥 Import JSON</button>
-  <button id="resetAllBindings" class="cb-reset" style="display:none">↺ Reset all</button>
-  <input type="file" id="importFile" accept=".json" style="display:none">
 </div>
 
 <!-- Confirm overlay dialog (reusable) -->
@@ -1071,6 +1084,14 @@
 
 </div>
 
+<div class="customize-bar" id="customizeBar">
+  <span>✎ Custom bindings:</span>
+  <button id="exportBindings">📤 Export JSON</button>
+  <button id="importBindings">📥 Import JSON</button>
+  <button id="resetAllBindings" class="cb-reset" style="display:none">↺ Reset all</button>
+  <input type="file" id="importFile" accept=".json" style="display:none">
+</div>
+
 <footer>
   Neovim Cheatsheet · Complete nvim command reference · Updated March 2026 · <a href="https://neovim.io" target="_blank" rel="noopener" style="color:#484f58;">neovim.io</a>
   <br>
@@ -1097,6 +1118,7 @@
 <script>
   const searchInput  = document.getElementById('search');
   const searchClear  = document.getElementById('searchClear');
+  const searchHint   = document.getElementById('searchHint');
   const countEl      = document.getElementById('count');
   const cards        = document.querySelectorAll('.card');
 
@@ -1138,6 +1160,27 @@
     return text.replace(re, '<mark>$1</mark>');
   }
 
+  // Search hint: show "/ to search" when empty & unfocused; hide otherwise
+  function updateSearchHint() {
+    const hide = searchInput.value.length > 0 || document.activeElement === searchInput;
+    searchHint.classList.toggle('hidden', hide);
+  }
+  searchInput.addEventListener('focus', updateSearchHint);
+  searchInput.addEventListener('blur',  updateSearchHint);
+
+  // "/" key focuses the search box (unless already in an input/textarea)
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      const tag = document.activeElement ? document.activeElement.tagName : '';
+      const editable = document.activeElement && document.activeElement.isContentEditable;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA' && !editable) {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    }
+  });
+
   searchClear.addEventListener('click', () => {
     searchInput.value = '';
     searchInput.dispatchEvent(new Event('input'));
@@ -1146,6 +1189,7 @@
 
   searchInput.addEventListener('input', () => {
     searchClear.classList.toggle('visible', searchInput.value.length > 0);
+    updateSearchHint();
     const query = searchInput.value.trim().toLowerCase();
 
     // Reset
