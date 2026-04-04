@@ -1345,6 +1345,16 @@
   }
 
 
+  // Track touch start position to distinguish taps from scrolls
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  // Close tooltip on scroll
+  window.addEventListener('scroll', () => { if (tipVisible) closeTooltip(); }, { passive: true });
+
   document.querySelectorAll('tr[data-tip]').forEach(row => {
     row.addEventListener('click', e => {
       if (!tipsEnabled() || tooltip.contains(e.target)) return;
@@ -1358,6 +1368,8 @@
     row.addEventListener('touchend', e => {
       if (!tipsEnabled() || tooltip.contains(e.target)) return;
       const t = e.changedTouches[0];
+      // Ignore if finger moved — user was scrolling, not tapping
+      if (Math.abs(t.clientX - touchStartX) > 8 || Math.abs(t.clientY - touchStartY) > 8) return;
       const el = document.elementFromPoint(t.clientX, t.clientY);
       if (!el || !el.closest('tr[data-tip]')) return;
       // Let the edit button and edit UI buttons' synthetic clicks through
