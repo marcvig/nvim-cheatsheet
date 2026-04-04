@@ -1346,6 +1346,18 @@
       if (tipVisible && activeRow === row) { closeTooltip(); return; }
       openTooltip(row);
     });
+    // iOS/tablet: touchend fires before the synthetic click, so handle it
+    // here and preventDefault() to suppress the follow-up click event.
+    // This gives a true single-tap open on iOS Safari.
+    row.addEventListener('touchend', e => {
+      if (!tipsEnabled() || tooltip.contains(e.target)) return;
+      const t = e.changedTouches[0];
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      if (!el || !el.closest('tr[data-tip]')) return;
+      e.preventDefault();
+      if (tipVisible && activeRow === row) { closeTooltip(); return; }
+      openTooltip(row);
+    }, { passive: false });
   });
 
   // ── Card headers + legend badges ──────────────────────────────────────
