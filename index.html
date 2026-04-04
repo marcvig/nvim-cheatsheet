@@ -1360,8 +1360,8 @@
       const t = e.changedTouches[0];
       const el = document.elementFromPoint(t.clientX, t.clientY);
       if (!el || !el.closest('tr[data-tip]')) return;
-      // Let the edit button's synthetic click through so startEdit() fires
-      if (el.closest('.edit-bind-btn')) return;
+      // Let the edit button and edit UI buttons' synthetic clicks through
+      if (el.closest('.edit-bind-btn') || el.closest('.binding-wrap')) return;
       e.preventDefault();
       if (tipVisible && activeRow === row) { closeTooltip(); return; }
       openTooltip(row);
