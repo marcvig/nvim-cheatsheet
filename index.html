@@ -582,7 +582,8 @@
     border-radius: 3px; line-height: 1; opacity: 0;
     transition: opacity 0.15s, color 0.15s, background 0.15s;
   }
-  tr:hover .edit-bind-btn { opacity: 1; }
+  tr:hover .edit-bind-btn,
+  tr.row-touched .edit-bind-btn { opacity: 1; }
   .edit-bind-btn:hover { color: #7ee787; background: #7ee78718; }
 
   /* Green dot on customized rows */
@@ -1352,8 +1353,11 @@
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
-  // Close tooltip on scroll
-  window.addEventListener('scroll', () => { if (tipVisible) closeTooltip(); }, { passive: true });
+  // Close tooltip and clear touch highlight on scroll
+  window.addEventListener('scroll', () => {
+    if (tipVisible) closeTooltip();
+    document.querySelectorAll('tr.row-touched').forEach(r => r.classList.remove('row-touched'));
+  }, { passive: true });
 
   document.querySelectorAll('tr[data-tip]').forEach(row => {
     row.addEventListener('click', e => {
@@ -1375,6 +1379,9 @@
       // Let the edit button and edit UI buttons' synthetic clicks through
       if (el.closest('.edit-bind-btn') || el.closest('.binding-wrap')) return;
       e.preventDefault();
+      // Mark row as touched so the edit icon becomes visible (mirrors :hover on real devices)
+      document.querySelectorAll('tr.row-touched').forEach(r => r.classList.remove('row-touched'));
+      row.classList.add('row-touched');
       if (tipVisible && activeRow === row) { closeTooltip(); return; }
       openTooltip(row);
     }, { passive: false });
