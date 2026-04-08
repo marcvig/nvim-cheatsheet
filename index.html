@@ -1522,10 +1522,9 @@
 <script>
   const themeToggle = document.getElementById('themeToggle');
 
-  // Apply saved preference on load
+  // Apply saved preference on load — dark is always the default
   const savedTheme = localStorage.getItem('nvim-theme');
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+  if (savedTheme === 'light') {
     document.body.classList.add('light');
   }
   document.documentElement.classList.remove('preload-light');
