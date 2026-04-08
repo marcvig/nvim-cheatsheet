@@ -91,7 +91,8 @@
      ============================================================ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap"></noscript>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -1454,8 +1455,9 @@
   });
 </script>
 
-<script src="/confetti.browser.min.js"></script>
+<script src="/confetti.browser.min.js" defer></script>
 <script>
+  window.addEventListener('load', function() {
   const penguinBtn = document.getElementById('penguinBtn');
   let penguinBusy = false;
 
@@ -1498,6 +1500,7 @@
       }, 450);
     }, 750);
   });
+  }); // end load
 </script>
 
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
