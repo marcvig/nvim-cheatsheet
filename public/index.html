@@ -227,6 +227,7 @@
   }
   .legend span { display: flex; align-items: center; gap: 5px; }
   .legend-dot { width: 7px; height: 7px; border-radius: 50%; background: #7ee787; flex: none; }
+  .cs-reset-hint { font-size: 11px; color: #8b949e; margin-top: 7px; line-height: 1.4; }
   .badge {
     display: inline-block;
     padding: 2px 8px;
@@ -667,6 +668,7 @@
   body.light .edit-bind-btn:hover { color: #116329; background: #11632912; }
   body.light tr.has-custom td:first-child::before { background: #116329; }
   body.light .legend-dot { background: #116329; }
+  body.light .cs-reset-hint { color: #57606a; }
   body.light .binding-input { background: #f6f8fa; border-color: #0969da88; color: #9a6700; }
   body.light .binding-input:focus { border-color: #116329; box-shadow: 0 0 0 2px #11632912; }
   body.light .binding-save { color: #116329; border-color: #11632955; }
@@ -788,6 +790,88 @@
 </style>
 </head>
 <body>
+<!-- cs-meganav:start -->
+  <style>
+  .cs-meganav { display: none; }
+  @media (min-width: 800px) {
+    .cs-meganav { display: block; position: absolute; top: 18px; right: max(16px, calc(50vw - 700px + 16px)); z-index: 60; }
+  }
+  .cs-meganav-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 8px; padding: 0; cursor: pointer; transition: border-color .15s, color .15s, box-shadow .15s; }
+  .cs-meganav-btn:hover, .cs-meganav-btn[aria-expanded="true"] { border-color: #7ee787; color: #fff; box-shadow: 0 0 11px color-mix(in srgb, #7ee787 32%, transparent); }
+  .cs-meganav-panel { position: absolute; top: calc(100% + 8px); right: 0; width: 320px; max-width: 86vw; background: #161b22; border: 1px solid #30363d; border-radius: 12px; box-shadow: 0 16px 44px rgba(0,0,0,.55); padding: 12px; opacity: 0; visibility: hidden; transform: translateY(-6px); pointer-events: none; transition: opacity .16s ease, transform .16s ease, visibility .16s; }
+  .cs-meganav.open .cs-meganav-panel { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+  .cs-meganav-head { display: flex; align-items: center; gap: 10px; padding: 3px 11px 11px; margin: 0 0 6px; border-bottom: 1px solid rgba(255,255,255,.07); text-decoration: none; }
+  .cs-meganav-head-txt { font-size: 13px; font-weight: 600; color: #e6edf3; transition: color .15s; }
+  .cs-meganav-head-arrow { margin-left: auto; color: #6e7681; font-size: 15px; transition: color .15s, transform .15s; }
+  .cs-meganav-head:hover .cs-meganav-head-txt { color: #7ee787; }
+  .cs-meganav-head:hover .cs-meganav-head-arrow { color: #7ee787; transform: translateX(2px); }
+  .cs-meganav-head:hover .cs-meganav-vl { filter: brightness(1.15) drop-shadow(0 0 5px color-mix(in srgb, #7ee787 60%, transparent)); }
+  .cs-meganav-grid { display: flex; flex-direction: column; gap: 3px; }
+  .cs-meganav-card { display: flex; align-items: center; gap: 11px; padding: 9px 10px; border-radius: 9px; text-decoration: none; border: 1px solid transparent; transition: background .12s, border-color .12s; }
+  .cs-meganav-card:hover { background: #1f2630; border-color: #7ee787; }
+  .cs-meganav-ico { flex: none; width: 22px; height: 22px; background: #f4f6f8; padding: 3px; border-radius: 6px; box-sizing: content-box; object-fit: contain; display: inline-flex; align-items: center; justify-content: center; }
+  .cs-meganav-ico--tmux { background: #10b981; padding: 0; width: 28px; height: 28px; }
+  .cs-meganav-vl { height: 20px; width: auto; transition: filter .15s; }
+  .cs-meganav-txt { display: flex; flex-direction: column; line-height: 1.3; }
+  .cs-meganav-name { color: #e6edf3; font-size: 13.5px; font-weight: 600; }
+  .cs-meganav-tag { color: #8b949e; font-size: 11.5px; margin-top: 1px; }
+  body.light .cs-meganav-btn { background: #eaeef2; color: #24292f; border-color: #d0d7de; }
+  body.light .cs-meganav-btn:hover, body.light .cs-meganav-btn[aria-expanded="true"] { color: #1a1e22; border-color: #116329; box-shadow: 0 0 11px color-mix(in srgb, #116329 26%, transparent); }
+  body.light .cs-meganav-panel { background: #ffffff; border-color: #d0d7de; box-shadow: 0 16px 44px rgba(0,0,0,.16); }
+  body.light .cs-meganav-name { color: #1f2328; }
+  body.light .cs-meganav-tag { color: #57606a; }
+  body.light .cs-meganav-head-txt { color: #1f2328; }
+  body.light .cs-meganav-head { border-bottom-color: rgba(0,0,0,.08); }
+  body.light .cs-meganav-head:hover .cs-meganav-head-txt { color: #116329; }
+  body.light .cs-meganav-head:hover .cs-meganav-head-arrow { color: #116329; }
+  body.light .cs-meganav-head:hover .cs-meganav-vl { filter: brightness(.92) drop-shadow(0 0 4px color-mix(in srgb, #116329 45%, transparent)); }
+  body.light .cs-meganav-card:hover { background: #f3f5f8; border-color: #116329; }
+  </style>
+  <nav class="cs-meganav" id="csMeganav" aria-label="Other Vigod Labs cheatsheets">
+    <button class="cs-meganav-btn" id="csMeganavBtn" aria-haspopup="true" aria-expanded="false" aria-label="Other free cheatsheets by Vigod Labs" title="Other free cheatsheets by Vigod Labs">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+    <div class="cs-meganav-panel" id="csMeganavPanel" role="menu">
+      <a class="cs-meganav-head" href="https://vigodlabs.com/cheatsheets" title="See all Vigod Labs cheatsheets"><svg class="cs-meganav-vl" xmlns="http://www.w3.org/2000/svg" viewBox="144 78 2906 1364" fill="#b7f12d" role="img" aria-label="Vigod Labs"><path d="M3039 78q-11 1-24 7l-15 6c-7 1-20 5-21 7l-14 4-19 6-17 5-23 7-119 39c-8 2-17 5-19 7l-16 5-17 5-17 6-19 6-16 6-17 5-16 5-17 6-15 5-16 5-17 6-18 6-36 14-34 12-16 5-15 5-15 5-15 4-34 12-22 7-11 4-16 6-15 6-17 6-14 6-15 5-16 6-17 6-17 6-16 6-16 5-18 6-19 6-16 4c-10 2-10 2-20 7l-16 7q-9 3-12 8-2 3 1 5l6 2 55-6 38-5 40-6a2474 2474 0 0 1 174-20q19-1 46-7c7-1 10 7 6 13l-6 8a641 641 0 0 0-49 64l-7 9a792 792 0 0 0-60 76l-8 10-16 21-7 9-20 26-17 21-6 7-6 7-23 28a426 426 0 0 0-37 47l-46 58-28 33q-1 3-6 8a697 697 0 0 0-46 59l-24 29-21 26-6 7-7 9-13 19-8 10-30 40-5 5-4 5-6 8-5 6-17 21-14 19-6 7-22 28-7 9-25 32a336 336 0 0 1-34 45l-12 16-4 6-7 8-6 8a151 151 0 0 0-24 30l-21 26-13 16-31 39-29 39a237 237 0 0 1-31 41q-4 4-6 9-4 10 2 13c2 2 8 2 87 2 99 1 90 2 100-10l19-24q8-12 26-33l7-10 45-55 22-28 18-22 11-12 59-69 23-30 44-52 25-29 9-10 11-12 18-21 24-28 47-55 32-38 15-17 11-12 8-10a1565 1565 0 0 1 88-100l44-51 37-40 64-68 65-72 42-43 49-50a16465 16465 0 0 1 257-261l81-81c11-10 11-11 11-15q0-4-2-5zM147 80q-4 1-3 7 0 3 5 7l7 7 96 96a7822 7822 0 0 0 182 184l178 184 14 15a1899 1899 0 0 1 100 106 919 919 0 0 1 75 84 797 797 0 0 0 63 69l17 19 95 108 11 13 71 82 18 21 22 26 55 63 17 20 17 21 50 62 21 26 12 13 43 53 32 40 21 27c5 6 6 7 11 8l46 1 134-2q2 0 4-4 3-8-6-19l-22-29-6-9-5-7-4-5a1723 1723 0 0 1-87-111l-9-12-13-17-5-6-8-10-15-17-27-34-7-9-8-11a599 599 0 0 0-44-54l-41-51-22-30-22-26-4-6-5-5a544 544 0 0 0-46-59l-7-9-6-7-4-5q-2 0-7-8l-6-7-5-7-37-47-19-26-7-8-28-33a998 998 0 0 1-62-76l-40-51-12-16-9-11-9-10-3-5-5-6-8-10-32-39-16-20-29-35-22-26-8-10-7-9-6-8-8-10-13-16c-20-25-18-23-16-26q1-6 13-4l24 1a985 985 0 0 1 122 13l182 23c21 2 25 2 25-4q1-2-5-5l-5-4-12-6q-11-5-21-7l-17-5-21-6-32-11-19-7-14-5-18-6-18-6-17-5-16-6-18-5-16-6-17-6-17-6-27-10-17-6-20-7-22-8-14-4-17-6-15-4-22-6-37-11-19-6-12-4-23-8q-7-1-15-5l-16-5-16-6-19-6-14-5-19-7-17-6-13-5-31-11c-8-1-19-4-24-7l-12-4-19-5-37-12-20-5-18-6-19-6-17-6-16-6-16-5-17-6q-12-3-17-6l-20-7zM1518 363q-10 3-16 11c-7 10-8 14-8 24 1 10 2 14 10 23 10 12 9 9 9 39l-1 38c-1 11-1 12-15 34l-6 11-6 10-4 7-5 9-7 13-5 8-6 10-12 20-5 8-6 10-5 8-6 9-7 12-5 9-4 11c-6 12-7 20-6 39 0 16 1 22 5 27l4 10c5 12 30 41 37 43l9 5 6 4h268l4-2q14-6 23-17 16-15 17-21l7-14c6-12 7-19 7-42q1-29-4-36l-7-11-6-11-6-10-6-12-6-9-5-8-6-10-6-10-5-7-5-8-8-12-9-15-6-10-7-12-20-30-2-6 1-33c0-24 1-33 2-35l10-12c11-11 13-16 12-29q-1-15-9-22c-8-9-3-8-70-9zm141 36q8 4-3 13c-9 9-9 7-9 55 0 39 0 41 2 47l5 10 13 20 7 12 6 11 4 7 5 9 7 12 7 13 6 11 4 5 4 7 8 12 5 8 6 10 6 9 4 8c7 9 14 30 15 41q1 7-2 16-6 18-13 26l-13 13-3 2c-4 3-12 4-44 5-34 1-211 1-217-1-5-1-15-8-21-15q-10-12-12-26a107 107 0 0 1 19-73l4-8 7-13 5-8 5-9 7-10 4-7 6-11q2-6 6-11l6-10 5-9 6-8 7-11 6-10 4-8q5-7 9-22c2-8 2-11 2-46-1-43 0-41-9-52q-6-6-5-10c0-6-2-6 66-6 60 0 61 0 63 2"/><path d="M1604 593q-13 6-21 21c-2 6-2 18 1 24s12 16 16 18q9 5 20 2 5 0 12-8 9-8 10-13 4-10 1-18c-2-8-4-11-11-18q-7-7-11-8zM1502 674c-9 1-23 5-28 8q-10 7-18 17c-7 9-9 12-9 24 1 9 1 10 4 15 9 16 15 21 24 24a2133 2133 0 0 0 237 2c11-4 16-8 24-23 5-7 6-12 6-23 0-9-1-13-6-20q-7-10-16-15c-6-3-11-2-24 4l-31 13c-35 8-51 7-75-5l-18-9q-33-16-70-12"/><path d="m2174 564-16 3-87 13c-8 2-18 8-22 12l-12 16-6 9-9 12-12 16-14 18-5 8-8 10-19 25-8 12-22 29-6 9-7 9-4 6-6 7-6 8-17 22-20 24-11 16-31 44-6 8-10 13-10 12-37 46-22 30-6 8-5 7-6 8-5 8-7 9-4 5-5 7-24 31-6 8-6 8-6 8-4 6-5 7-16 21-8 11-19 23c-8 1-10 0-16-8l-19-25-47-60-6-8-4-5-6-10-7-9q-2-5-5-7l-5-8-7-8-29-41-6-9-9-11-17-21-5-6-7-9-16-22-6-7-5-8-6-7-5-7-7-9-5-7-6-7-7-9-4-4-4-7-18-25c-2-4-19-27-40-52l-8-9-32-42-5-8-7-8-16-23-22-29-23-30-7-9c-2-4-11-12-15-15-3-2-14-5-23-5l-54-8-56-8q-8 4 0 13l9 12 12 16a770 770 0 0 0 63 86l5 7 5 6 37 48 4 5 5 8 7 8 6 8 6 8 17 24 8 10 19 24 31 38 37 46 6 8q4 4 5 8l5 7 7 8 7 9 20 26 15 21 8 11 7 10 5 7 4 4q3 7 17 23l13 15 5 7 3 6 8 9 38 47 19 28a572 572 0 0 0 62 79q5 5 6 9l6 8q5 4 7 9l40 45c7 2 13-3 36-30l22-27 6-10 6-8 5-6 4-7 7-8 33-44 16-21 20-26 8-12 7-9 7-9 7-8 3-4 5-6 7-9 30-38 6-9 10-12 22-30q2-4 6-8l6-8 6-9 4-6 16-20 8-10 7-9 6-7q1-4 14-18l6-8 7-9 14-18 6-8 8-11a367 367 0 0 1 38-52l7-9 6-9 17-21 35-48q10-15 25-33l8-11 50-70c18-26 19-27 19-30q0-4-3-6-3-4-10-2"/></svg><span class="cs-meganav-head-txt">Vigod Labs Cheat Sheets</span><span class="cs-meganav-head-arrow" aria-hidden="true">&rarr;</span></a>
+      <div class="cs-meganav-grid">
+      <a class="cs-meganav-card" role="menuitem" href="https://gitcheatsheets.org">
+        <span class="cs-meganav-ico"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#0d1117"/><circle cx="10" cy="8" r="3" fill="none" stroke="#1D9E75" stroke-width="2.2"/><circle cx="10" cy="24" r="3" fill="none" stroke="#1D9E75" stroke-width="2.2"/><circle cx="22" cy="13" r="3" fill="none" stroke="#1D9E75" stroke-width="2.2"/><line x1="10" y1="11" x2="10" y2="21" stroke="#1D9E75" stroke-width="2.2" stroke-linecap="round"/><path d="M10 11 Q10 13 22 13" fill="none" stroke="#1D9E75" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+        <span class="cs-meganav-txt"><b class="cs-meganav-name">Git &amp; GitHub</b><span class="cs-meganav-tag">Every git command in one place</span></span>
+      </a>
+      <a class="cs-meganav-card" role="menuitem" href="https://tmuxcheatsheet.org">
+        <span class="cs-meganav-ico cs-meganav-ico--tmux" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg></span>
+        <span class="cs-meganav-txt"><b class="cs-meganav-name">Tmux</b><span class="cs-meganav-tag">Every tmux command, searchable &amp; copyable</span></span>
+      </a>
+      <a class="cs-meganav-card" role="menuitem" href="https://zellijcheatsheet.dev">
+        <span class="cs-meganav-ico"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#0f1117"/><text x="16" y="23" font-family="monospace" font-size="17" font-weight="bold" fill="#c084fc" text-anchor="middle">zj</text></svg></span>
+        <span class="cs-meganav-txt"><b class="cs-meganav-name">Zellij</b><span class="cs-meganav-tag">Every Zellij keybinding, searchable</span></span>
+      </a>
+      <a class="cs-meganav-card" role="menuitem" href="https://atuin.linuz.com">
+        <span class="cs-meganav-ico"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><defs><linearGradient id="csAtuinG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c6af7"/><stop offset="100%" stop-color="#5bc4f5"/></linearGradient></defs><rect width="32" height="32" rx="6" fill="#0f1117"/><text x="16" y="23" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="22" fill="url(#csAtuinG)">A</text></svg></span>
+        <span class="cs-meganav-txt"><b class="cs-meganav-name">Atuin</b><span class="cs-meganav-tag">Every shell-history command, one page</span></span>
+      </a>
+      <a class="cs-meganav-card" role="menuitem" href="https://fresheditor.linuz.com">
+        <span class="cs-meganav-ico"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#0a0a0a"/><text x="16" y="22" font-family="monospace" font-size="18" font-weight="bold" fill="#10b981" text-anchor="middle">f</text></svg></span>
+        <span class="cs-meganav-txt"><b class="cs-meganav-name">Fresh Editor</b><span class="cs-meganav-tag">Every Fresh shortcut, searchable</span></span>
+      </a>
+      </div>
+    </div>
+  </nav>
+  <script>
+  (function(){
+    var nav=document.getElementById('csMeganav'),btn=document.getElementById('csMeganavBtn'),t;
+    if(!nav||!btn)return;
+    function openNav(){clearTimeout(t);nav.classList.add('open');btn.setAttribute('aria-expanded','true');}
+    function closeNav(){clearTimeout(t);nav.classList.remove('open');btn.setAttribute('aria-expanded','false');}
+    function closeSoon(){clearTimeout(t);t=setTimeout(closeNav,180);}
+    nav.addEventListener('mouseenter',openNav);
+    nav.addEventListener('mouseleave',closeSoon);
+    btn.addEventListener('click',function(e){e.stopPropagation();nav.classList.contains('open')?closeNav():openNav();});
+    document.addEventListener('click',function(e){if(!nav.contains(e.target))closeNav();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+  })();
+  </script>
+  <!-- cs-meganav:end -->
 
 <!-- Tooltip popup -->
 <div id="tooltip" class="tooltip" role="tooltip">
@@ -808,6 +892,7 @@
       <code class="tooltip-example-code" id="tooltipCustomCode"></code>
       <button class="tooltip-copy" id="tooltipCustomCopy">Copy</button>
     </div>
+    <div class="cs-reset-hint">Click the pencil to edit this binding, or ↩ to reset it to the default.</div>
   </div>
 </div>
 
