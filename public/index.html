@@ -226,6 +226,7 @@
     font-size: 0.78rem;
   }
   .legend span { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; background: #7ee787; flex: none; }
   .badge {
     display: inline-block;
     padding: 2px 8px;
@@ -665,6 +666,7 @@
   body.light .edit-bind-btn { color: #6a737d; }
   body.light .edit-bind-btn:hover { color: #116329; background: #11632912; }
   body.light tr.has-custom td:first-child::before { background: #116329; }
+  body.light .legend-dot { background: #116329; }
   body.light .binding-input { background: #f6f8fa; border-color: #0969da88; color: #9a6700; }
   body.light .binding-input:focus { border-color: #116329; box-shadow: 0 0 0 2px #11632912; }
   body.light .binding-save { color: #116329; border-color: #11632955; }
@@ -866,6 +868,7 @@
   <span data-cmd="Insert Mode" data-tip="Type text directly into the buffer. Enter with i (before cursor), a (after), o (new line below), or O (new line above). Return to Normal with Esc or Ctrl+[."><span class="badge badge-i">I</span> Insert</span>
   <span data-cmd="Visual Mode" data-tip="Select text interactively, then apply an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — returns to Normal automatically."><span class="badge badge-v">V</span> Visual</span>
   <span data-cmd="Command Mode" data-tip="Type Ex commands starting with :, or search with / and ?. Enter with : from Normal mode. Run with Enter, cancel with Esc. Supports tab completion for commands, files, and options."><span class="badge badge-c">C</span> Command</span>
+  <span data-cmd="Custom binding" data-tip="A green dot marks a row whose keybinding you changed from the default. Overrides save in this browser only. Click the pencil on any row to edit one, or use Reset all to restore defaults."><span class="legend-dot"></span> Custom binding</span>
 </div>
 
 <!-- Confirm overlay dialog (reusable) -->
