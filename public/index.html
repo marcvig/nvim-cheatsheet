@@ -904,9 +904,9 @@
     <div class="card-header" data-cmd="Navigation" data-tip="In Normal mode use h/j/k/l instead of arrow keys. Combine motions with counts: 5j moves 5 lines down. Motions also work as operator arguments — d5j deletes 5 lines down.">Navigation — Basic</div>
     <table>
       <tr data-tip="Move the cursor left (h), down (j), up (k), or right (l) — prefix with a count" data-example="5j"><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
-      <tr data-tip="Move forward to the start of the next word; W skips over punctuation" data-example="3w"><td>w / W</td><td>Next word / WORD</td></tr>
-      <tr data-tip="Move backward to the start of the previous word; B skips over punctuation" data-example="b"><td>b / B</td><td>Prev word / WORD</td></tr>
-      <tr data-tip="Move to the end of the current or next word; E skips over punctuation" data-example="e"><td>e / E</td><td>End of word / WORD</td></tr>
+      <tr data-tip="Move forward to the start of the next word; w stops at punctuation while W (WORD) uses whitespace-only boundaries, keeping punctuation as part of the WORD" data-example="3w"><td>w / W</td><td>Next word / WORD</td></tr>
+      <tr data-tip="Move backward to the start of the previous word; b stops at punctuation while B (WORD) uses whitespace-only boundaries, keeping punctuation as part of the WORD" data-example="b"><td>b / B</td><td>Prev word / WORD</td></tr>
+      <tr data-tip="Move to the end of the current or next word; e stops at punctuation while E (WORD) uses whitespace-only boundaries, keeping punctuation as part of the WORD" data-example="e"><td>e / E</td><td>End of word / WORD</td></tr>
       <tr data-tip="Jump to column 0 (0) or the first non-blank character on the line (^)" data-example="^"><td>0 / ^</td><td>Line start / first non-blank</td></tr>
       <tr data-tip="Move to the last character on the current line" data-example="$"><td>$</td><td>Line end</td></tr>
       <tr data-tip="Jump to the very first line (gg) or very last line (G) of the file" data-example="gg"><td>gg / G</td><td>File start / file end</td></tr>
@@ -995,8 +995,8 @@
       <tr data-tip="Open a specific file in a new tab page" data-example=":tabnew index.lua"><td>:tabnew {file}</td><td>Open file in new tab</td></tr>
       <tr data-tip="Switch to the next (gt) or previous (gT) tab page" data-example="gt"><td>gt / gT</td><td>Next / prev tab</td></tr>
       <tr data-tip="Go to the next (:tabn) or previous (:tabp) tab page" data-example=":tabn"><td>:tabn / :tabp</td><td>Next / prev tab</td></tr>
-      <tr data-tip="Close the current tab page — prompts if there are unsaved buffers" data-example=":tabclose"><td>:tabclose</td><td>Close current tab</td></tr>
-      <tr data-tip="Close all tab pages except the current one" data-example=":tabonly" data-danger="Closes all other tab pages immediately"><td>:tabonly</td><td>Close all other tabs</td></tr>
+      <tr data-tip="Close the current tab page. It refuses (no prompt) when a buffer has unsaved changes and no other window shows it; use :tabclose! to force" data-example=":tabclose"><td>:tabclose</td><td>Close current tab</td></tr>
+      <tr data-tip="Close all tab pages except the current one. Tabs whose buffers have unsaved changes are kept (changes are never discarded); use :tabonly! to force-hide them." data-example=":tabonly" data-danger="Closes other tabs, but tabs with unsaved changes are kept unless you use :tabonly!"><td>:tabonly</td><td>Close all other tabs</td></tr>
       <tr data-tip="Jump directly to tab number N" data-example="3gt"><td>{N}gt</td><td>Go to tab N</td></tr>
     </table>
   </div>
@@ -1004,7 +1004,7 @@
   <div class="card">
     <div class="card-header" data-cmd="Files & Buffers" data-tip="A buffer is an in-memory copy of a file. You can have many buffers open at once — :ls lists them all, :bn/:bp navigates between them. Splits and tabs are just different views into buffers.">Files &amp; Buffers</div>
     <table>
-      <tr data-tip="Open a file for editing — creates it if it doesn't exist yet" data-example=":e src/main.lua"><td>:e {file}</td><td>Edit file</td></tr>
+      <tr data-tip="Open a file for editing. If it does not exist yet, this opens an empty buffer; the file is written to disk only when you save (:w)" data-example=":e src/main.lua"><td>:e {file}</td><td>Edit file</td></tr>
       <tr data-tip="Write the current buffer to disk" data-example=":w"><td>:w</td><td>Save</td></tr>
       <tr data-tip="Write the current buffer to a new filename (Save As)" data-example=":w newfile.txt"><td>:w {file}</td><td>Save as</td></tr>
       <tr data-tip="Write the file and automatically create any missing parent directories" data-example=":w ++p"><td>:w ++p</td><td>Save, creating parent dirs if needed</td></tr>
@@ -1075,7 +1075,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header teal" data-cmd="Neovim-Specific" data-tip="Features unique to Neovim or its ecosystem. LSP keymaps (gd, grr, gra, etc.) are built-in defaults since Neovim 0.10 — no config needed, work on any machine or server. Plugin managers like Lazy.nvim and Mason require installation.">Neovim-Specific</div>
+    <div class="card-header teal" data-cmd="Neovim-Specific" data-tip="Features unique to Neovim or its ecosystem. LSP keymaps (grr, gri, grn, gra, etc.) are built-in defaults, no config needed, working on any machine or server (K hover and ]d/[d diagnostics since 0.10; the gr* family since 0.11). Note: gd is a built-in Vim motion (local declaration), not an LSP default. Plugin managers like Lazy.nvim and Mason require installation.">Neovim-Specific</div>
     <table>
       <tr data-tip="Run Neovim's built-in health checks for plugins and system dependencies. Shows what LSP servers, tools, and providers are properly installed." data-example=":checkhealth"><td>:checkhealth</td><td>Run health diagnostics</td></tr>
       <tr data-tip="Open a built-in terminal emulator inside a new buffer. The terminal runs in a special mode — normal editing keys are passed to the shell, not Neovim." data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
@@ -1083,13 +1083,13 @@
       <tr data-tip="Open the Lazy.nvim plugin manager UI to install, update, or remove plugins. Lazy.nvim is the most popular Neovim plugin manager — requires it to be configured in your init.lua first." data-example=":Lazy"><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
       <tr data-tip="Open Mason to browse and install LSP servers, formatters, and linters. Mason manages the binaries; you still need to configure each server in your init.lua via lspconfig or similar." data-example=":Mason"><td>:Mason</td><td>Open Mason LSP installer</td></tr>
       <tr data-tip="Show hover documentation for the symbol under the cursor. Built-in default since Neovim 0.10 — no config needed. Requires an LSP server attached to the buffer. Press K again to enter the hover window." data-example="K"><td>K</td><td>LSP hover docs</td></tr>
-      <tr data-tip="Jump to the definition of the symbol under the cursor. Built-in default since Neovim 0.10 — works on any machine without custom keymaps. Use Ctrl+o to jump back after." data-example="gd"><td>gd</td><td>Go to definition (LSP)</td></tr>
-      <tr data-tip="Show all references to the symbol under the cursor in a quickfix list. Built-in default since Neovim 0.10 — grr (two r's) not gr. Use :cn / :cp to navigate the quickfix list." data-example="grr"><td>grr</td><td>Find references (LSP)</td></tr>
-      <tr data-tip="Jump to the implementation(s) of the symbol under the cursor — useful for interfaces and abstract methods. Built-in default since Neovim 0.10, no config needed." data-example="gri"><td>gri</td><td>Go to implementation (LSP)</td></tr>
-      <tr data-tip="Rename the symbol under the cursor across the entire project via LSP. Built-in default since Neovim 0.10 — smarter than find-and-replace because it understands scope and references." data-example="grn"><td>grn</td><td>Rename symbol (LSP)</td></tr>
-      <tr data-tip="Trigger a code action at the cursor — auto-import, extract variable, fix diagnostic, etc. Built-in default since Neovim 0.10. You may have seen &lt;leader&gt;ca used instead — that is a custom mapping for the same thing, not a built-in." data-example="gra"><td>gra</td><td>Code action (LSP)</td></tr>
-      <tr data-tip="List all symbols in the current file (functions, classes, variables) via LSP. Built-in default since Neovim 0.10. Results open in a quickfix list — use :cn / :cp to navigate." data-example="gO"><td>gO</td><td>Document symbols (LSP)</td></tr>
-      <tr data-tip="Show the function signature (parameter types and docs) for the call under the cursor. Built-in default since Neovim 0.10 — works in Insert mode while typing a function call." data-example="Ctrl+S"><td>Ctrl+S <span style="font-size:0.7em;color:#8b949e">(Insert)</span></td><td>Signature help (LSP)</td></tr>
+      <tr data-tip="Built-in Vim motion: jump to the local declaration (first occurrence) of the keyword under the cursor in the current function or file. This is NOT LSP go-to-definition, which has no default mapping; map vim.lsp.buf.definition() yourself, or use Ctrl+] for a tag jump. Ctrl+o jumps back." data-example="gd"><td>gd</td><td>Go to local declaration</td></tr>
+      <tr data-tip="Show all references to the symbol under the cursor in a quickfix list. Built-in default since Neovim 0.11, grr (two r's) not gr. Use :cn / :cp to navigate the quickfix list." data-example="grr"><td>grr</td><td>Find references (LSP)</td></tr>
+      <tr data-tip="Jump to the implementation(s) of the symbol under the cursor, useful for interfaces and abstract methods. Built-in default since Neovim 0.11, no config needed." data-example="gri"><td>gri</td><td>Go to implementation (LSP)</td></tr>
+      <tr data-tip="Rename the symbol under the cursor across the entire project via LSP. Built-in default since Neovim 0.11, smarter than find-and-replace because it understands scope and references." data-example="grn"><td>grn</td><td>Rename symbol (LSP)</td></tr>
+      <tr data-tip="Trigger a code action at the cursor: auto-import, extract variable, fix diagnostic, etc. Built-in default since Neovim 0.11. You may have seen &lt;leader&gt;ca used instead, that is a custom mapping for the same thing, not a built-in." data-example="gra"><td>gra</td><td>Code action (LSP)</td></tr>
+      <tr data-tip="List all symbols in the current file (functions, classes, variables) via LSP. Built-in default, no config needed. Results open in the location-list, use :lnext / :lprev to navigate." data-example="gO"><td>gO</td><td>Document symbols (LSP)</td></tr>
+      <tr data-tip="Show the function signature (parameter types and docs) for the call under the cursor. Built-in default since Neovim 0.11, works in Insert mode while typing a function call." data-example="Ctrl+S"><td>Ctrl+S <span style="font-size:0.7em;color:#8b949e">(Insert)</span></td><td>Signature help (LSP)</td></tr>
       <tr data-tip="Jump to the next (]d) or previous ([d) LSP diagnostic in the buffer — errors, warnings, and hints. Built-in defaults since Neovim 0.10, no config needed." data-example="]d"><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
     </table>
   </div>
@@ -1107,7 +1107,7 @@
       <tr data-tip="Run a shell command and insert its stdout output below the cursor" data-example=":r !date"><td>:r !{cmd}</td><td>Insert shell output at cursor</td></tr>
       <tr data-tip="Show where a key mapping was defined — useful for debugging config conflicts" data-example=":verbose map &lt;leader&gt;f"><td>:verbose map {key}</td><td>Show where a key is mapped</td></tr>
       <tr data-tip="Show the current filename, modification status, and cursor position in the status line" data-example="Ctrl+g"><td>Ctrl+g</td><td>Show file info + cursor position</td></tr>
-      <tr data-tip="Show the ASCII decimal, hex, and Unicode code point of the character under the cursor" data-example="ga"><td>ga</td><td>Show ASCII/Unicode of character</td></tr>
+      <tr data-tip="Show the decimal, hex, and octal value of the character under the cursor (the Unicode/byte view is g8)" data-example="ga"><td>ga</td><td>Show character codes (dec/hex/octal)</td></tr>
     </table>
   </div>
 
