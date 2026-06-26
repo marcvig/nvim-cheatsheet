@@ -6,3 +6,7 @@
 !.env.example
 .DS_Store
 .claude/
+
+# agent / local artifacts (auto-generated, kept out of the repo)
+AGENTS.md
+nvim.log
