@@ -10,3 +10,6 @@
 # agent / local artifacts (auto-generated, kept out of the repo)
 AGENTS.md
 nvim.log
+
+# local AI/dev notes (not for the public repo)
+CLAUDE.md
