@@ -10,7 +10,7 @@ An interactive, searchable Neovim cheatsheet: keybindings, motions, and editing 
 - Click any binding for a description and example
 - Remappable bindings you can edit in the browser, with JSON import/export
 - Light and dark mode
-- No tracking, no logins, no telemetry
+- No logins, no ads
 
 ## Contributing
 
