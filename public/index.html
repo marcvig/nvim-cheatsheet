@@ -16,7 +16,7 @@
 <!-- ============================================================
      PRIMARY META
      ============================================================ -->
-<title>Neovim Cheatsheet — Complete nvim Command Reference</title>
+<title>Neovim Cheatsheet - Complete nvim Command Reference</title>
 <meta name="description" content="A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.">
 <meta name="keywords" content="neovim cheatsheet, nvim cheatsheet, neovim commands, nvim commands, neovim reference, vim cheatsheet, nvim keybindings, neovim keyboard shortcuts, neovim tutorial, nvim guide, vim commands, neovim lsp, neovim splits, neovim macros, neovim text objects">
 <meta name="author" content="nvimcheatsheet">
@@ -39,23 +39,23 @@
      ============================================================ -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Neovim Cheatsheet">
-<meta property="og:title" content="Neovim Cheatsheet — Complete nvim Command Reference">
+<meta property="og:title" content="Neovim Cheatsheet - Complete nvim Command Reference">
 <meta property="og:description" content="A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.">
 <meta property="og:url" content="https://neovimcheatsheet.com/">
 <meta property="og:image" content="https://neovimcheatsheet.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Neovim Cheatsheet — searchable nvim command reference">
+<meta property="og:image:alt" content="Neovim Cheatsheet - searchable nvim command reference">
 <meta property="og:locale" content="en_US">
 
 <!-- ============================================================
      TWITTER / X CARD
      ============================================================ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Neovim Cheatsheet — Complete nvim Command Reference">
+<meta name="twitter:title" content="Neovim Cheatsheet - Complete nvim Command Reference">
 <meta name="twitter:description" content="A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.">
 <meta name="twitter:image" content="https://neovimcheatsheet.com/og-image.png">
-<meta name="twitter:image:alt" content="Neovim Cheatsheet — searchable nvim command reference">
+<meta name="twitter:image:alt" content="Neovim Cheatsheet - searchable nvim command reference">
 
 <!-- ============================================================
      JSON-LD STRUCTURED DATA
@@ -64,7 +64,7 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Neovim Cheatsheet — Complete nvim Command Reference",
+  "name": "Neovim Cheatsheet - Complete nvim Command Reference",
   "description": "A fast, searchable Neovim cheatsheet covering every essential nvim command: modes, navigation, editing, text objects, search & replace, splits, tabs, buffers, macros, LSP, and more.",
   "url": "https://neovimcheatsheet.com/",
   "inLanguage": "en-US",
@@ -663,7 +663,7 @@
   .customize-bar .cb-reset { color: #f85149; border-color: #f8514955; }
   .customize-bar .cb-reset:hover { background: #f8514912; border-color: #f85149; color: #f85149; }
 
-  /* Light mode overrides — custom bindings */
+  /* Light mode overrides - custom bindings */
   body.light .edit-bind-btn { color: #6a737d; }
   body.light .edit-bind-btn:hover { color: #116329; background: #11632912; }
   body.light tr.has-custom td:first-child::before { background: #116329; }
@@ -912,8 +912,8 @@
     </div>
     <div class="textobj-col">
       <div class="textobj-label">i vs a</div>
-      <div class="textobj-row"><code>i</code><span>inner — excludes delimiters</span></div>
-      <div class="textobj-row"><code>a</code><span>around — includes delimiters</span></div>
+      <div class="textobj-row"><code>i</code><span>inner - excludes delimiters</span></div>
+      <div class="textobj-row"><code>a</code><span>around - includes delimiters</span></div>
     </div>
   </div>
   <div class="textobj-label" style="margin-top:12px">Examples</div>
@@ -930,7 +930,7 @@
   <h1>Neovim Cheatsheet</h1>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">☀️</button>
 </div>
-<p class="subtitle">Complete nvim command reference — searchable, fast, always free</p>
+<p class="subtitle">Complete nvim command reference - searchable, fast, always free</p>
 
 <!-- SEARCH -->
 <div class="search-wrap">
@@ -950,9 +950,9 @@
 
 <!-- LEGEND -->
 <div class="legend">
-  <span data-cmd="Normal Mode" data-tip="The default mode — you're here unless you've switched. Navigate, run operators, and issue commands. Enter with Esc from any other mode. Most commands only work in Normal mode."><span class="badge badge-n">N</span> Normal</span>
+  <span data-cmd="Normal Mode" data-tip="The default mode - you're here unless you've switched. Navigate, run operators, and issue commands. Enter with Esc from any other mode. Most commands only work in Normal mode."><span class="badge badge-n">N</span> Normal</span>
   <span data-cmd="Insert Mode" data-tip="Type text directly into the buffer. Enter with i (before cursor), a (after), o (new line below), or O (new line above). Return to Normal with Esc or Ctrl+[."><span class="badge badge-i">I</span> Insert</span>
-  <span data-cmd="Visual Mode" data-tip="Select text interactively, then apply an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — returns to Normal automatically."><span class="badge badge-v">V</span> Visual</span>
+  <span data-cmd="Visual Mode" data-tip="Select text interactively, then apply an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection - returns to Normal automatically."><span class="badge badge-v">V</span> Visual</span>
   <span data-cmd="Command Mode" data-tip="Type Ex commands starting with :, or search with / and ?. Enter with : from Normal mode. Run with Enter, cancel with Esc. Supports tab completion for commands, files, and options."><span class="badge badge-c">C</span> Command</span>
   <span data-cmd="Custom binding" data-tip="A green dot marks a row whose keybinding you changed from the default. Overrides save in this browser only. Click the pencil on any row to edit one, or use Reset all to restore defaults."><span class="legend-dot"></span> Custom binding</span>
 </div>
@@ -972,7 +972,7 @@
 <div class="grid" id="grid">
 
   <div class="card">
-    <div class="card-header green" data-cmd="Vim Modes" data-tip="Neovim has distinct modes for different tasks. Normal is default — navigate and issue commands. Switch with i/a/o (Insert), v/V/Ctrl+v (Visual), or : (Command). Always return to Normal with Esc.">Modes</div>
+    <div class="card-header green" data-cmd="Vim Modes" data-tip="Neovim has distinct modes for different tasks. Normal is default - navigate and issue commands. Switch with i/a/o (Insert), v/V/Ctrl+v (Visual), or : (Command). Always return to Normal with Esc.">Modes</div>
     <table>
       <tr data-tip="Enter Insert mode before the cursor position" data-example="i"><td>i</td><td>Insert before cursor</td></tr>
       <tr data-tip="Enter Insert mode before the first non-blank character of the line" data-example="I"><td>I</td><td>Insert at first non-blank</td></tr>
@@ -985,14 +985,14 @@
       <tr data-tip="Enter Visual Block mode to select a rectangular region of text" data-example="Ctrl+v"><td>Ctrl+v</td><td>Visual (block)</td></tr>
       <tr data-tip="Enter Command mode to type Ex commands like :w, :q, :s" data-example=":w"><td>:</td><td>Command mode</td></tr>
       <tr data-tip="Return to Normal mode from Insert, Visual, or Command-line mode (Terminal mode uses Ctrl+\ Ctrl+N)" data-example="Esc"><td>Esc / Ctrl+[</td><td>Return to Normal</td></tr>
-      <tr data-tip="Enter Replace mode — typed characters overwrite existing text character by character" data-example="R"><td>R</td><td>Replace mode</td></tr>
+      <tr data-tip="Enter Replace mode - typed characters overwrite existing text character by character" data-example="R"><td>R</td><td>Replace mode</td></tr>
     </table>
   </div>
 
   <div class="card">
-    <div class="card-header" data-cmd="Navigation" data-tip="In Normal mode use h/j/k/l instead of arrow keys. Combine motions with counts: 5j moves 5 lines down. Motions also work as operator arguments — d5j deletes 5 lines down.">Navigation — Basic</div>
+    <div class="card-header" data-cmd="Navigation" data-tip="In Normal mode use h/j/k/l instead of arrow keys. Combine motions with counts: 5j moves 5 lines down. Motions also work as operator arguments - d5j deletes 5 lines down.">Navigation - Basic</div>
     <table>
-      <tr data-tip="Move the cursor left (h), down (j), up (k), or right (l) — prefix with a count" data-example="5j"><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
+      <tr data-tip="Move the cursor left (h), down (j), up (k), or right (l) - prefix with a count" data-example="5j"><td>h j k l</td><td>←  ↓  ↑  →</td></tr>
       <tr data-tip="Move forward to the start of the next word; w stops at punctuation while W (WORD) uses whitespace-only boundaries, keeping punctuation as part of the WORD" data-example="3w"><td>w / W</td><td>Next word / WORD</td></tr>
       <tr data-tip="Move backward to the start of the previous word; b stops at punctuation while B (WORD) uses whitespace-only boundaries, keeping punctuation as part of the WORD" data-example="b"><td>b / B</td><td>Prev word / WORD</td></tr>
       <tr data-tip="Move to the end of the current or next word; e stops at punctuation while E (WORD) uses whitespace-only boundaries, keeping punctuation as part of the WORD" data-example="e"><td>e / E</td><td>End of word / WORD</td></tr>
@@ -1001,7 +1001,7 @@
       <tr data-tip="Jump to the very first line (gg) or very last line (G) of the file" data-example="gg"><td>gg / G</td><td>File start / file end</td></tr>
       <tr data-tip="Jump directly to a specific line number" data-example=":42"><td>:{N}</td><td>Go to line N</td></tr>
       <tr data-tip="Jump to the bracket, parenthesis, or brace that matches the one under the cursor" data-example="%"><td>%</td><td>Jump to matching bracket</td></tr>
-      <tr data-tip="Jump to the previous ({) or next (}) empty line — moves between paragraphs" data-example="}"><td>{ / }</td><td>Prev / next blank line (paragraph)</td></tr>
+      <tr data-tip="Jump to the previous ({) or next (}) empty line - moves between paragraphs" data-example="}"><td>{ / }</td><td>Prev / next blank line (paragraph)</td></tr>
       <tr data-tip="Scroll down (Ctrl+d) or up (Ctrl+u) by half a screen" data-example="Ctrl+d"><td>Ctrl+d / Ctrl+u</td><td>Half-page down / up</td></tr>
       <tr data-tip="Scroll forward (Ctrl+f) or backward (Ctrl+b) by a full screen" data-example="Ctrl+f"><td>Ctrl+f / Ctrl+b</td><td>Full-page down / up</td></tr>
     </table>
@@ -1011,29 +1011,29 @@
     <div class="card-header orange" data-cmd="Editing" data-tip="Operators like d (delete), c (change), and y (yank) act on motions or text objects. Most edits go into the unnamed register and can be pasted with p. Use . to repeat the last change.">Editing</div>
     <table>
       <tr data-tip="Delete the character under the cursor and put it in the unnamed register" data-example="x"><td>x</td><td>Delete character</td></tr>
-      <tr data-tip="Delete the entire current line — goes to the unnamed register, not lost" data-example="dd" data-danger="Deletes the line from the buffer immediately"><td>dd</td><td>Delete line</td></tr>
+      <tr data-tip="Delete the entire current line - goes to the unnamed register, not lost" data-example="dd" data-danger="Deletes the line from the buffer immediately"><td>dd</td><td>Delete line</td></tr>
       <tr data-tip="Delete from the cursor to the start of the next word" data-example="dw"><td>dw</td><td>Delete word</td></tr>
       <tr data-tip="Delete from the cursor to the end of the line" data-example="D"><td>d$ / D</td><td>Delete to end of line</td></tr>
       <tr data-tip="Yank (copy) the entire current line into the unnamed register" data-example="yy"><td>yy</td><td>Yank (copy) line</td></tr>
-      <tr data-tip="Yank from the cursor to the end of the line — equivalent to y$ in Neovim" data-example="Y"><td>Y</td><td>Yank to end of line (= y$)</td></tr>
+      <tr data-tip="Yank from the cursor to the end of the line - equivalent to y$ in Neovim" data-example="Y"><td>Y</td><td>Yank to end of line (= y$)</td></tr>
       <tr data-tip="Yank from the cursor to the start of the next word" data-example="yw"><td>yw</td><td>Yank word</td></tr>
-      <tr data-tip="Paste after the cursor (p) or before it (P) — linewise yanks go below/above on a new line" data-example="p"><td>p / P</td><td>Paste after / before cursor</td></tr>
-      <tr data-tip="Undo the last change — press repeatedly to undo further" data-example="u"><td>u</td><td>Undo</td></tr>
+      <tr data-tip="Paste after the cursor (p) or before it (P) - linewise yanks go below/above on a new line" data-example="p"><td>p / P</td><td>Paste after / before cursor</td></tr>
+      <tr data-tip="Undo the last change - press repeatedly to undo further" data-example="u"><td>u</td><td>Undo</td></tr>
       <tr data-tip="Redo the last undone change" data-example="Ctrl+r"><td>Ctrl+r</td><td>Redo</td></tr>
       <tr data-tip="Delete the line (cc) or to end of line (C) and enter Insert mode" data-example="cc"><td>cc / C</td><td>Change line / to end of line</td></tr>
       <tr data-tip="Change from the cursor to the end of the word, then enter Insert mode (acts like ce)" data-example="cw"><td>cw</td><td>Change word</td></tr>
-      <tr data-tip="Replace only the character under the cursor — stays in Normal mode" data-example="ra"><td>r{char}</td><td>Replace single character</td></tr>
+      <tr data-tip="Replace only the character under the cursor - stays in Normal mode" data-example="ra"><td>r{char}</td><td>Replace single character</td></tr>
       <tr data-tip="Toggle the case of the character under the cursor and move the cursor right" data-example="~"><td>~</td><td>Toggle case</td></tr>
       <tr data-tip="Join the line below to the end of the current line, separated by a space" data-example="J"><td>J</td><td>Join line below to current</td></tr>
-      <tr data-tip="Repeat the last edit command — one of the most powerful Normal mode keys" data-example="."><td>.</td><td>Repeat last change</td></tr>
+      <tr data-tip="Repeat the last edit command - one of the most powerful Normal mode keys" data-example="."><td>.</td><td>Repeat last change</td></tr>
     </table>
   </div>
 
   <div class="card">
     <div class="card-header purple" data-cmd="Text Objects" data-tip="Text objects describe a region by structure: words, sentences, paragraphs, or delimiters. Combine with any operator: operator + i/a + object. Example: diw deletes inner word, ci( changes inside parens.">Text Objects (combine with d/c/y/v)</div>
     <table>
-      <tr data-tip="Select inside (iw) or around (aw) a word — use with d, c, y, or v" data-example="diw"><td>iw / aw</td><td>Inner / around word</td></tr>
-      <tr data-tip="Select inside or around a sentence — useful for prose editing" data-example="dis"><td>is / as</td><td>Inner / around sentence</td></tr>
+      <tr data-tip="Select inside (iw) or around (aw) a word - use with d, c, y, or v" data-example="diw"><td>iw / aw</td><td>Inner / around word</td></tr>
+      <tr data-tip="Select inside or around a sentence - useful for prose editing" data-example="dis"><td>is / as</td><td>Inner / around sentence</td></tr>
       <tr data-tip="Select inside or around a paragraph (contiguous block of non-empty lines)" data-example="dip"><td>ip / ap</td><td>Inner / around paragraph</td></tr>
       <tr data-tip='Select text inside (i") or including (a") the surrounding double quotes' data-example='ci"'><td>i" / a"</td><td>Inner / around double quotes</td></tr>
       <tr data-tip="Select text inside or including the surrounding single quotes" data-example="ci'"><td>i' / a'</td><td>Inner / around single quotes</td></tr>
@@ -1046,16 +1046,16 @@
   </div>
 
   <div class="card">
-    <div class="card-header red" data-cmd="Search & Replace" data-tip="Search with /pattern (forward) or ?pattern (backward). Press n/N to cycle matches. :%s/old/new/g replaces all occurrences in the file — add c flag to confirm each match individually.">Search &amp; Replace</div>
+    <div class="card-header red" data-cmd="Search & Replace" data-tip="Search with /pattern (forward) or ?pattern (backward). Press n/N to cycle matches. :%s/old/new/g replaces all occurrences in the file - add c flag to confirm each match individually.">Search &amp; Replace</div>
     <table>
-      <tr data-tip="Search forward for a pattern — press Enter to jump to the first match" data-example="/function"><td>/pattern</td><td>Search forward</td></tr>
+      <tr data-tip="Search forward for a pattern - press Enter to jump to the first match" data-example="/function"><td>/pattern</td><td>Search forward</td></tr>
       <tr data-tip="Search backward for a pattern in the file" data-example="?TODO"><td>?pattern</td><td>Search backward</td></tr>
       <tr data-tip="Jump to the next (n) or previous (N) search match" data-example="n"><td>n / N</td><td>Next / prev match</td></tr>
       <tr data-tip="Search forward for the exact whole word under the cursor" data-example="*"><td>*</td><td>Search word under cursor (fwd)</td></tr>
       <tr data-tip="Search backward for the exact whole word under the cursor" data-example="#"><td>#</td><td>Search word under cursor (bwd)</td></tr>
       <tr data-tip="Replace the first occurrence of a pattern with a new string on the current line" data-example=":s/foo/bar/"><td>:s/old/new/</td><td>Replace first on line</td></tr>
       <tr data-tip="Replace all occurrences on the current line" data-example=":s/foo/bar/g"><td>:s/old/new/g</td><td>Replace all on line</td></tr>
-      <tr data-tip="Replace every match across the entire file — no confirmation prompt" data-example=":%s/foo/bar/g" data-danger="Replaces all matches in the entire file with no undo prompt"><td>:%s/old/new/g</td><td>Replace all in file</td></tr>
+      <tr data-tip="Replace every match across the entire file - no confirmation prompt" data-example=":%s/foo/bar/g" data-danger="Replaces all matches in the entire file with no undo prompt"><td>:%s/old/new/g</td><td>Replace all in file</td></tr>
       <tr data-tip="Replace all in file but prompt y/n/a/q at each match for safety" data-example=":%s/foo/bar/gc"><td>:%s/old/new/gc</td><td>Replace with confirmation</td></tr>
       <tr data-tip="Clear the search highlight without clearing the search pattern itself" data-example=":noh"><td>:noh</td><td>Clear search highlight</td></tr>
     </table>
@@ -1065,8 +1065,8 @@
     <div class="card-header yellow" data-cmd="Splits & Windows" data-tip="Display multiple buffers side by side in split windows. Use :sp for horizontal and :vsp for vertical splits. Navigate splits with Ctrl+w + h/j/k/l. Resize with Ctrl+w +/-/_/|.">Splits &amp; Windows</div>
     <table>
       <tr data-tip="Split the current window horizontally (:sp) or vertically (:vsp)" data-example=":vsp"><td>:sp / :vsp</td><td>Horizontal / vertical split</td></tr>
-      <tr data-tip="Split the current window horizontally — same as :sp" data-example="Ctrl+w s"><td>Ctrl+w s</td><td>Horizontal split</td></tr>
-      <tr data-tip="Split the current window vertically — same as :vsp" data-example="Ctrl+w v"><td>Ctrl+w v</td><td>Vertical split</td></tr>
+      <tr data-tip="Split the current window horizontally - same as :sp" data-example="Ctrl+w s"><td>Ctrl+w s</td><td>Horizontal split</td></tr>
+      <tr data-tip="Split the current window vertically - same as :vsp" data-example="Ctrl+w v"><td>Ctrl+w v</td><td>Vertical split</td></tr>
       <tr data-tip="Move focus to the split in the left/down/up/right direction" data-example="Ctrl+w l"><td>Ctrl+w h/j/k/l</td><td>Move between splits</td></tr>
       <tr data-tip="Move the current split window to the far left/bottom/top/right edge" data-example="Ctrl+w H"><td>Ctrl+w H/J/K/L</td><td>Move split to edge</td></tr>
       <tr data-tip="Resize all open splits to equal dimensions" data-example="Ctrl+w ="><td>Ctrl+w =</td><td>Equalize split sizes</td></tr>
@@ -1078,28 +1078,28 @@
   </div>
 
   <div class="card">
-    <div class="card-header teal" data-cmd="Tabs" data-tip="Tabs in Neovim are tab pages — each holds its own window layout, not just a single file. Use :tabnew to open a tab, gt/gT to switch. A single tab can contain multiple splits.">Tabs</div>
+    <div class="card-header teal" data-cmd="Tabs" data-tip="Tabs in Neovim are tab pages - each holds its own window layout, not just a single file. Use :tabnew to open a tab, gt/gT to switch. A single tab can contain multiple splits.">Tabs</div>
     <table>
       <tr data-tip="Open a new empty tab page" data-example=":tabnew"><td>:tabnew</td><td>Open new tab</td></tr>
       <tr data-tip="Open a specific file in a new tab page" data-example=":tabnew index.lua"><td>:tabnew {file}</td><td>Open file in new tab</td></tr>
       <tr data-tip="Switch to the next (gt) or previous (gT) tab page" data-example="gt"><td>gt / gT</td><td>Next / prev tab</td></tr>
       <tr data-tip="Go to the next (:tabn) or previous (:tabp) tab page" data-example=":tabn"><td>:tabn / :tabp</td><td>Next / prev tab</td></tr>
-      <tr data-tip="Close the current tab page. With Neovim's default 'hidden' on, it closes even when a buffer has unsaved changes — that buffer just becomes hidden and its changes stay in the buffer list (:ls). Only fails when this is the last tab page (E784)." data-example=":tabclose"><td>:tabclose</td><td>Close current tab</td></tr>
-      <tr data-tip="Close all other tab pages. With Neovim's default 'hidden' on, it closes them all even when buffers have unsaved changes — those buffers become hidden (not kept as tabs), with their changes preserved in the buffer list (:ls)." data-example=":tabonly"><td>:tabonly</td><td>Close all other tabs</td></tr>
+      <tr data-tip="Close the current tab page. With Neovim's default 'hidden' on, it closes even when a buffer has unsaved changes - that buffer just becomes hidden and its changes stay in the buffer list (:ls). Only fails when this is the last tab page (E784)." data-example=":tabclose"><td>:tabclose</td><td>Close current tab</td></tr>
+      <tr data-tip="Close all other tab pages. With Neovim's default 'hidden' on, it closes them all even when buffers have unsaved changes - those buffers become hidden (not kept as tabs), with their changes preserved in the buffer list (:ls)." data-example=":tabonly"><td>:tabonly</td><td>Close all other tabs</td></tr>
       <tr data-tip="Jump directly to tab number N" data-example="3gt"><td>{N}gt</td><td>Go to tab N</td></tr>
     </table>
   </div>
 
   <div class="card">
-    <div class="card-header" data-cmd="Files & Buffers" data-tip="A buffer is an in-memory copy of a file. You can have many buffers open at once — :ls lists them all, :bn/:bp navigates between them. Splits and tabs are just different views into buffers.">Files &amp; Buffers</div>
+    <div class="card-header" data-cmd="Files & Buffers" data-tip="A buffer is an in-memory copy of a file. You can have many buffers open at once - :ls lists them all, :bn/:bp navigates between them. Splits and tabs are just different views into buffers.">Files &amp; Buffers</div>
     <table>
       <tr data-tip="Open a file for editing. If it does not exist yet, this opens an empty buffer; the file is written to disk only when you save (:w)" data-example=":e src/main.lua"><td>:e {file}</td><td>Edit file</td></tr>
       <tr data-tip="Write the current buffer to disk" data-example=":w"><td>:w</td><td>Save</td></tr>
-      <tr data-tip="Write a copy to a new file — the buffer keeps its original name (:saveas renames)" data-example=":w newfile.txt"><td>:w {file}</td><td>Write a copy</td></tr>
+      <tr data-tip="Write a copy to a new file - the buffer keeps its original name (:saveas renames)" data-example=":w newfile.txt"><td>:w {file}</td><td>Write a copy</td></tr>
       <tr data-tip="Write the file and automatically create any missing parent directories" data-example=":w ++p"><td>:w ++p</td><td>Save, creating parent dirs if needed</td></tr>
-      <tr data-tip="Save the file and quit — :x only writes if there are unsaved changes" data-example=":wq"><td>:wq / :x</td><td>Save and quit</td></tr>
+      <tr data-tip="Save the file and quit - :x only writes if there are unsaved changes" data-example=":wq"><td>:wq / :x</td><td>Save and quit</td></tr>
       <tr data-tip="Quit the current window; fails (E37) only when it's the last window of a buffer with unsaved changes" data-example=":q"><td>:q</td><td>Quit</td></tr>
-      <tr data-tip="Force-quit without saving, discarding all unsaved changes" data-example=":q!" data-danger="Discards all unsaved changes — cannot be undone"><td>:q!</td><td>Quit without saving</td></tr>
+      <tr data-tip="Force-quit without saving, discarding all unsaved changes" data-example=":q!" data-danger="Discards all unsaved changes - cannot be undone"><td>:q!</td><td>Quit without saving</td></tr>
       <tr data-tip="Save all open buffers and quit Neovim completely" data-example=":wqa"><td>:wqa</td><td>Save all and quit</td></tr>
       <tr data-tip="List all open buffers and their status (modified, active, etc.)" data-example=":ls"><td>:ls / :buffers</td><td>List buffers</td></tr>
       <tr data-tip="Switch to the next (:bn) or previous (:bp) buffer in the buffer list" data-example=":bn"><td>:bn / :bp</td><td>Next / prev buffer</td></tr>
@@ -1112,7 +1112,7 @@
   <div class="card">
     <div class="card-header purple" data-cmd="Marks & Jumps" data-tip="Marks bookmark positions in a file. Lowercase marks (m{a-z}) are local to the buffer; uppercase (m{A-Z}) are global across files. The jump list (Ctrl+o/Ctrl+i) tracks everywhere you've jumped.">Marks &amp; Jumps</div>
     <table>
-      <tr data-tip="Set a local mark at the cursor — lowercase marks are per-file" data-example="ma"><td>m{a-z}</td><td>Set local mark</td></tr>
+      <tr data-tip="Set a local mark at the cursor - lowercase marks are per-file" data-example="ma"><td>m{a-z}</td><td>Set local mark</td></tr>
       <tr data-tip="Set a global mark accessible from any file across sessions" data-example="mA"><td>m{A-Z}</td><td>Set global mark</td></tr>
       <tr data-tip="Jump to the first non-blank character of the line where the mark was set (use `mark to land on the exact column)" data-example="'a"><td>'{mark}</td><td>Jump to mark line</td></tr>
       <tr data-tip="Jump to the exact position (line and column) where the mark was set" data-example="`a"><td>`{mark}</td><td>Jump to exact mark position</td></tr>
@@ -1125,28 +1125,28 @@
   <div class="card">
     <div class="card-header orange" data-cmd="Macros" data-tip="Macros record a sequence of keystrokes into a named register. Press q{letter} to start recording, make your edits, then q to stop. Replay with @{letter} or run N times with {N}@{letter}.">Macros</div>
     <table>
-      <tr data-tip="Start recording a macro into the named register — all keystrokes are recorded" data-example="qa"><td>q{a-z}</td><td>Start recording macro into register</td></tr>
+      <tr data-tip="Start recording a macro into the named register - all keystrokes are recorded" data-example="qa"><td>q{a-z}</td><td>Start recording macro into register</td></tr>
       <tr data-tip="Stop recording the current macro" data-example="q"><td>q</td><td>Stop recording</td></tr>
       <tr data-tip="Replay the macro stored in the named register" data-example="@a"><td>@{a-z}</td><td>Play macro</td></tr>
       <tr data-tip="Repeat the most recently played macro" data-example="@@"><td>@@</td><td>Repeat last macro</td></tr>
-      <tr data-tip="Run a macro N times in a row — great for repetitive edits" data-example="10@a"><td>{N}@{a-z}</td><td>Play macro N times</td></tr>
+      <tr data-tip="Run a macro N times in a row - great for repetitive edits" data-example="10@a"><td>{N}@{a-z}</td><td>Play macro N times</td></tr>
       <tr data-tip="Display the contents of all registers, including recorded macros" data-example=":reg"><td>:reg</td><td>View all registers / macros</td></tr>
     </table>
   </div>
 
   <div class="card">
-    <div class="card-header green" data-cmd="Visual Mode" data-tip="Select text interactively before applying an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection — Neovim returns to Normal automatically.">Visual Mode</div>
+    <div class="card-header green" data-cmd="Visual Mode" data-tip="Select text interactively before applying an operator. Enter with v (character), V (line), or Ctrl+v (block). Apply d, c, y, >, < to the selection - Neovim returns to Normal automatically.">Visual Mode</div>
     <table>
       <tr data-tip="Enter Visual mode and extend the selection using any motion command" data-example="ve"><td>v + motion</td><td>Select characters</td></tr>
       <tr data-tip="Enter Visual Line mode and select entire lines with a motion" data-example="Vj"><td>V + motion</td><td>Select lines</td></tr>
-      <tr data-tip="Enter Visual Block mode to select a rectangular region — great for column edits" data-example="Ctrl+v 3j I# Esc"><td>Ctrl+v + motion</td><td>Block select</td></tr>
+      <tr data-tip="Enter Visual Block mode to select a rectangular region - great for column edits" data-example="Ctrl+v 3j I# Esc"><td>Ctrl+v + motion</td><td>Block select</td></tr>
       <tr data-tip="Delete the visually selected text into the unnamed register" data-example="vwd"><td>d / x</td><td>Delete selection</td></tr>
       <tr data-tip="Yank (copy) the selected text into the unnamed register" data-example="viwy"><td>y</td><td>Yank selection</td></tr>
       <tr data-tip="Delete the selection and enter Insert mode to type replacement text" data-example="viwc"><td>c</td><td>Change selection</td></tr>
       <tr data-tip="Indent the selection right (>) or left (<) by one shiftwidth" data-example=">"><td>&gt; / &lt;</td><td>Indent / un-indent</td></tr>
       <tr data-tip="Convert the selected text to lowercase (u) or uppercase (U)" data-example="viwU"><td>u / U</td><td>Lowercase / uppercase</td></tr>
       <tr data-tip="Enter Command mode with the visual selection range pre-filled as '&lt;,'&gt;" data-example=":'<,'>sort"><td>:</td><td>Run command on selection</td></tr>
-      <tr data-tip="Re-select the last visual selection — useful after a paste or command" data-example="gv"><td>gv</td><td>Reselect last selection</td></tr>
+      <tr data-tip="Re-select the last visual selection - useful after a paste or command" data-example="gv"><td>gv</td><td>Reselect last selection</td></tr>
     </table>
   </div>
 
@@ -1157,8 +1157,8 @@
       <tr data-tip="Toggle a fold open or closed at the cursor" data-example="za"><td>za</td><td>Toggle fold</td></tr>
       <tr data-tip="Close (zC) or open (zO) all nested folds at the cursor recursively" data-example="zO"><td>zC / zO</td><td>Close / open all folds at cursor</td></tr>
       <tr data-tip="Close all folds in the file (zM) or open every fold (zR)" data-example="zR"><td>zM / zR</td><td>Close all / open all folds in file</td></tr>
-      <tr data-tip="Create a fold spanning the range of the motion — works with manual foldmethod" data-example="zf3j"><td>zf{motion}</td><td>Create fold</td></tr>
-      <tr data-tip="Delete the fold at the cursor — manual/marker folds only (marker folds lose their markers too)" data-example="zd" data-danger="Removes the fold; for marker folds it also deletes the fold-marker characters"><td>zd</td><td>Delete fold at cursor</td></tr>
+      <tr data-tip="Create a fold spanning the range of the motion - works with manual foldmethod" data-example="zf3j"><td>zf{motion}</td><td>Create fold</td></tr>
+      <tr data-tip="Delete the fold at the cursor - manual/marker folds only (marker folds lose their markers too)" data-example="zd" data-danger="Removes the fold; for marker folds it also deletes the fold-marker characters"><td>zd</td><td>Delete fold at cursor</td></tr>
       <tr data-tip="Move the cursor to the start of the next fold (zj) or the end of the previous fold (zk)" data-example="zj"><td>zj / zk</td><td>Move to next / prev fold</td></tr>
     </table>
   </div>
@@ -1167,11 +1167,11 @@
     <div class="card-header teal" data-cmd="Neovim-Specific" data-tip="Features unique to Neovim or its ecosystem. LSP keymaps (grr, gri, grn, gra, etc.) are built-in defaults, no config needed, working on any machine or server (K hover and ]d/[d diagnostics since 0.10; the gr* family since 0.11). Note: gd is a built-in Vim motion (local declaration), not an LSP default. Plugin managers like Lazy.nvim and Mason require installation.">Neovim-Specific</div>
     <table>
       <tr data-tip="Run Neovim's built-in health checks for plugins and system dependencies. Shows what LSP servers, tools, and providers are properly installed." data-example=":checkhealth"><td>:checkhealth</td><td>Run health diagnostics</td></tr>
-      <tr data-tip="Open a built-in terminal emulator inside a new buffer. The terminal runs in a special mode — normal editing keys are passed to the shell, not Neovim." data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
+      <tr data-tip="Open a built-in terminal emulator inside a new buffer. The terminal runs in a special mode - normal editing keys are passed to the shell, not Neovim." data-example=":terminal"><td>:terminal</td><td>Open built-in terminal</td></tr>
       <tr data-tip="Exit terminal mode back to Normal mode. By default Esc is sent to the shell rather than Neovim, so this two-key chord is the standard way out (you can remap Esc to trigger it)." data-example="Ctrl+\ Ctrl+n"><td>Ctrl+\ Ctrl+n</td><td>Exit terminal to Normal mode</td></tr>
-      <tr data-tip="Open the Lazy.nvim plugin manager UI to install, update, or remove plugins. Lazy.nvim is the most popular Neovim plugin manager — requires it to be configured in your init.lua first." data-example=":Lazy"><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
-      <tr data-tip="Open Mason to browse and install external tools — LSP servers, DAP debug adapters, linters, and formatters. Mason manages the binaries; you still configure each LSP server in your init.lua via lspconfig or similar." data-example=":Mason"><td>:Mason</td><td>Open Mason tool installer</td></tr>
-      <tr data-tip="Show hover documentation for the symbol under the cursor. Built-in default since Neovim 0.10 — no config needed. Requires an LSP server attached to the buffer. Press K again to enter the hover window." data-example="K"><td>K</td><td>LSP hover docs</td></tr>
+      <tr data-tip="Open the Lazy.nvim plugin manager UI to install, update, or remove plugins. Lazy.nvim is the most popular Neovim plugin manager - requires it to be configured in your init.lua first." data-example=":Lazy"><td>:Lazy</td><td>Open Lazy.nvim plugin manager</td></tr>
+      <tr data-tip="Open Mason to browse and install external tools - LSP servers, DAP debug adapters, linters, and formatters. Mason manages the binaries; you still configure each LSP server in your init.lua via lspconfig or similar." data-example=":Mason"><td>:Mason</td><td>Open Mason tool installer</td></tr>
+      <tr data-tip="Show hover documentation for the symbol under the cursor. Built-in default since Neovim 0.10 - no config needed. Requires an LSP server attached to the buffer. Press K again to enter the hover window." data-example="K"><td>K</td><td>LSP hover docs</td></tr>
       <tr data-tip="Built-in Vim motion: jump to the local declaration (first occurrence) of the keyword under the cursor in the current function or file. This is NOT LSP go-to-definition, which has no default mapping; map vim.lsp.buf.definition() yourself, or use Ctrl+] for a tag jump. Ctrl+o jumps back." data-example="gd"><td>gd</td><td>Go to local declaration</td></tr>
       <tr data-tip="Show all references to the symbol under the cursor in a quickfix list. Built-in default since Neovim 0.11, grr (two r's) not gr. Use :cn / :cp to navigate the quickfix list." data-example="grr"><td>grr</td><td>Find references (LSP)</td></tr>
       <tr data-tip="Jump to the implementation(s) of the symbol under the cursor, useful for interfaces and abstract methods. Built-in default since Neovim 0.11, no config needed." data-example="gri"><td>gri</td><td>Go to implementation (LSP)</td></tr>
@@ -1179,7 +1179,7 @@
       <tr data-tip="Trigger a code action at the cursor: auto-import, extract variable, fix diagnostic, etc. Also works in Visual mode on the selection. Built-in default since Neovim 0.11. You may have seen &lt;leader&gt;ca used instead, that is a custom mapping for the same thing, not a built-in." data-example="gra"><td>gra</td><td>Code action (LSP)</td></tr>
       <tr data-tip="List all symbols in the current file (functions, classes, variables) via LSP. Built-in default, no config needed. Results open in the location-list, use :lnext / :lprev to navigate." data-example="gO"><td>gO</td><td>Document symbols (LSP)</td></tr>
       <tr data-tip="Show the function signature (parameter types and docs) for the call under the cursor. Built-in default since Neovim 0.11, works in Insert mode while typing a function call." data-example="Ctrl+S"><td>Ctrl+S <span style="font-size:0.7em;color:#8b949e">(Insert)</span></td><td>Signature help (LSP)</td></tr>
-      <tr data-tip="Jump to the next (]d) or previous ([d) diagnostic in the buffer — errors, warnings, and hints (from any source, not only LSP). Built-in defaults since Neovim 0.10, no config needed." data-example="]d"><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
+      <tr data-tip="Jump to the next (]d) or previous ([d) diagnostic in the buffer - errors, warnings, and hints (from any source, not only LSP). Built-in defaults since Neovim 0.10, no config needed." data-example="]d"><td>]d / [d</td><td>Next / prev diagnostic</td></tr>
     </table>
   </div>
 
@@ -1187,14 +1187,14 @@
     <div class="card-header" data-cmd="Useful Commands" data-tip="Handy Ex commands for customizing your editing environment on the fly. Make any :set option permanent by adding it to your init.lua (or init.vim) config file so it's applied on every launch.">Useful Commands</div>
     <table>
       <tr data-tip="Display absolute line numbers in the left gutter" data-example=":set number"><td>:set number</td><td>Show line numbers</td></tr>
-      <tr data-tip="Display line numbers relative to the cursor — great for planning jump counts" data-example=":set relativenumber"><td>:set relativenumber</td><td>Relative line numbers</td></tr>
+      <tr data-tip="Display line numbers relative to the cursor - great for planning jump counts" data-example=":set relativenumber"><td>:set relativenumber</td><td>Relative line numbers</td></tr>
       <tr data-tip="Wrap long lines visually (:set wrap) or scroll them (:set nowrap); :set wrap! toggles" data-example=":set wrap"><td>:set wrap / nowrap</td><td>Toggle line wrap</td></tr>
-      <tr data-tip="Make searches case-insensitive — combine with :set smartcase for best results" data-example=":set ignorecase"><td>:set ignorecase</td><td>Case-insensitive search</td></tr>
-      <tr data-tip="Enable spell checking — use ]s and [s to navigate misspellings, z= to fix" data-example=":set spell"><td>:set spell</td><td>Enable spell check</td></tr>
-      <tr data-tip="Sort lines alphabetically — the whole file by default, or just a range / visual selection if one is given" data-example=":'<,'>sort"><td>:sort</td><td>Sort lines (file or selection)</td></tr>
-      <tr data-tip="Run a shell command without leaving Neovim — its output is shown below, then press Enter to return" data-example=":!ls -la"><td>:!{cmd}</td><td>Run shell command</td></tr>
+      <tr data-tip="Make searches case-insensitive - combine with :set smartcase for best results" data-example=":set ignorecase"><td>:set ignorecase</td><td>Case-insensitive search</td></tr>
+      <tr data-tip="Enable spell checking - use ]s and [s to navigate misspellings, z= to fix" data-example=":set spell"><td>:set spell</td><td>Enable spell check</td></tr>
+      <tr data-tip="Sort lines alphabetically - the whole file by default, or just a range / visual selection if one is given" data-example=":'<,'>sort"><td>:sort</td><td>Sort lines (file or selection)</td></tr>
+      <tr data-tip="Run a shell command without leaving Neovim - its output is shown below, then press Enter to return" data-example=":!ls -la"><td>:!{cmd}</td><td>Run shell command</td></tr>
       <tr data-tip="Run a shell command and insert its stdout output below the cursor" data-example=":r !date"><td>:r !{cmd}</td><td>Insert shell output below line</td></tr>
-      <tr data-tip="Show where a key mapping was defined — useful for debugging config conflicts" data-example=":verbose map &lt;leader&gt;f"><td>:verbose map {key}</td><td>Show where a key is mapped</td></tr>
+      <tr data-tip="Show where a key mapping was defined - useful for debugging config conflicts" data-example=":verbose map &lt;leader&gt;f"><td>:verbose map {key}</td><td>Show where a key is mapped</td></tr>
       <tr data-tip="Print the current filename, modification status, and cursor position on the command line" data-example="Ctrl+g"><td>Ctrl+g</td><td>Show file info + cursor position</td></tr>
       <tr data-tip="Show the decimal, hex, and octal value of the character under the cursor (the Unicode/byte view is g8)" data-example="ga"><td>ga</td><td>Show character codes (dec/hex/octal)</td></tr>
     </table>
@@ -1375,11 +1375,11 @@
     } else {
       tooltipDanger.style.display = 'none';
     }
-    // Command label — use data-cmd, or first td text, or element's own text
+    // Command label - use data-cmd, or first td text, or element's own text
     tooltipCmd.textContent = el.dataset.cmd || el.dataset.currentCmd
       || (el.querySelector('td:first-child') ? el.querySelector('td:first-child').textContent : el.textContent.trim());
     tooltipDesc.textContent = el.dataset.tip;
-    // Accent color — match parent card header color in all cases
+    // Accent color - match parent card header color in all cases
     let accentColor = '';
     if (el.classList.contains('card-header')) {
       accentColor = getComputedStyle(el).color;
@@ -1387,13 +1387,13 @@
       const badge = el.querySelector('.badge');
       accentColor = badge ? getComputedStyle(badge).color : '';
     } else {
-      // Row — walk up to the card and read its header color
+      // Row - walk up to the card and read its header color
       const header = el.closest('.card')?.querySelector('.card-header');
       accentColor = header ? getComputedStyle(header).color : '';
     }
     tooltipCmd.style.color    = accentColor;
     tooltip.style.borderColor = accentColor;
-    // Example section — hide if no example
+    // Example section - hide if no example
     if (el.dataset.example) {
       tooltipCode.textContent = el.dataset.example;
       tooltipExampleSection.style.display = '';
@@ -1402,7 +1402,7 @@
     }
     tooltipCopy.textContent = 'Copy';
     tooltipCopy.classList.remove('copied');
-    // Your Binding section — only for rows with a custom binding
+    // Your Binding section - only for rows with a custom binding
     const isCustom = el.classList.contains('has-custom');
     if (isCustom && el.dataset.currentCmd) {
       tooltipCustomCode.textContent = el.dataset.currentCmd;
@@ -1478,7 +1478,7 @@
     row.addEventListener('touchend', e => {
       if (!tipsEnabled() || tooltip.contains(e.target)) return;
       const t = e.changedTouches[0];
-      // Ignore if finger moved — user was scrolling, not tapping
+      // Ignore if finger moved - user was scrolling, not tapping
       if (Math.abs(t.clientX - touchStartX) > 8 || Math.abs(t.clientY - touchStartY) > 8) return;
       const el = document.elementFromPoint(t.clientX, t.clientY);
       if (!el || !el.closest('tr[data-tip]')) return;
@@ -1627,7 +1627,7 @@
 <script>
   const themeToggle = document.getElementById('themeToggle');
 
-  // Apply saved preference on load — dark is always the default
+  // Apply saved preference on load - dark is always the default
   const savedTheme = localStorage.getItem('nvim-theme');
   if (savedTheme === 'light') {
     document.body.classList.add('light');
@@ -1786,7 +1786,7 @@
     });
   }
 
-  // Capture-phase delegation — fires before tooltip row handlers
+  // Capture-phase delegation - fires before tooltip row handlers
   document.addEventListener('click', e => {
     const btn = e.target.closest('.edit-bind-btn');
     if (!btn) return;
@@ -1843,7 +1843,7 @@
   document.getElementById('exportBindings')?.addEventListener('click', () => {
     const data = loadBindings();
     if (!Object.keys(data).length) {
-      alert('No custom bindings yet — hover any command row and click ✎ to customize one first.');
+      alert('No custom bindings yet - hover any command row and click ✎ to customize one first.');
       return;
     }
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1880,7 +1880,7 @@
         updateResetAllBtn();
         alert(`Imported ${count} custom binding${count !== 1 ? 's' : ''}.`);
       } catch {
-        alert('Invalid file — expected a JSON object like:\n{ "Modes::i": "ctrl+i" }');
+        alert('Invalid file - expected a JSON object like:\n{ "Modes::i": "ctrl+i" }');
       }
       importFile.value = '';
     };
