@@ -694,7 +694,7 @@
     max-width: 380px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
     display: flex; flex-direction: column; gap: 10px;
   }
-  .confirm-dialog h3 {
+  .confirm-dialog h2 {
     margin: 0; font-size: 1rem; font-weight: 600; color: #f85149;
   }
   .confirm-dialog p {
@@ -925,6 +925,8 @@
   </div>
 </div>
 
+<main>
+
 <div class="header-top">
   <button class="penguin-btn" id="penguinBtn" aria-label="🐧 Easter egg" title="Try clicking me…">🐧</button>
   <h1>Neovim Cheatsheet</h1>
@@ -960,7 +962,7 @@
 <!-- Confirm overlay dialog (reusable) -->
 <div class="confirm-overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
   <div class="confirm-dialog">
-    <h3 id="confirmTitle">Reset all custom bindings?</h3>
+    <h2 id="confirmTitle">Reset all custom bindings?</h2>
     <p id="confirmMsg">This will restore every command to its default keybinding. This cannot be undone.</p>
     <div class="confirm-dialog-btns">
       <button class="confirm-btn-cancel" id="confirmCancel">Cancel</button>
@@ -1209,6 +1211,8 @@
   <button id="resetAllBindings" class="cb-reset" style="display:none">↺ Reset all</button>
   <input type="file" id="importFile" accept=".json" style="display:none">
 </div>
+
+</main>
 
 <footer>
   Neovim Cheatsheet · Complete nvim command reference · Updated June 2026 · <a href="https://neovim.io" target="_blank" rel="noopener">neovim.io</a>
